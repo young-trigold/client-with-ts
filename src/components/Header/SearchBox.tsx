@@ -65,8 +65,8 @@ function SearchResult(props) {
 
   return (
     <StyledSearchResult selectedIndex={selectedIndex}>
-      {results.map((result, i) => (
-        <StyledOption key={result[i]} type="button" onMouseDown={() => handleMouseDown(result)}>
+      {results.map((result) => (
+        <StyledOption key={result._id} type="button" onMouseDown={() => handleMouseDown(result)}>
           {result.title}
         </StyledOption>
       ))}
