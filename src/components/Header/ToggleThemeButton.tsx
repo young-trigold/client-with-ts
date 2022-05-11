@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleThemeMode } from '../../theme/themeModeSlice';
-
-import SunIcon from '../../static/icon/sun.png';
-import MoonIcon from '../../static/icon/moon.png';
-import toggleSound from '../../static/audio/toggle.mp3';
 import addMediaEffect from '../../utils/addMediaEffect';
+
+import SunIconSrc from '../../static/icon/sun.png';
+import MoonIconSrc from '../../static/icon/moon.png';
+import ToggleSoundSrc from '../../static/audio/toggle.mp3';
 
 const StyledToggleThemeButton = styled.button`
   width: 90px;
@@ -41,9 +41,9 @@ function ToggleThemeButton() {
   };
 
   return (
-    <StyledToggleThemeButton type="button" onClick={addMediaEffect(handleCilick, toggleSound, 20)}>
-      <img src={SunIcon} width="30" alt="太阳" />
-      <img src={MoonIcon} width="30" alt="月亮" />
+    <StyledToggleThemeButton type="button" onClick={addMediaEffect(handleCilick, ToggleSoundSrc, 20)}>
+      <img src={SunIconSrc} width="30" alt="太阳" />
+      <img src={MoonIconSrc} width="30" alt="月亮" />
       <Marker themeMode={themeMode} />
     </StyledToggleThemeButton>
   );

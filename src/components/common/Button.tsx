@@ -29,10 +29,7 @@ function TextButton(props) {
   const { title, handler } = props;
 
   return (
-    <StyledTextButton
-      type="button"
-      onClick={addMediaEffect(handler, TextPressSound, 20)}
-    >
+    <StyledTextButton type="button" onClick={addMediaEffect(handler, TextPressSound, 20)}>
       {title}
     </StyledTextButton>
   );
@@ -50,10 +47,7 @@ function WarnButton(props) {
   const { title, handler } = props;
 
   return (
-    <StyledWarnButton
-      type="button"
-      onClick={addMediaEffect(handler, TextPressSound, 20)}
-    >
+    <StyledWarnButton type="button" onClick={addMediaEffect(handler, TextPressSound, 20)}>
       {title}
     </StyledWarnButton>
   );
@@ -71,10 +65,7 @@ function DangeButton(props) {
   const { title, handler } = props;
 
   return (
-    <StyledDangeButton
-      type="button"
-      onClick={addMediaEffect(handler, TextPressSound, 20)}
-    >
+    <StyledDangeButton type="button" onClick={addMediaEffect(handler, TextPressSound, 20)}>
       {title}
     </StyledDangeButton>
   );
@@ -105,9 +96,7 @@ const StyledIconButton = styled.button`
 `;
 
 function IconButton(props) {
-  const {
-    icon, width, desription, handler,
-  } = props;
+  const { icon, width, desription, handler } = props;
 
   return (
     <StyledIconButton type="button" onClick={addMediaEffect(handler, IconPressSound, 20)}>
@@ -123,6 +112,4 @@ const StyledButtonBar = styled.div`
   margin: 10px 0;
 `;
 
-export {
-  WarnButton, DangeButton, TextButton, IconButton, StyledButtonBar,
-};
+export { WarnButton, DangeButton, TextButton, IconButton, StyledButtonBar };
