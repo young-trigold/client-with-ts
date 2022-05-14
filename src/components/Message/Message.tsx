@@ -31,6 +31,7 @@ const getColor = (props) => {
   if (props.tag === 'warn') {
     return props.theme.warnColor;
   }
+
   if (props.tag === 'error') {
     return props.theme.dangeColor;
   }

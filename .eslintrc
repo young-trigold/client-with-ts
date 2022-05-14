@@ -20,6 +20,7 @@
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "no-underscore-dangle": "off",
-    "object-curly-newline": "off"
+    "object-curly-newline": "off",
+    "no-unused-vars": "off"
   }
 }
