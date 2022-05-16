@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import React from 'react';
 
 const StyledModal = styled.div`
   display: flex;
@@ -32,7 +33,12 @@ const ModalContainer = styled.div`
   overflow: hidden;
 `;
 
-function Modal(props) {
+export interface ModalProps {
+  isVisible: boolean;
+  children: React.ReactNode;
+}
+
+function Modal(props: ModalProps) {
   const { isVisible, children } = props;
 
   return (

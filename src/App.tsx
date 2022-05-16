@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import GlobalStyle from './app/GlobalStyle';
 import RouterPart from './app/RouterPart';
 
-import theme from './theme/theme.json';
+import theme from './theme/theme';
 
 function App() {
   const themeMode = useSelector((state) => state.themeMode.value);

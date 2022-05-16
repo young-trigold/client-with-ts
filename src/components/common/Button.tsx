@@ -1,18 +1,32 @@
 import styled from 'styled-components';
 
 import addMediaEffect from '../../utils/addMediaEffect';
-import TextPressSound from '../../static/audio/text-press.mp3';
+import TextPressSoundSrc from '../../static/audio/text-press.mp3';
 import IconPressSound from '../../static/audio/icon-press.mp3';
 
-const StyledTextButton = styled.button`
+export type ButtonType = 'elevated' | 'outlined' | 'text' | 'link';
+export type ButtonShape = 'rect' | 'rounded' | 'circular';
+export type ButtonHTMLType = 'button' | 'submit' | 'reset';
+
+export interface ButtonProps {
+  buttonType?: ButtonType;
+  shape?: ButtonShape;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
+  dangerouse?: boolean;
+  children?: React.ReactNode;
+}
+
+const StyledButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.foregroundColor};
   border: none;
-  font-size: 1em;
+  font-size: 1rem;
   color: ${(props) => props.theme.secondColor};
   margin-right: 0.5em;
   border-radius: 6px;
-  transition: all 0.3s;
+  transition: 0.2s;
   user-select: none;
+  touch-action: manipulation;
 
   @media (hover: hover) {
     &:hover {
@@ -25,49 +39,40 @@ const StyledTextButton = styled.button`
   }
 `;
 
-function TextButton(props) {
-  const { title, handler } = props;
-
-  return (
-    <StyledTextButton type="button" onClick={addMediaEffect(handler, TextPressSound, 20)}>
-      {title}
-    </StyledTextButton>
-  );
-}
-
-const StyledWarnButton = styled(StyledTextButton)`
-  @media (hover: hover) {
-    &:hover {
-      color: ${(props) => props.theme.warnColor};
-    }
+const getBorderRadius = (shape: ButtonShape) => {
+  switch (shape) {
+    case 'rounded':
+      return '1em';
+    case 'circular':
+      return '50%';
+    default:
+      return '4px';
   }
-`;
+};
 
-function WarnButton(props) {
-  const { title, handler } = props;
+function Button(props: ButtonProps) {
+  const {
+    onClick,
+    buttonType = 'elevated',
+    shape = 'rect',
+    children = '按钮',
+    disabled = false,
+    dangerouse = false,
+  } = props;
 
-  return (
-    <StyledWarnButton type="button" onClick={addMediaEffect(handler, TextPressSound, 20)}>
-      {title}
-    </StyledWarnButton>
-  );
-}
-
-const StyledDangeButton = styled(StyledTextButton)`
-  @media (hover: hover) {
-    &:hover {
-      color: ${(props) => props.theme.dangeColor};
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      event.preventDefault();
+      return;
     }
-  }
-`;
 
-function DangeButton(props) {
-  const { title, handler } = props;
+    addMediaEffect(onClick)?.(event);
+  };
 
   return (
-    <StyledDangeButton type="button" onClick={addMediaEffect(handler, TextPressSound, 20)}>
-      {title}
-    </StyledDangeButton>
+    <StyledButton onClick={handleClick} buttonType={buttonType} shape={shape} type="button" dangerouse={dangerouse}>
+      {children}
+    </StyledButton>
   );
 }
 
@@ -81,7 +86,7 @@ const StyledIconButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
+  transition: 0.2s;
   user-select: none;
   box-shadow: 3px 3px 3px ${(props) => props.theme.shadowColor};
 
@@ -95,7 +100,14 @@ const StyledIconButton = styled.button`
   }
 `;
 
-function IconButton(props) {
+export interface IconButtonProps {
+  icon: string;
+  width: number;
+  desription: string;
+  handler: React.MouseEventHandler<HTMLElement>;
+}
+
+function IconButton(props:IconButtonProps) {
   const { icon, width, desription, handler } = props;
 
   return (
@@ -112,4 +124,4 @@ const StyledButtonBar = styled.div`
   margin: 10px 0;
 `;
 
-export { WarnButton, DangeButton, TextButton, IconButton, StyledButtonBar };
+export { Button, IconButton, StyledButtonBar };
