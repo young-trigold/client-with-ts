@@ -6,14 +6,12 @@ import IconPressSound from '../../static/audio/icon-press.mp3';
 
 export type ButtonType = 'elevated' | 'outlined' | 'text' | 'link';
 export type ButtonShape = 'rect' | 'rounded' | 'circular';
-export type ButtonHTMLType = 'button' | 'submit' | 'reset';
 
 export interface ButtonProps {
   buttonType?: ButtonType;
   shape?: ButtonShape;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
-  dangerouse?: boolean;
   children?: React.ReactNode;
 }
 
@@ -57,7 +55,6 @@ function Button(props: ButtonProps) {
     shape = 'rect',
     children = '按钮',
     disabled = false,
-    dangerouse = false,
   } = props;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -70,7 +67,7 @@ function Button(props: ButtonProps) {
   };
 
   return (
-    <StyledButton onClick={handleClick} buttonType={buttonType} shape={shape} type="button" dangerouse={dangerouse}>
+    <StyledButton onClick={handleClick} buttonType={buttonType} shape={shape} type="button">
       {children}
     </StyledButton>
   );
