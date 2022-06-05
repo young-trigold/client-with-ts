@@ -6,7 +6,7 @@ import LoginButton from './LoginButton';
 import CancelIcon from '../../static/icon/cancel.png';
 import MenuIcon from '../../static/icon/menu.png';
 import IconPressSound from '../../static/audio/icon-press.mp3';
-import { TextButton } from '../common/Button';
+import { Button } from '../common/Button';
 import addMediaEffect from '../../utils/addMediaEffect';
 
 const MenuButton = styled.button`
@@ -73,8 +73,8 @@ function LinkContainer() {
   return (
     <>
       <LoginButton />
-      <TextButton title="我的文章" handler={handleArticleClick} />
-      <TextButton title="我的笔记" handler={handleNoteClick} />
+      <Button onClick={handleArticleClick}>我的文章</Button>
+      <Button onClick={handleNoteClick}>我的笔记</Button>
     </>
   );
 }

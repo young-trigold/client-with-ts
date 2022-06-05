@@ -4,7 +4,7 @@ import axios from 'axios';
 import { message } from '../../Message/Message';
 import { FileInput } from '../../common/Input';
 import Modal from '../../common/Modal';
-import { DangeButton, StyledButtonBar, TextButton } from '../../common/Button';
+import { StyledButtonBar, Button } from '../../common/Button';
 
 function AddChapterModal(props) {
   const { isVisible, currentOption, setIsVisible } = props;
@@ -49,8 +49,10 @@ function AddChapterModal(props) {
     <Modal isVisible={isVisible}>
       <FileInput accept=".md" onChange={handleFileInputChange} title="上传章节" file={file} />
       <StyledButtonBar>
-        <TextButton handler={handleSubmit} title="提交" />
-        <DangeButton handler={handleCancel} title="取消" />
+        <Button onClick={handleSubmit}>提交</Button>
+        <Button onClick={handleCancel} state="dange">
+          取消
+        </Button>
       </StyledButtonBar>
     </Modal>
   );

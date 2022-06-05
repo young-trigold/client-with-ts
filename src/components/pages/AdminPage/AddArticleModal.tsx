@@ -2,7 +2,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../../Message/Message';
-import { DangeButton, StyledButtonBar, TextButton } from '../../common/Button';
+import { StyledButtonBar, Button } from '../../common/Button';
 import Modal from '../../common/Modal';
 import { FileInput } from '../../common/Input';
 
@@ -52,8 +52,10 @@ function AddArticleModal(props) {
         <FileInput accept=".md" onChange={handleFileInputChange} title="上传文章" file={file} />
       </div>
       <StyledButtonBar>
-        <TextButton handler={handleSubmit} title="提交" />
-        <DangeButton handler={handleCancel} title="取消" />
+        <Button onClick={handleSubmit}>提交</Button>
+        <Button onClick={handleCancel} state="dange">
+          取消
+        </Button>
       </StyledButtonBar>
     </Modal>
   );

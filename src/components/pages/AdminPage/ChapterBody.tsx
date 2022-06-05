@@ -35,7 +35,7 @@ function AddButton(props) {
     <>
       <IconButton
         icon={isVisible ? CancelIcon : AddIcon}
-        width="24"
+        width={24}
         description="添加"
         handler={handleClick}
       />

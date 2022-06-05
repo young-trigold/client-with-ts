@@ -1,14 +1,15 @@
 import styled from 'styled-components';
 
 import addMediaEffect from '../../utils/addMediaEffect';
-import TextPressSoundSrc from '../../static/audio/text-press.mp3';
 import IconPressSound from '../../static/audio/icon-press.mp3';
 
 export type ButtonType = 'elevated' | 'outlined' | 'text' | 'link';
 export type ButtonShape = 'rect' | 'rounded' | 'circular';
+export type ButtonState = 'dange' | 'warn' | 'success';
 
 export interface ButtonProps {
   buttonType?: ButtonType;
+  state?: ButtonState;
   shape?: ButtonShape;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
@@ -37,21 +38,11 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-const getBorderRadius = (shape: ButtonShape) => {
-  switch (shape) {
-    case 'rounded':
-      return '1em';
-    case 'circular':
-      return '50%';
-    default:
-      return '4px';
-  }
-};
-
 function Button(props: ButtonProps) {
   const {
     onClick,
     buttonType = 'elevated',
+    state,
     shape = 'rect',
     children = '按钮',
     disabled = false,
@@ -63,15 +54,17 @@ function Button(props: ButtonProps) {
       return;
     }
 
-    addMediaEffect(onClick)?.(event);
+    if (onClick) addMediaEffect(onClick)(event);
   };
 
   return (
-    <StyledButton onClick={handleClick} buttonType={buttonType} shape={shape} type="button">
+    <StyledButton onClick={handleClick} buttonType={buttonType} state={state} shape={shape} type="button">
       {children}
     </StyledButton>
   );
 }
+
+const getHoverStateColor = (state:ButtonState) => {};
 
 const StyledIconButton = styled.button`
   background-color: ${(props) => props.theme.foregroundColor};
@@ -100,16 +93,16 @@ const StyledIconButton = styled.button`
 export interface IconButtonProps {
   icon: string;
   width: number;
-  desription: string;
+  description: string;
   handler: React.MouseEventHandler<HTMLElement>;
 }
 
-function IconButton(props:IconButtonProps) {
-  const { icon, width, desription, handler } = props;
+function IconButton(props: IconButtonProps) {
+  const { icon, width, description, handler } = props;
 
   return (
     <StyledIconButton type="button" onClick={addMediaEffect(handler, IconPressSound, 20)}>
-      <img alt={desription} src={icon} width={width} />
+      <img alt={description} src={icon} width={width} />
     </StyledIconButton>
   );
 }

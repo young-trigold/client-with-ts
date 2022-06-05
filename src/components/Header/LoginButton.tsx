@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { useState } from 'react';
 
-import { TextButton } from '../common/Button';
+import { Button } from '../common/Button';
 import LoginModal from './LoginModal';
 
 function LoginButton() {
@@ -13,7 +13,7 @@ function LoginButton() {
 
   return (
     <>
-      <TextButton handler={handleClick} title="登录" />
+      <Button onClick={handleClick}>登录</Button>
       <LoginModal isVisible={isVisible} setIsVisible={setIsVisible} />
     </>
   );

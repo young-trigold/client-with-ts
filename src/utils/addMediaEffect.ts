@@ -2,14 +2,12 @@ import React from 'react';
 import textPressSoundSrc from '../static/audio/text-press.mp3';
 
 function addMediaEffect(
-  func: React.MouseEventHandler<HTMLElement> | undefined,
+  func: React.MouseEventHandler<HTMLElement>,
   sound = textPressSoundSrc,
   vibrateDuration = 200,
 ) {
-  if (func === undefined) return undefined;
-
   return function aftered(event: React.MouseEvent<HTMLElement>) {
-    func!(event);
+    func(event);
     navigator?.vibrate(vibrateDuration);
     (new Audio(sound).cloneNode(true) as HTMLAudioElement).play();
   };

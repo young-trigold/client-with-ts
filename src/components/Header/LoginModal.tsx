@@ -6,7 +6,7 @@ import { message } from '../Message/Message';
 import { validateName, validatePwd } from './validate';
 import { TextInput } from '../common/Input';
 import Modal from '../common/Modal';
-import { TextButton } from '../common/Button';
+import { Button } from '../common/Button';
 
 import CancelIcon from '../../static/icon/cancel.png';
 import EyeOpen from '../../static/icon/eye-open.png';
@@ -147,8 +147,8 @@ function LoginModal(props) {
         </PwdInputContainer>
       </div>
       <StyledButtonBar>
-        <TextButton handler={handleLogin} title="登录" />
-        <TextButton handler={handleRegister} title="注册?" />
+        <Button onClick={handleLogin}>登录</Button>
+        <Button onClick={handleRegister}>注册</Button>
       </StyledButtonBar>
     </Modal>
   );

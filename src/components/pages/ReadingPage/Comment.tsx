@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import { TextButton } from '../../common/Button';
+import { Button } from '../../common/Button';
 import { message } from '../../Message/Message';
 import px from '../../../utils/realPixel';
 
@@ -123,7 +123,7 @@ function Comment(props) {
     <CommentContainer id="comment">
       <StyledTitle>评论</StyledTitle>
       <StyledTextArea onChange={handleCommentChange} />
-      <TextButton title="发表评论" handler={postComment} />
+      <Button onClick={postComment}>发表评论</Button>
     </CommentContainer>
   );
 }

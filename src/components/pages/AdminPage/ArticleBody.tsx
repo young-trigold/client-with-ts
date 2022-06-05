@@ -18,7 +18,7 @@ function AddButton(props) {
 
   return (
     <>
-      <IconButton width="24" description="添加" icon={AddIcon} handler={handleClick} />
+      <IconButton width={24} description="添加" icon={AddIcon} handler={handleClick} />
       <AddArticleModal
         isVisible={isVisible}
         currentOption={currentOption}

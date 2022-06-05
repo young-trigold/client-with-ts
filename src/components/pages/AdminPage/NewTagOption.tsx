@@ -6,7 +6,7 @@ import { message } from '../../Message/Message';
 import Modal from '../../common/Modal';
 import AddIcon from '../../../static/icon/plus.png';
 import { TextInput, FileInput } from '../../common/Input';
-import { TextButton, DangeButton, StyledButtonBar } from '../../common/Button';
+import { Button, StyledButtonBar } from '../../common/Button';
 
 const AddTagButton = styled.button`
   display: flex;
@@ -101,8 +101,10 @@ function NewTagOption() {
         </div>
 
         <StyledButtonBar>
-          <TextButton handler={handleSubmit} title="提交" />
-          <DangeButton handler={handleCancel} title="取消" />
+          <Button onClick={handleSubmit}>提交</Button>
+          <Button onClick={handleCancel} state="dange">
+            取消
+          </Button>
         </StyledButtonBar>
       </Modal>
     </>
