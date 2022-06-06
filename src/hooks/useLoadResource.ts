@@ -14,7 +14,10 @@ const useLoadResource = (url = '') => {
       const res = await axios.get(url);
       setResource(res.data);
     } catch (error) {
-      message.error(error?.response?.data?.message || error.message);
+      if (axios.isAxiosError(error))
+        return message.error((error.response?.data as { message: string })?.message);
+      if (error instanceof Error) return message.error(error.message);
+      return message.error(JSON.stringify(error));
     } finally {
       setLoading(false);
     }
