@@ -20,7 +20,7 @@ export interface ButtonProps {
 const StyledButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.foregroundColor};
   border: none;
-  font-size: 18px;
+  font-size: unset;
   color: ${(props) => props.theme.secondColor};
   margin-right: 0.5em;
   border-radius: 6px;
