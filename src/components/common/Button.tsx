@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import debounce from '../../utils/debounce';
 import addMediaEffect from '../../utils/addMediaEffect';
 import IconPressSound from '../../static/audio/icon-press.mp3';
 
@@ -19,7 +20,7 @@ export interface ButtonProps {
 const StyledButton = styled.button<ButtonProps>`
   background-color: ${(props) => props.theme.foregroundColor};
   border: none;
-  font-size: 1rem;
+  font-size: 18px;
   color: ${(props) => props.theme.secondColor};
   margin-right: 0.5em;
   border-radius: 6px;
@@ -38,7 +39,7 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-function Button(props: ButtonProps) {
+const Button = (props: ButtonProps) => {
   const {
     onClick,
     buttonType = 'elevated',
@@ -48,23 +49,27 @@ function Button(props: ButtonProps) {
     disabled = false,
   } = props;
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = debounce((event: React.MouseEvent<HTMLButtonElement>) => {
     if (disabled) {
       event.preventDefault();
       return;
     }
 
     if (onClick) addMediaEffect(onClick)(event);
-  };
+  }, 600);
 
   return (
-    <StyledButton onClick={handleClick} buttonType={buttonType} state={state} shape={shape} type="button">
+    <StyledButton
+      onClick={handleClick}
+      buttonType={buttonType}
+      state={state}
+      shape={shape}
+      type="button"
+    >
       {children}
     </StyledButton>
   );
-}
-
-const getHoverStateColor = (state:ButtonState) => {};
+};
 
 const StyledIconButton = styled.button`
   background-color: ${(props) => props.theme.foregroundColor};
@@ -97,7 +102,7 @@ export interface IconButtonProps {
   handler: React.MouseEventHandler<HTMLElement>;
 }
 
-function IconButton(props: IconButtonProps) {
+const IconButton = (props: IconButtonProps) => {
   const { icon, width, description, handler } = props;
 
   return (
@@ -105,7 +110,7 @@ function IconButton(props: IconButtonProps) {
       <img alt={description} src={icon} width={width} />
     </StyledIconButton>
   );
-}
+};
 
 const StyledButtonBar = styled.div`
   display: flex;

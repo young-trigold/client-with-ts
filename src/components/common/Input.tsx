@@ -56,7 +56,7 @@ const StyledFileInput = styled.label`
   }
 `;
 
-function TextInput(props) {
+const TextInput = (props) => {
   const {
     type, size, maxLength, fontSize, placeholder, onChange, onFocus, onInput, value,
   } = props;

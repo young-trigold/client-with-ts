@@ -22,7 +22,7 @@ const StyledHeader = styled.header`
   transition: all 0.3s ease-in-out;
 `;
 
-function Header(props) {
+const Header = (props) => {
   const { atHomePage } = props;
   const [isVisible, setIsVisible] = useState(true);
 

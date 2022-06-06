@@ -49,7 +49,7 @@ const PwdInputContainer = styled.div`
   align-items: center;
 `;
 
-function LoginModal(props) {
+const LoginModal = (props) => {
   const { isVisible, setIsVisible } = props;
   const [isPwdVisible, setIsPwdVisible] = useState(false);
 
@@ -88,7 +88,7 @@ function LoginModal(props) {
       }
     };
 
-    if (validateName(name, '昵称') && validatePwd(pwd, '密码')) {
+    if (validateName(name) && validatePwd(pwd)) {
       postUser();
     }
   };
@@ -116,9 +116,7 @@ function LoginModal(props) {
       }
     };
 
-    if (validateName(name) && validatePwd(pwd)) {
-      login();
-    }
+    if (validateName(name) && validatePwd(pwd)) login();
   };
 
   return (

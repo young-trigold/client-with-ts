@@ -38,7 +38,7 @@ export interface ModalProps {
   children: React.ReactNode;
 }
 
-function Modal(props: ModalProps) {
+const Modal = (props: ModalProps) => {
   const { isVisible, children } = props;
 
   return (

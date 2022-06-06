@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { addMessage } from './messagesSlice';
+import { addMessage, clearMessage } from './messagesSlice';
 import store from '../../app/store';
 import CancelIcon from '../../static/icon/cancel.png';
 
@@ -31,7 +31,6 @@ const getColor = (props) => {
   if (props.tag === 'warn') {
     return props.theme.warnColor;
   }
-
   if (props.tag === 'error') {
     return props.theme.dangeColor;
   }
@@ -62,7 +61,9 @@ function Message(props) {
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(false), 2000);
+    const timer = setTimeout(() => {
+      store.dispatch(clearMessage());
+    }, 1500);
 
     return () => clearTimeout(timer);
   }, []);
@@ -87,7 +88,7 @@ function MessageList() {
   return (
     <StyledMessageList>
       {messages.map((message) => (
-        <Message key={message} title={message.title} tag={message.tag} />
+        <Message key={Math.random().toString(36)} title={message.title} tag={message.tag} />
       ))}
     </StyledMessageList>
   );

@@ -12,7 +12,6 @@ function Heading(properties, setCurrentHeading) {
 
         if (isCurrent) {
           setCurrentHeading(ref.current.id);
-          window.location.hash = ref.current.id;
         }
       }
     });

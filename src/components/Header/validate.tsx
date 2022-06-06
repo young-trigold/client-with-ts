@@ -1,6 +1,6 @@
 import { message } from '../Message/Message';
 
-const validateName = (name) => {
+const validateName = (name:string) => {
   const userName = '用户名';
   let result = false;
 
@@ -17,7 +17,7 @@ const validateName = (name) => {
   return result;
 };
 
-const validatePwd = (pwd) => {
+const validatePwd = (pwd:string) => {
   const pwdText = '密码';
   let result = false;
 
