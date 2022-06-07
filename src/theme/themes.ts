@@ -1,26 +1,14 @@
-export interface Theme {
-  primaryColor: string;
-  secondColor: string;
-  backgroundColor: string;
-  foregroundColor: string;
-  surfaceColor: string;
-  textColor: string;
-  successColor: string;
-  warnColor: string;
-  dangeColor: string;
-  shadowColor: string;
-  codeMask: string;
-  lineColor: string;
-}
+import { DefaultTheme } from 'styled-components';
 
 export interface Themes {
-  [key: string]: Theme;
+  [key: string]: DefaultTheme;
 }
 
 const themes: Themes = {
   light: {
-    primaryColor: '#40a9ff',
-    secondColor: '#096dd9',
+    primaryColor: '#1890ff',
+    hoverColor: '#40a9ff',
+    activeColor: '#096dd9',
     backgroundColor: '#f3f3f3',
     foregroundColor: '#fcfbfb',
     surfaceColor: '#f1f0f0',
@@ -31,10 +19,14 @@ const themes: Themes = {
     shadowColor: 'rgb(0 0 0 / 0.3)',
     codeMask: '#bae7ff',
     lineColor: '#dddddd',
+    rectRadius: '4px',
+    roundedRadius: '1em',
+    transitionDuration: '0.3s',
   },
   dark: {
-    primaryColor: '#002766',
-    secondColor: '#096dd9',
+    primaryColor: '#177ddc',
+    hoverColor: '#095cb5',
+    activeColor: '#3c9be8',
     backgroundColor: '#121212',
     foregroundColor: '#212121',
     surfaceColor: '#383838',
@@ -45,6 +37,9 @@ const themes: Themes = {
     shadowColor: 'rgb(0 0 0/0.7)',
     codeMask: '#1890ff',
     lineColor: '#444444',
+    rectRadius: '4px',
+    roundedRadius: '1em',
+    transitionDuration: '0.3s',
   },
 };
 

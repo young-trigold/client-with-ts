@@ -25,7 +25,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   a:hover {
-    color: ${(props) => props.theme.secondColor};
+    color: ${(props) => props.theme.hoverColor};
   }
 
   // =============================================滚动条===========================================

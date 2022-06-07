@@ -40,7 +40,8 @@ const Menu = styled.nav`
 const NavContainer = styled.nav`
   display: flex;
   align-items: center;
-  font-size: 1.3em;
+  min-width: 250px;
+  justify-content: space-between;
 `;
 
 const StyledNavigation = styled.div`
@@ -73,8 +74,12 @@ function LinkContainer() {
   return (
     <>
       <LoginButton />
-      <Button onClick={handleArticleClick}>我的文章</Button>
-      <Button onClick={handleNoteClick}>我的笔记</Button>
+      <Button buttonType="link" onClick={handleArticleClick}>
+        我的文章
+      </Button>
+      <Button buttonType="link" onClick={handleNoteClick}>
+        我的笔记
+      </Button>
     </>
   );
 }

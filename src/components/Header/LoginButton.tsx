@@ -13,7 +13,9 @@ function LoginButton() {
 
   return (
     <>
-      <Button onClick={handleClick}>登录</Button>
+      <Button buttonType="outlined" onClick={handleClick}>
+        登录
+      </Button>
       <LoginModal isVisible={isVisible} setIsVisible={setIsVisible} />
     </>
   );

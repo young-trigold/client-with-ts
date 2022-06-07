@@ -84,7 +84,9 @@ function ChapterBody(props) {
             <StyledRow key={chapter._id}>
               <td>{chapter.title}</td>
               <td>
-                <Button onClick={() => deleteItem(chapter._id)}>删除</Button>
+                <Button onClick={() => deleteItem(chapter._id)} state="dange">
+                  删除
+                </Button>
                 <Button>修改</Button>
               </td>
             </StyledRow>

@@ -4,58 +4,140 @@ import debounce from '../../utils/debounce';
 import addMediaEffect from '../../utils/addMediaEffect';
 import IconPressSound from '../../static/audio/icon-press.mp3';
 
+import { State, Size } from '../../config/config';
+
 export type ButtonType = 'elevated' | 'outlined' | 'text' | 'link';
 export type ButtonShape = 'rect' | 'rounded' | 'circular';
-export type ButtonState = 'dange' | 'warn' | 'success';
 
 export interface ButtonProps {
   buttonType?: ButtonType;
-  state?: ButtonState;
+  state?: State;
   shape?: ButtonShape;
+  size?: Size;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   children?: React.ReactNode;
 }
 
 const StyledButton = styled.button<ButtonProps>`
-  background-color: ${(props) => props.theme.foregroundColor};
-  border: none;
-  font-size: unset;
-  color: ${(props) => props.theme.secondColor};
-  margin-right: 0.5em;
-  border-radius: 6px;
-  transition: 0.2s;
+  background-color: ${(props) =>
+    (() => {
+      if (props.buttonType === 'elevated') return props.theme.primaryColor;
+      return 'unset';
+    })()};
+  border: ${(props) =>
+    (() => {
+      if (props.buttonType === 'outlined') return `1px solid ${props.theme.shadowColor}`;
+      return 'none';
+    })()};
+  font-size: ${(props) =>
+    (() => {
+      switch (props.size) {
+        case 'large':
+          return '18px';
+        case 'middle':
+          return '16px';
+        case 'small':
+          return '14px';
+        default:
+          return '16px';
+      }
+    })()};
+  color: ${(props) =>
+    (() => {
+      if (props.buttonType === 'elevated') return props.theme.backgroundColor;
+      if (props.buttonType === 'link') return props.theme.primaryColor;
+
+      switch (props.state) {
+        case 'dange':
+          return props.theme.dangeColor;
+        case 'success':
+          return props.theme.successColor;
+        case 'warn':
+          return props.theme.warnColor;
+        default:
+          return props.theme.textColor;
+      }
+    })()};
+  padding: ${(props) =>
+    (() => {
+      switch (props.size) {
+        case 'large':
+          return '6.4px 15px';
+        case 'small':
+          return '0 7px';
+        default:
+          return '4px 15px';
+      }
+    })()};
+  border-radius: ${(props) =>
+    (() => {
+      switch (props.shape) {
+        case 'rect':
+          return props.theme.rectRadius;
+        case 'rounded':
+          return props.theme.roundedRadius;
+        case 'circular':
+          return '50%';
+        default:
+          return props.theme.rectRadius;
+      }
+    })()};
+  transition: ${(props) => props.theme.transitionDuration};
   user-select: none;
   touch-action: manipulation;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
 
-  @media (hover: hover) {
-    &:hover {
-      background-color: ${(props) =>
-        (() => {
-          switch (props.state) {
-            case 'dange':
-              return props.theme;
-            case 'success':
-              return 'green';
-            case 'warn':
-              return 'yellow';
-            default:
-              return props.theme.surfaceColor;
-          }
-        })()};
-    }
+  &:hover,
+  &:focus {
+    color: ${(props) =>
+      (() => {
+        switch (props.buttonType) {
+          case 'elevated':
+            return props.theme.backgroundColor;
+          case 'outlined':
+            return props.theme.hoverColor;
+          case 'link':
+            return props.theme.hoverColor;
+          default:
+            return props.theme.textColor;
+        }
+      })()};
+    border-color: ${(props) =>
+      props.buttonType === 'outlined' ? props.theme.hoverColor : props.theme.textColor};
+    background-color: ${(props) =>
+      props.buttonType !== 'outlined' && props.buttonType !== 'link'
+        ? props.theme.hoverColor
+        : 'unset'};
   }
 
   &:active {
-    background-color: ${(props) => props.theme.primaryColor};
+    color: ${(props) =>
+      (() => {
+        switch (props.buttonType) {
+          case 'elevated':
+            return props.theme.backgroundColor;
+          case 'outlined':
+            return props.theme.activeColor;
+          case 'link':
+            return props.theme.activeColor;
+          default:
+            return props.theme.textColor;
+        }
+      })()};
+    border-color: ${(props) =>
+      props.buttonType === 'outlined' ? props.theme.activeColor : props.theme.textColor};
+    background-color: ${(props) =>
+      props.buttonType === 'elevated' ? props.theme.activeColor : 'unset'};
   }
 `;
 
 const Button = (props: ButtonProps) => {
   const {
     onClick,
-    buttonType = 'elevated',
+    buttonType = 'outlined',
     state,
+    size = 'middle',
     shape = 'rect',
     children = '按钮',
     disabled = false,
@@ -76,6 +158,7 @@ const Button = (props: ButtonProps) => {
       buttonType={buttonType}
       state={state}
       shape={shape}
+      size={size}
       type="button"
     >
       {children}
@@ -125,10 +208,9 @@ const IconButton = (props: IconButtonProps) => {
 };
 
 const StyledButtonBar = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin: 10px 0;
+  & > * {
+    margin: 1em;
+  }
 `;
 
 export { Button, IconButton, StyledButtonBar };

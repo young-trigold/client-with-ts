@@ -7,8 +7,8 @@ const StyledTextInput = styled.input`
   background-color: ${(props) => props.theme.backgroundColor};
   border-radius: 17px;
   padding: 4px 8px;
+  color: ${(props) => props.theme.textColor};
   margin: 3px;
-  color: ${(props) => props.theme.secondColor};
   transition: all 0.3s;
 
   &:focus {
@@ -42,7 +42,7 @@ const StyledFileInput = styled.label`
   user-select: none;
 
   &:hover {
-    color: ${(props) => props.theme.secondColor};
+    color: ${(props) => props.theme.hoverColor};
   }
 
   &:active {
@@ -57,9 +57,7 @@ const StyledFileInput = styled.label`
 `;
 
 const TextInput = (props) => {
-  const {
-    type, size, maxLength, fontSize, placeholder, onChange, onFocus, onInput, value,
-  } = props;
+  const { type, size, maxLength, fontSize, placeholder, onChange, onFocus, onInput, value } = props;
 
   return (
     <StyledTextInput
@@ -74,12 +72,10 @@ const TextInput = (props) => {
       value={value}
     />
   );
-}
+};
 
 function FileInput(props) {
-  const {
-    title, accept, file, onChange,
-  } = props;
+  const { title, accept, file, onChange } = props;
 
   return (
     <StyledFileInput>
