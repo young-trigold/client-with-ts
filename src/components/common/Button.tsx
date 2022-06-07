@@ -209,7 +209,7 @@ const IconButton = (props: IconButtonProps) => {
 
 const StyledButtonBar = styled.div`
   & > * {
-    margin: 1em;
+    margin: 0 1em;
   }
 `;
 

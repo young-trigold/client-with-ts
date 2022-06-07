@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import { StyledTable, StyledRow } from './StyledTable';
-import { IconButton, Button } from '../../common/Button';
+import { StyledButtonBar, IconButton, Button } from '../../common/Button';
 import AddChapterModal from './AddChapterModal';
 import { message } from '../../Message/Message';
 
@@ -84,10 +84,12 @@ function ChapterBody(props) {
             <StyledRow key={chapter._id}>
               <td>{chapter.title}</td>
               <td>
-                <Button onClick={() => deleteItem(chapter._id)} state="dange">
-                  删除
-                </Button>
-                <Button>修改</Button>
+                <StyledButtonBar>
+                  <Button onClick={() => deleteItem(chapter._id)} state="dange">
+                    删除
+                  </Button>
+                  <Button>修改</Button>
+                </StyledButtonBar>
               </td>
             </StyledRow>
           ))}

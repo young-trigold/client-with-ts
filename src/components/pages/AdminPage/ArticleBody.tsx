@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { message } from '../../Message/Message';
 import { StyledTable, StyledRow } from './StyledTable';
-import { IconButton, Button } from '../../common/Button';
+import { StyledButtonBar, IconButton, Button } from '../../common/Button';
 import AddArticleModal from './AddArticleModal';
 import AddIcon from '../../../static/icon/plus.png';
 
@@ -75,10 +75,12 @@ function ArticleBody(props) {
             <StyledRow key={article._id}>
               <td>{article.title}</td>
               <td>
-                <Button onClick={() => deleteItem(article._id)} state="dange">
-                  删除
-                </Button>
-                <Button>修改</Button>
+                <StyledButtonBar>
+                  <Button onClick={() => deleteItem(article._id)} state="dange">
+                    删除
+                  </Button>
+                  <Button>修改</Button>
+                </StyledButtonBar>
               </td>
             </StyledRow>
           ))}
