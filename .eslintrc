@@ -25,6 +25,7 @@
     "no-underscore-dangle": "off",
     "object-curly-newline": "off",
     "no-unused-vars": "off",
+    "react/no-unused-prop-types": "off",
     "no-undef": "off",
     "consistent-return": "off"
   }

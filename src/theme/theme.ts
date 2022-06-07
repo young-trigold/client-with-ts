@@ -1,4 +1,23 @@
-const theme = {
+export interface Theme {
+  primaryColor: string;
+  secondColor: string;
+  backgroundColor: string;
+  foregroundColor: string;
+  surfaceColor: string;
+  textColor: string;
+  successColor: string;
+  warnColor: string;
+  dangeColor: string;
+  shadowColor: string;
+  codeMask: string;
+  lineColor: string;
+}
+
+export interface Themes {
+  [key: string]: Theme;
+}
+
+const themes: Themes = {
   light: {
     primaryColor: '#40a9ff',
     secondColor: '#096dd9',
@@ -29,4 +48,4 @@ const theme = {
   },
 };
 
-export default theme;
+export default themes;

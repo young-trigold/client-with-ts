@@ -8,7 +8,9 @@ import NotFoundPage from '../components/NotFound/NotFoundPage';
 
 const NotePage = React.lazy(() => import('../components/pages/NotePage/NotePage'));
 const ReadingPage = React.lazy(() => import('../components/pages/ReadingPage/ReadingPage'));
-const ChapterListPage = React.lazy(() => import('../components/pages/ChapterListPage/ChapterListPage'));
+const ChapterListPage = React.lazy(
+  () => import('../components/pages/ChapterListPage/ChapterListPage'),
+);
 const ProtectPage = React.lazy(() => import('../components/pages/AdminPage/ProtectPage'));
 
 function RouterPart() {
@@ -21,44 +23,44 @@ function RouterPart() {
           <Route path="/" element={<HomePage />} />
           <Route
             path="notes"
-            element={(
+            element={
               <Suspense fallback={<LoadingPage />}>
                 <NotePage />
               </Suspense>
-            )}
+            }
           />
           <Route
             path="notes/:noteTitle"
-            element={(
+            element={
               <Suspense fallback={<LoadingPage />}>
                 <ChapterListPage />
               </Suspense>
-            )}
+            }
           />
           <Route
             path="reading/articles/:itemId"
-            element={(
+            element={
               <Suspense fallback={<LoadingPage />}>
                 <ReadingPage />
               </Suspense>
-            )}
+            }
           />
           <Route />
           <Route
             path="reading/chapters/:itemId"
-            element={(
+            element={
               <Suspense fallback={<LoadingPage />}>
                 <ReadingPage isChapter />
               </Suspense>
-            )}
+            }
           />
           <Route
             path="admin"
-            element={(
+            element={
               <Suspense fallback={<LoadingPage text="正在验证身份" />}>
                 <ProtectPage />
               </Suspense>
-            )}
+            }
           />
         </Routes>
       </Router>

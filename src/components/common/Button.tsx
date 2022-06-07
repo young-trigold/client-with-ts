@@ -30,7 +30,19 @@ const StyledButton = styled.button<ButtonProps>`
 
   @media (hover: hover) {
     &:hover {
-      background-color: ${(props) => props.theme.surfaceColor};
+      background-color: ${(props) =>
+        (() => {
+          switch (props.state) {
+            case 'dange':
+              return props.theme;
+            case 'success':
+              return 'green';
+            case 'warn':
+              return 'yellow';
+            default:
+              return props.theme.surfaceColor;
+          }
+        })()};
     }
   }
 

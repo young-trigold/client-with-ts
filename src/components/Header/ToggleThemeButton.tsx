@@ -6,6 +6,7 @@ import addMediaEffect from '../../utils/addMediaEffect';
 import SunIconSrc from '../../static/icon/sun.png';
 import MoonIconSrc from '../../static/icon/moon.png';
 import ToggleSoundSrc from '../../static/audio/toggle.mp3';
+import { RootState } from '../../app/store';
 
 const StyledToggleThemeButton = styled.button`
   width: 90px;
@@ -21,7 +22,12 @@ const StyledToggleThemeButton = styled.button`
   box-shadow: 3px 3px 3px ${(props) => props.theme.shadowColor};
 `;
 
-const Marker = styled.div`
+interface MakerProps {
+  themeMode: string;
+  children?: React.ReactNode;
+}
+
+const Marker = styled.div<MakerProps>`
   width: 33px;
   height: 33px;
   border-radius: 16px;
@@ -33,7 +39,7 @@ const Marker = styled.div`
 `;
 
 function ToggleThemeButton() {
-  const themeMode = useSelector((state) => state.themeMode.value);
+  const themeMode = useSelector((state: RootState) => state.themeMode.value);
   const dispath = useDispatch();
 
   const handleCilick = () => {
@@ -41,7 +47,10 @@ function ToggleThemeButton() {
   };
 
   return (
-    <StyledToggleThemeButton type="button" onClick={addMediaEffect(handleCilick, ToggleSoundSrc, 20)}>
+    <StyledToggleThemeButton
+      type="button"
+      onClick={addMediaEffect(handleCilick, ToggleSoundSrc, 20)}
+    >
       <img src={SunIconSrc} width="30" alt="太阳" />
       <img src={MoonIconSrc} width="30" alt="月亮" />
       <Marker themeMode={themeMode} />
