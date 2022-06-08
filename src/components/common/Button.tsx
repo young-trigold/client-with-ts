@@ -157,6 +157,7 @@ const Button = (props: ButtonProps) => {
       state={state}
       shape={shape}
       size={size}
+      disabled={disabled}
       type="button"
     >
       {children}
