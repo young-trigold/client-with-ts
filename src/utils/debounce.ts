@@ -1,21 +1,21 @@
-const debounce = (callback: React.MouseEventHandler, wait = 200) => {
+const debounce = <F extends (...args: any[]) => void>(callback: F, wait = 200) => {
   let timer: number;
   let isFirst = true;
-
-  return (event: React.MouseEvent<HTMLElement>) => {
+  const debounced = (...args: Parameters<F>) => {
     clearTimeout(timer);
 
     if (isFirst) {
       isFirst = false;
-      callback(event);
+      callback(...args);
 
       timer = setTimeout(() => {
         isFirst = true;
       }, wait);
     } else {
-      timer = setTimeout(callback, wait, event);
+      timer = setTimeout(callback, wait, ...args);
     }
   };
+  return debounced as (...args: Parameters<F>) => ReturnType<F>;
 };
 
 export default debounce;

@@ -1,41 +1,72 @@
 import styled from 'styled-components';
 import { Size } from '../../config/config';
 
+export type InputShape = 'rect' | 'rounded';
+
 interface InputProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  value: string;
-  placeholder: string;
+  onFocus?: React.FocusEventHandler<HTMLInputElement>;
+  value?: string;
+  shape?: InputShape;
+  placeholder?: string;
   type?: string;
   disabled?: boolean;
-  maxLength: number;
+  maxLength?: number;
   inputSize?: Size;
+  size?: number;
+  [key: string]: any;
 }
 
 const StyledInput = styled.input<InputProps>`
-  font-size: ${(props) => (props.inputSize ? props.inputSize : '1em')};
+  font-size: ${(props) =>
+    (() => {
+      switch (props.inputSize) {
+        case 'large':
+          return '18px';
+        case 'small':
+          return '14px';
+        default:
+          return '16px';
+      }
+    })()};
   caret-color: ${(props) => props.theme.warnColor};
   border: 1px solid ${(props) => props.theme.borderColor};
   background-color: transparent;
-  border-radius: 17px;
-  padding: 4px 11px;
+  border-radius: ${(props) =>
+    (() => {
+      switch (props.shape) {
+        case 'rounded':
+          return '1em';
+        default:
+          return '4px';
+      }
+    })()};
+  padding: ${(props) =>
+    (() => {
+      switch (props.inputSize) {
+        case 'large':
+          return '6.4px 15px';
+        case 'small':
+          return '0 7px';
+        default:
+          return '4px 15px';
+      }
+    })()};
   color: ${(props) => props.theme.textColor};
   transition: all 0.3s;
   touch-action: manipulation;
 
-  &:focus {
-    border: 1px solid ${(props) => props.theme.primaryColor};
-  }
-
   &:hover {
-    box-shadow: 0px 0px 6px ${(props) => props.theme.shadowColor};
+    border-color: ${(props) => props.theme.hoverColor};
   }
 
+  &:focus,
   &:active {
-    box-shadow: 0px 0px 6px ${(props) => props.theme.shadowColor};
+    border-color: ${(props) => props.theme.activeColor};
   }
 `;
 
-const StyledFileInput = styled.label`
+const StyledUpload = styled.label`
   background: ${(props) => props.theme.foregroundColor};
   border: none;
   border-radius: 10px;
@@ -68,29 +99,49 @@ const StyledFileInput = styled.label`
 `;
 
 const Input = (props: InputProps) => {
-  const { type, inputSize, maxLength, placeholder, onChange, value } = props;
+  const {
+    type = 'text',
+    shape = 'rounded',
+    inputSize = 'middle',
+    size,
+    maxLength = 2,
+    placeholder,
+    onChange,
+    onFocus,
+    value,
+  } = props;
 
   return (
     <StyledInput
+      shape={shape}
       inputSize={inputSize}
+      size={size}
       maxLength={maxLength}
       placeholder={placeholder}
       onChange={onChange}
+      onFocus={onFocus}
       type={type}
       value={value}
     />
   );
 };
 
-function FileInput(props) {
+export interface UploadProps {
+  title?: string;
+  accept?: string;
+  file?: File;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+function Upload(props: UploadProps) {
   const { title, accept, file, onChange } = props;
 
   return (
-    <StyledFileInput>
+    <StyledUpload>
       {file ? file.name : title}
       <input type="file" accept={accept} onChange={onChange} />
-    </StyledFileInput>
+    </StyledUpload>
   );
 }
 
-export { Input, FileInput };
+export { Input, Upload };

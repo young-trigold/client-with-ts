@@ -8,7 +8,7 @@ import ToggleThemeButton from './ToggleThemeButton';
 
 export interface HeaderProps {
   atHomePage?: boolean;
-  isVisible: boolean;
+  isVisible?: boolean;
   children?: React.ReactNode;
 }
 

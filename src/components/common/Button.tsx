@@ -17,6 +17,7 @@ export interface ButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   children?: React.ReactNode;
+  [key: string]: any;
 }
 
 const StyledButton = styled.button<ButtonProps>`
