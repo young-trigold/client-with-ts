@@ -15,26 +15,34 @@ const StyledTagContainer = styled.nav`
   box-shadow: 0px 0px 2px rgb(0 0 0 / 0.5);
 
   & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
+    color: ${(props) => props.theme.backgroundColor};
     box-shadow: 3px 3px 3px ${(props) => props.theme.shadowColor};
-    background: linear-gradient(180deg, ${(props) => props.theme.secondColor}, ${(props) => props.theme.primaryColor});
+    background: linear-gradient(
+      180deg,
+      ${(props) => props.theme.primaryColor},
+      ${(props) => props.theme.hoverColor}
+    );
   }
 `;
 
 const StyledTag = styled.button`
   user-select: none;
   font-size: 1.2em;
-  color: unset;
+  color: ${(props) => props.theme.textColor};
   border: none;
   border-radius: 1em;
   margin: 0.5em;
+  cursor: pointer;
   background-color: ${(props) => props.theme.foregroundColor};
 
-  &:hover {
-    background: linear-gradient(180deg, ${(props) => props.theme.secondColor}, ${(props) => props.theme.primaryColor});
-  }
-
+  &:hover,
   &:active {
-    background: linear-gradient(180deg, ${(props) => props.theme.secondColor}, ${(props) => props.theme.primaryColor});
+    color: ${(props) => props.theme.backgroundColor};
+    background: linear-gradient(
+      180deg,
+      ${(props) => props.theme.primaryColor},
+      ${(props) => props.theme.hoverColor}
+    );
   }
 `;
 

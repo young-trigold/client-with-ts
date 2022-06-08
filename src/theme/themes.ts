@@ -19,9 +19,8 @@ const themes: Themes = {
     shadowColor: 'rgb(0 0 0 / 0.3)',
     codeMask: '#bae7ff',
     lineColor: '#dddddd',
-    rectRadius: '4px',
-    roundedRadius: '1em',
     transitionDuration: '0.3s',
+    borderColor: '#434343',
   },
   dark: {
     primaryColor: '#177ddc',
@@ -37,9 +36,8 @@ const themes: Themes = {
     shadowColor: 'rgb(0 0 0/0.7)',
     codeMask: '#1890ff',
     lineColor: '#444444',
-    rectRadius: '4px',
-    roundedRadius: '1em',
     transitionDuration: '0.3s',
+    borderColor: '#434343',
   },
 };
 

@@ -42,8 +42,8 @@ const StyledArticleBar = styled.div`
   width: 0;
   background: linear-gradient(
     90deg,
-    ${(props) => props.theme.primaryColor},
-    ${(props) => props.theme.secondColor}
+    ${(props) => props.theme.hoverColor},
+    ${(props) => props.theme.primaryColor}
   );
   transition: all 0.3s ease;
 

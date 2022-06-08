@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { message } from '../Message/Message';
 import { validateName, validatePwd } from './validate';
-import { TextInput } from '../common/Input';
+import { Input } from '../common/Input';
 import Modal from '../common/Modal';
 import { Button } from '../common/Button';
 
@@ -126,16 +126,15 @@ const LoginModal = (props) => {
       </StyledCancelButton>
       <div>
         <div>用户名:</div>
-        <TextInput value={name} onChange={handleNameChange} maxLength="10" placeholder="昵称" />
+        <Input value={name} onChange={handleNameChange} maxLength="10" placeholder="昵称" />
       </div>
       <div>
         <div>密码:</div>
         <PwdInputContainer>
-          <TextInput
+          <Input
             value={pwd}
             type={isPwdVisible ? 'text' : 'password'}
-            maxLength="16"
-            minLength="8"
+            maxLength={16}
             placeholder="12345678"
             onChange={handlePwdChange}
           />
@@ -150,6 +149,6 @@ const LoginModal = (props) => {
       </StyledButtonBar>
     </Modal>
   );
-}
+};
 
 export default LoginModal;

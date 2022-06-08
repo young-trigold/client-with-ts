@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import debounce from '../../utils/debounce';
 import SearchImage from '../../static/icon/search.png';
-import { TextInput } from '../common/Input';
+import { Input } from '../common/Input';
 import { message } from '../Message/Message';
 
 const StyledSearchContainer = styled.div`
@@ -78,7 +78,7 @@ function SearchBox() {
   const [isVisible, setIsVisible] = useState(false);
   const [results, setResults] = useState([]);
 
-  const handleInput = (event) => {
+  const onChange = (event) => {
     const searchValue = event.target.value;
 
     if (searchValue) {
@@ -98,13 +98,12 @@ function SearchBox() {
   return (
     <StyledSearchContainer onBlur={() => setIsVisible(false)}>
       <StyledSearchBox autoComplete="off">
-        <TextInput
+        <Input
           onFocus={() => setIsVisible(true)}
-          fontSize="1.2em"
           placeholder="搜索文章"
-          maxLength="10"
-          size="10"
-          onInput={debounce(handleInput, 200)}
+          maxLength={10}
+          inputSize={10}
+          onChange={debounce(onChange, 200)}
         />
         <SearchImg src={SearchImage} width="24" alt="搜索" />
       </StyledSearchBox>

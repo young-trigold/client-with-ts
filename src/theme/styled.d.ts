@@ -8,6 +8,7 @@ declare module 'styled-components' {
     backgroundColor: string;
     foregroundColor: string;
     surfaceColor: string;
+    borderColor: string;
     textColor: string;
     successColor: string;
     warnColor: string;
@@ -15,8 +16,6 @@ declare module 'styled-components' {
     shadowColor: string;
     codeMask: string;
     lineColor: string;
-    rectRadius: string;
-    roundedRadius: string;
     transitionDuration: string;
   }
 }

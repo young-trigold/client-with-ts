@@ -1,15 +1,26 @@
 import styled from 'styled-components';
+import { Size } from '../../config/config';
 
-const StyledTextInput = styled.input`
-  font-size: ${(props) => (props.fontSize ? props.fontSize : '1em')};
+interface InputProps {
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  value: string;
+  placeholder: string;
+  type?: string;
+  disabled?: boolean;
+  maxLength: number;
+  inputSize?: Size;
+}
+
+const StyledInput = styled.input<InputProps>`
+  font-size: ${(props) => (props.inputSize ? props.inputSize : '1em')};
   caret-color: ${(props) => props.theme.warnColor};
-  border: 1px solid ${(props) => props.theme.foregroundColor};
-  background-color: ${(props) => props.theme.backgroundColor};
+  border: 1px solid ${(props) => props.theme.borderColor};
+  background-color: transparent;
   border-radius: 17px;
-  padding: 4px 8px;
+  padding: 4px 11px;
   color: ${(props) => props.theme.textColor};
-  margin: 3px;
   transition: all 0.3s;
+  touch-action: manipulation;
 
   &:focus {
     border: 1px solid ${(props) => props.theme.primaryColor};
@@ -56,19 +67,16 @@ const StyledFileInput = styled.label`
   }
 `;
 
-const TextInput = (props) => {
-  const { type, size, maxLength, fontSize, placeholder, onChange, onFocus, onInput, value } = props;
+const Input = (props: InputProps) => {
+  const { type, inputSize, maxLength, placeholder, onChange, value } = props;
 
   return (
-    <StyledTextInput
-      fontSize={fontSize}
-      size={size}
+    <StyledInput
+      inputSize={inputSize}
       maxLength={maxLength}
-      placeholder={placeholder || ''}
+      placeholder={placeholder}
       onChange={onChange}
-      onFocus={onFocus}
-      onInput={onInput}
-      type={type || 'text'}
+      type={type}
       value={value}
     />
   );
@@ -85,4 +93,4 @@ function FileInput(props) {
   );
 }
 
-export { TextInput, FileInput };
+export { Input, FileInput };

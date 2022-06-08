@@ -15,8 +15,8 @@ function ArticleShow(props) {
     <StyledArticleShow>
       {articleTags
         ? articleTags[currentIndex]?.articles?.map((article) => (
-          <Article key={article._id} article={article} />
-        ))
+            <Article key={article._id} article={article} />
+          ))
         : null}
     </StyledArticleShow>
   );

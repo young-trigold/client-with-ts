@@ -27,7 +27,7 @@ const StyledButton = styled.button<ButtonProps>`
     })()};
   border: ${(props) =>
     (() => {
-      if (props.buttonType === 'outlined') return `1px solid ${props.theme.shadowColor}`;
+      if (props.buttonType === 'outlined') return `1px solid ${props.theme.borderColor}`;
       return 'none';
     })()};
   font-size: ${(props) =>
@@ -35,8 +35,6 @@ const StyledButton = styled.button<ButtonProps>`
       switch (props.size) {
         case 'large':
           return '18px';
-        case 'middle':
-          return '16px';
         case 'small':
           return '14px';
         default:
@@ -73,17 +71,16 @@ const StyledButton = styled.button<ButtonProps>`
   border-radius: ${(props) =>
     (() => {
       switch (props.shape) {
-        case 'rect':
-          return props.theme.rectRadius;
         case 'rounded':
-          return props.theme.roundedRadius;
+          return '1em';
         case 'circular':
           return '50%';
         default:
-          return props.theme.rectRadius;
+          return '4px';
       }
     })()};
-  transition: ${(props) => props.theme.transitionDuration};
+  transition: ${(props) =>
+    `all ${props.theme.transitionDuration} cubic-bezier(0.645, 0.045, 0.355, 1)`};
   user-select: none;
   touch-action: manipulation;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
@@ -209,7 +206,7 @@ const IconButton = (props: IconButtonProps) => {
 
 const StyledButtonBar = styled.div`
   & > * {
-    margin: 0 1em;
+    margin: 0 0.5em;
   }
 `;
 
