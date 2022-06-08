@@ -16,7 +16,7 @@ const StyledTagContainer = styled.nav`
 
   & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
     color: ${(props) => props.theme.backgroundColor};
-    box-shadow: 3px 3px 3px ${(props) => props.theme.shadowColor};
+    box-shadow: 1px 1px 3px ${(props) => props.theme.shadowColor};
     background: linear-gradient(
       180deg,
       ${(props) => props.theme.primaryColor},
@@ -27,7 +27,7 @@ const StyledTagContainer = styled.nav`
 
 const StyledTag = styled.button`
   user-select: none;
-  font-size: 1.2em;
+  font-size: 16px;
   color: ${(props) => props.theme.textColor};
   border: none;
   border-radius: 1em;

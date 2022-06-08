@@ -20,8 +20,8 @@ const SearchImg = styled.img`
 
 const StyledOption = styled.button`
   width: 100%;
-  color: unset;
-  font-size: 1em;
+  color: ${(props) => props.theme.textColor};
+  font-size: 16px;
   text-align: left;
   margin-bottom: 10px;
   border-radius: 4px;
