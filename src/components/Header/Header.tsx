@@ -33,14 +33,13 @@ const Header = (props: HeaderProps) => {
   const [isVisible, setIsVisible] = useState(true);
 
   if (atHomePage) {
-    const hideHeaderWhileScroll = () =>
-      window.requestAnimationFrame(() => {
-        if (window.scrollY > 54) {
-          setIsVisible(false);
-        } else {
-          setIsVisible(true);
-        }
-      });
+    const hideHeaderWhileScroll = () => {
+      if (window.scrollY > 51.999) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    };
 
     useEffect(() => {
       window.addEventListener('scroll', hideHeaderWhileScroll);

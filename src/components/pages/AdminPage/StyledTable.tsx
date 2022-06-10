@@ -12,7 +12,7 @@ const StyledTable = styled.table`
 
   & th {
     font-size: 18px;
-    border-right: 2px solid ${(props) => props.theme.surfaceColor};
+    border-right: 1px solid ${(props) => props.theme.surfaceColor};
   }
 
   & th:last-of-type {
@@ -21,8 +21,9 @@ const StyledTable = styled.table`
 
   & tr {
     border-bottom: 1px solid ${(props) => props.theme.surfaceColor};
+
     &:hover {
-      background-color: ${(props) => props.theme.surfaceColor};
+      background-color: ${(props) => props.theme.foregroundColor};
     }
   }
 
@@ -35,7 +36,6 @@ const StyledTable = styled.table`
 
 const StyledRow = styled.tr`
   margin: 0em 1em;
-  border-bottom: 1px solid ${(props) => props.theme.surfaceColor};
 `;
 
 export { StyledTable, StyledRow };

@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Button } from '../common/Button';
 import LoginModal from './LoginModal';
 
-function LoginButton() {
+const LoginButton = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
   const handleClick = () => {
@@ -21,6 +21,6 @@ function LoginButton() {
       />
     </>
   );
-}
+};
 
 export default LoginButton;

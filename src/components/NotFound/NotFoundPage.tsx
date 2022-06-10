@@ -12,7 +12,7 @@ const StyledNotFoundPage = styled.div`
   justify-content: center;
 `;
 
-function NotFoundPage() {
+const NotFoundPage = () => {
   const navigate = useNavigate();
 
   useDocumentTitle('该页面不存在');
@@ -23,6 +23,6 @@ function NotFoundPage() {
       <Button onClick={() => navigate('/', { replace: true })}>回到主页</Button>
     </StyledNotFoundPage>
   );
-}
+};
 
 export default NotFoundPage;

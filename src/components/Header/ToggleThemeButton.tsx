@@ -38,7 +38,7 @@ const Marker = styled.div<MakerProps>`
   transition: all 0.3s;
 `;
 
-function ToggleThemeButton() {
+const ToggleThemeButton = () => {
   const themeMode = useSelector((state: RootState) => state.themeMode.value);
   const dispath = useDispatch();
 
@@ -56,6 +56,6 @@ function ToggleThemeButton() {
       <Marker themeMode={themeMode} />
     </StyledToggleThemeButton>
   );
-}
+};
 
 export default ToggleThemeButton;

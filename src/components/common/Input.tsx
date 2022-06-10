@@ -133,7 +133,7 @@ export interface UploadProps {
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-function Upload(props: UploadProps) {
+const Upload = (props: UploadProps) => {
   const { title, accept, file, onChange } = props;
 
   return (
@@ -142,6 +142,6 @@ function Upload(props: UploadProps) {
       <input type="file" accept={accept} onChange={onChange} />
     </StyledUpload>
   );
-}
+};
 
 export { Input, Upload };

@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-const StyledLoadingIndicator = styled.div`
+export interface LoadingIndicatorProps {
+  curI: number;
+  text?: string;
+}
+
+const StyledLoadingIndicator = styled.div<LoadingIndicatorProps>`
   height: 200px;
   display: flex;
   align-items: center;
@@ -18,12 +23,12 @@ const StyledLoadingIndicator = styled.div`
   }
 `;
 
-function LoadingIndicator(props) {
+const LoadingIndicator = (props: LoadingIndicatorProps) => {
   const { text } = props;
   const [curI, setCurI] = useState(0);
 
   useEffect(() => {
-    let timer;
+    let timer: number;
 
     if (curI < (text ? text.length : 3)) {
       timer = setTimeout(() => setCurI(curI + 1), 300);
@@ -42,6 +47,6 @@ function LoadingIndicator(props) {
       ...
     </StyledLoadingIndicator>
   );
-}
+};
 
 export default LoadingIndicator;

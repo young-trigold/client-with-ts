@@ -33,7 +33,7 @@ const Menu = styled.nav<MenuProps>`
   overflow: hidden;
   transition: all 0.3s;
   opacity: ${(props) => (props.isMenuVisible ? 1 : 0)};
-  height: ${(props) => (props.isMenuVisible ? '116px' : '0')};
+  height: ${(props) => (props.isMenuVisible ? '160px' : '0')};
 
   & > button {
     padding: 4px;
@@ -75,9 +75,16 @@ function LinkContainer() {
     navigate('/');
   };
 
+  const handleAdminClick = () => {
+    navigate('/admin');
+  };
+
   return (
     <>
       <LoginButton />
+      <Button buttonType="link" onClick={handleAdminClick}>
+        进入后台
+      </Button>
       <Button buttonType="link" onClick={handleArticleClick}>
         我的文章
       </Button>
@@ -88,7 +95,7 @@ function LinkContainer() {
   );
 }
 
-function Navigation() {
+const Navigation = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const handleClick = () => {
@@ -110,6 +117,6 @@ function Navigation() {
       </NavContainer>
     </StyledNavigation>
   );
-}
+};
 
 export default Navigation;

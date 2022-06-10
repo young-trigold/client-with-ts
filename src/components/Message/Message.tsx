@@ -29,7 +29,7 @@ const StyledCancelButton = styled.button`
 
 export interface MessageProps {
   title?: string;
-  state: string;
+  state?: string;
   visible?: boolean;
   [key: string]: any;
 }
@@ -61,7 +61,7 @@ const StyledMessage = styled.div<MessageProps>`
   z-index: 4;
 `;
 
-function Message(props: MessageProps) {
+const Message = (props: MessageProps) => {
   const { title, state } = props;
   const [visible, setVisible] = useState(true);
 
@@ -85,9 +85,9 @@ function Message(props: MessageProps) {
       </StyledCancelButton>
     </StyledMessage>
   );
-}
+};
 
-function MessageList() {
+const MessageList = () => {
   const messages = useSelector((state: RootState) => state.messages.value);
 
   return (
@@ -97,7 +97,7 @@ function MessageList() {
       ))}
     </StyledMessageList>
   );
-}
+};
 
 const message = {
   info(title: string) {

@@ -66,7 +66,7 @@ const StyledArticle = styled.article`
   }
 
   & thead > tr:hover {
-    background-color: ${(props) => props.theme.secondColor};
+    background-color: ${(props) => props.theme.hoverColor};
   }
 
   & thead {
@@ -112,7 +112,9 @@ const StyledArticle = styled.article`
   }
 `;
 
-function Code(props) {
+export interface CodeProps {}
+
+const Code = (props: CodeProps) => {
   const themeMode = useSelector((state) => state.themeMode.value);
   const { inline, className, children } = props;
   const match = /language-(\w+)/.exec(className || '');
@@ -130,7 +132,7 @@ function Code(props) {
   ) : (
     <code className={className}>{children}</code>
   );
-}
+};
 
 function Article(props) {
   const { content, loading, setCurrentHeading } = props;
