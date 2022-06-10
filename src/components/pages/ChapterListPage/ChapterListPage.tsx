@@ -29,9 +29,9 @@ export interface ChapterInfo {
 
 function ChapterListPage() {
   const { noteTitle } = useParams();
-  const { noteId } = useLocation().state;
+  const { noteId } = useLocation().state as { [key: string]: string };
 
-  const { loading, resource: chapters } = useLoadResource(`/api/chapters/${noteId}`);
+  const { loading, resource: chapters } = useLoadResource<ChapterInfo[]>(`/api/chapters/${noteId}`);
   useDocumentTitle(noteTitle);
 
   return (

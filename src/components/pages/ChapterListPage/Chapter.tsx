@@ -3,10 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import LikeIcon from '../../../static/icon/like.png';
 import EyeOpen from '../../../static/icon/eye-open.png';
-
-
-
-
+import { ChapterInfo } from './ChapterListPage';
 
 const StyledChapter = styled.article`
   position: relative;
@@ -45,7 +42,7 @@ const StyledInfoBar = styled.div`
   justify-content: space-around;
 `;
 
-function Chapter(props: ChapterProps) {
+function Chapter(props: { chapter: ChapterInfo }) {
   const { chapter } = props;
   const navigate = useNavigate();
 
