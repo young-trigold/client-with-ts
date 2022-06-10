@@ -12,7 +12,7 @@ function ProtectPage() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = JSON.parse(localStorage.getItem('user'));
+      const user = JSON.parse(localStorage.getItem('user') ?? '');
 
       if (user) {
         try {
@@ -24,7 +24,10 @@ function ProtectPage() {
           if (res.data.role === 'admin') setIsAdmin(true);
           else message.warn('权限不足!');
         } catch (error) {
-          message.error(error?.response?.data?.message || error.message);
+          if (axios.isAxiosError(error))
+            return message.error((error.response?.data as { message: string })?.message);
+          if (error instanceof Error) return message.error(error.message);
+          return message.error(JSON.stringify(error));
         } finally {
           setLoading(false);
         }
@@ -37,11 +40,11 @@ function ProtectPage() {
     fetchUser();
   }, []);
 
-  if (loading) return (<LoadingIndicator text="正在验证身份" />);
+  if (loading) return <LoadingIndicator text="正在验证身份" />;
 
-  if (isAdmin) return (<AdminPage />);
+  if (isAdmin) return <AdminPage />;
 
-  return (<Navigate to="/" replace />);
+  return <Navigate to="/" replace />;
 }
 
 export default ProtectPage;

@@ -9,7 +9,9 @@ import { StyledButtonBar, Button } from '../../common/Button';
 export interface AddChapterModalProps {
   isModalVisible: boolean;
   setIsModalVisible: Function;
-  currentOption: string;
+  currentOption: {
+    _id: string;
+  };
 }
 
 function AddChapterModal(props: AddChapterModalProps) {

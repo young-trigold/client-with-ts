@@ -9,6 +9,8 @@ import { message } from '../../Message/Message';
 
 import AddIcon from '../../../static/icon/plus.png';
 import CancelIcon from '../../../static/icon/cancel.png';
+import { ChapterInfo } from '../ChapterListPage/ChapterListPage';
+import { NoteInfo } from '../NotePage/NoteShow';
 
 const StyledChapterBody = styled.main`
   flex: 8;
@@ -23,7 +25,16 @@ const StyledChapterBody = styled.main`
   }
 `;
 
-function AddButton(props) {
+export interface OptionInfo {
+  _id: string;
+  title: string;
+}
+
+export interface AddButtonProps {
+  currentOption: OptionInfo;
+}
+
+function AddButton(props: AddButtonProps) {
   const { currentOption } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -48,15 +59,21 @@ function AddButton(props) {
   );
 }
 
-function ChapterBody(props) {
+export interface ChapterBodyProps {
+  currentIndex: number;
+  chapters: ChapterInfo[];
+  noteOptions: NoteInfo[];
+}
+
+function ChapterBody(props: ChapterBodyProps) {
   const { currentIndex, chapters, noteOptions } = props;
 
-  const deleteItem = (chapterId) => {
+  const deleteItem = (chapterId: string) => {
     const deleteChapter = async () => {
       try {
         await axios.delete(`/api/notes/${noteOptions[currentIndex]._id}/${chapterId}`, {
           headers: {
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')).token}`,
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem('user') ?? '')?.token}`,
           },
         });
 

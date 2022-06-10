@@ -54,16 +54,19 @@ function NewNoteOption() {
           },
         );
         message.success('创建成功!');
-        window.location.reload(false);
+        window.location.reload();
       } catch (error) {
-        message.error(error?.response?.data?.message || error.message);
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
     } else {
       message.warn('笔记标题不能为空!');
     }
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
     if (value) {
       setTitle(value);
@@ -75,10 +78,10 @@ function NewNoteOption() {
       <AddNoteButton type="button" onClick={handleClick}>
         <img src={AddIcon} alt="添加笔记" width="20" />
       </AddNoteButton>
-      <Modal isVisible={isModalVisible}>
-        <div>
+      <Modal isModalVisible={isModalVisible}>
+        <div style={{ margin: '1em 0' }}>
           <span>笔记标题:</span>
-          <Input size="10" maxLength="20" onChange={handleInputChange} />
+          <Input size={10} maxLength={20} onChange={handleInputChange} />
         </div>
         <StyledButtonBar>
           <Button onClick={handleSubmit}>提交</Button>

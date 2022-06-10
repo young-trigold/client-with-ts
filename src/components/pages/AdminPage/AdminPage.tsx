@@ -79,7 +79,7 @@ function AdminPage() {
   useDocumentTitle('好久不见');
 
   useEffect(() => {
-    Promise.all([axios.get('/api/notes'), axios.get('/api/articles')])
+    Promise.all([axios.get('/api/notes'), axios.ge4t('/api/articles')])
       .then((response) => {
         setNoteOptions(response[0].data?.map((note) => ({ title: note.title, _id: note._id })));
         setChapters(response[0].data?.map((note) => note.chapters));
