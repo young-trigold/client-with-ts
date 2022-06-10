@@ -2,9 +2,7 @@ import ChapterBody from './ChapterBody';
 import ArticleBody from './ArticleBody';
 
 function AdminBody(props) {
-  const {
-    currentIndex, noteOptionsLength, articles, chapters, tagOptions, noteOptions,
-  } = props;
+  const { currentIndex, noteOptionsLength, articles, chapters, tagOptions, noteOptions } = props;
 
   if (currentIndex < noteOptionsLength) {
     return (

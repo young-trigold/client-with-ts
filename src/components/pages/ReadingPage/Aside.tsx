@@ -14,7 +14,7 @@ const StyledButtonBar = styled.aside`
   display: flex;
   flex-direction: column;
   padding: 1em;
-  top: 160px;
+  top: 180px;
   left: 2em;
   z-index: 2;
   min-width: 150px;

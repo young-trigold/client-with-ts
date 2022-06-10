@@ -48,10 +48,10 @@ const StyledCatalogItem = styled.a`
   margin: 5px ${(props) => `${(props.level - 1) * 1.5}em`};
   border-left: ${(props) => (props.heading.content === props.currentHeading ? '5px' : '0')} solid
     ${(props) => props.theme.primaryColor};
-  color: ${(props) => (isCurrentHeading(props) ? props.theme.secondColor : 'inherit')};
+  color: ${(props) => (isCurrentHeading(props) ? props.theme.primaryColor : 'inherit')};
 
   &:active {
-    color: ${(props) => props.theme.secondColor};
+    color: ${(props) => props.theme.primaryColor};
   }
 
   &:hover {

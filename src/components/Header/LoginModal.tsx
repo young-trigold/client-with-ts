@@ -135,25 +135,28 @@ const LoginModal = (props: LoginModalProps) => {
       <StyledCancelButton type="button" onClick={() => setIsLoginModalVisible(false)}>
         <img src={CancelIcon} alt="取消" width="18" />
       </StyledCancelButton>
-      <div>
-        <div>用户名:</div>
-        <Input value={name} onChange={handleNameChange} maxLength={10} placeholder="昵称" />
-      </div>
-      <div>
-        <div>密码:</div>
-        <PwdInputContainer>
-          <Input
-            value={pwd}
-            type={isPwdVisible ? 'text' : 'password'}
-            maxLength={16}
-            placeholder="12345678"
-            onChange={handlePwdChange}
-          />
-          <StyledTogglePwdIsVisibleButton type="button" onClick={togglePwdIsVisible}>
-            <img alt="眼睛开合" src={isPwdVisible ? EyeOpen : EyeClose} width="16" />
-          </StyledTogglePwdIsVisibleButton>
-        </PwdInputContainer>
-      </div>
+      <form>
+        <div style={{ margin: '0.5em 0' }}>
+          <div>用户名:</div>
+          <Input value={name} onChange={handleNameChange} maxLength={10} placeholder="昵称" />
+        </div>
+        <div style={{ margin: '0.5em 0' }}>
+          <div>密码:</div>
+          <PwdInputContainer>
+            <Input
+              value={pwd}
+              type={isPwdVisible ? 'text' : 'password'}
+              maxLength={16}
+              placeholder="12345678"
+              onChange={handlePwdChange}
+            />
+            <StyledTogglePwdIsVisibleButton type="button" onClick={togglePwdIsVisible}>
+              <img alt="眼睛开合" src={isPwdVisible ? EyeOpen : EyeClose} width="16" />
+            </StyledTogglePwdIsVisibleButton>
+          </PwdInputContainer>
+        </div>
+      </form>
+
       <StyledButtonBar>
         <Button onClick={handleLogin}>登录</Button>
         <Button onClick={handleRegister}>注册</Button>

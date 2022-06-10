@@ -48,7 +48,7 @@ function ArticleBody(props) {
       try {
         await axios.delete(`/api/articles/${articleId}`, {
           headers: {
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem('user')).token}`,
+            Authorization: `Bearer ${JSON.parse(localStorage.getItem('user') ?? '')?.token}`,
           },
         });
         message.success('删除成功!');

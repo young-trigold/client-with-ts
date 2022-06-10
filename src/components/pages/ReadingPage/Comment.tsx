@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { Button } from '../../common/Button';
 import { message } from '../../Message/Message';
-import px from '../../../utils/realPixel';
 
 const CommentContainer = styled.div`
   display: flex;
@@ -15,18 +14,10 @@ const CommentContainer = styled.div`
   justify-content: center;
   border-radius: 10px;
   background-color: ${(props) => props.theme.foregroundColor};
-  background-image: linear-gradient(
-      to right,
-      ${(props) => props.theme.lineColor} ${px()},
-      transparent 0
-    ),
-    linear-gradient(to bottom, ${(props) => props.theme.lineColor} ${px()}, transparent 0);
-  background-size: 1.2em 1.2em;
   box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
 
   & > button {
     margin-top: 1em;
-    font-size: 1.2em;
   }
 
   @media (max-width: 400px) {
@@ -103,6 +94,7 @@ function Comment(props: CommmentProps) {
     const user = JSON.parse(localStorage.getItem('user') ?? '');
 
     if (!user) return message.warn('您还没有登录!');
+    if (!comment) return message.warn('内容不可为空!');
 
     try {
       await axios.put(
