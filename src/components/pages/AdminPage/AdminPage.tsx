@@ -83,7 +83,7 @@ function AdminPage() {
       .then((response) => {
         setNoteOptions(response[0].data?.map((note) => ({ title: note.title, _id: note._id })));
         setChapters(response[0].data?.map((note) => note.chapters));
-        setTagOptions(response[1].data?.map((tag) => tag._id.title));
+        setTagOptions(response[1].data?.map((tag) => tag._id));
         setArticles(response[1].data?.map((tag) => tag.articles));
       })
       .catch((error) => {

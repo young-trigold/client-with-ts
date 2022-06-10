@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 export interface TagContainerProps {
-  currentIndex?: number;
+  currentIndex: number;
   setCurrentIndex?: Function;
   curTop?: number;
   tags?: string[];
@@ -21,7 +21,7 @@ const StyledTagContainer = styled.nav<TagContainerProps>`
   justify-content: center;
   box-shadow: 0px 0px 2px rgb(0 0 0 / 0.5);
 
-  & > button:nth-of-type(${(props) => props.currentIndex ?? 0 + 1}) {
+  & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
     color: ${(props) => props.theme.backgroundColor};
     box-shadow: 1px 1px 3px ${(props) => props.theme.shadowColor};
     background: linear-gradient(
