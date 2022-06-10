@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
 export interface LoadingIndicatorProps {
-  curI: number;
+  curI?: number;
   text?: string;
 }
 
@@ -18,7 +18,7 @@ const StyledLoadingIndicator = styled.div<LoadingIndicatorProps>`
     transition: all 0.3s ease-out;
   }
 
-  & > span:nth-of-type(${(props) => props.curI + 1}) {
+  & > span:nth-of-type(${(props) => props.curI ?? 0 + 1}) {
     transform: translateY(-1em);
   }
 `;

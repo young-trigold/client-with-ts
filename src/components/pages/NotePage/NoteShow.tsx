@@ -11,8 +11,13 @@ const StyledNoteShow = styled.section`
   justify-content: center;
 `;
 
-function NoteShow() {
-  const { resource: notes, loading } = useLoadResource('/api/notes');
+export interface NoteInfo {
+  _id: string;
+  title: string;
+}
+
+const NoteShow = () => {
+  const { resource: notes, loading } = useLoadResource<NoteInfo[]>('/api/notes');
 
   return loading ? (
     <LoadingIndicator text="笔记马上就好" />
@@ -23,6 +28,6 @@ function NoteShow() {
       ))}
     </StyledNoteShow>
   );
-}
+};
 
 export default NoteShow;

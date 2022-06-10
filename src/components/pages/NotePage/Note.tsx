@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { NoteInfo } from './NoteShow';
 
 const StyledNote = styled.article`
   width: 220px;
@@ -30,11 +31,15 @@ const StyledNote = styled.article`
   }
 
   &:active {
-    color: ${(props) => props.theme.secondColor};
+    color: ${(props) => props.theme.activeColor};
   }
 `;
 
-function Note(props) {
+export interface NoteProps {
+  note: NoteInfo;
+}
+
+const Note = (props: NoteProps) => {
   const { note } = props;
   const navigate = useNavigate();
 
@@ -47,6 +52,6 @@ function Note(props) {
       <h3>{note.title}</h3>
     </StyledNote>
   );
-}
+};
 
 export default Note;

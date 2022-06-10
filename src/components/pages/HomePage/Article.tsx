@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import LikeIcon from '../../../static/icon/like.png';
 import EyeOpen from '../../../static/icon/eye-open.png';
+import { ArticleInfo } from './HomePage';
 
 const StyledArticle = styled.article`
   margin: 1em 0;
@@ -66,7 +67,11 @@ const StyledTime = styled.time`
   bottom: 3em;
 `;
 
-function Article(props) {
+export interface ArticleProps {
+  article: ArticleInfo;
+}
+
+const Article = (props: ArticleProps) => {
   const { article } = props;
   const navigate = useNavigate();
 
@@ -96,6 +101,6 @@ function Article(props) {
       </StyledTime>
     </StyledArticle>
   );
-}
+};
 
 export default Article;

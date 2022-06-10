@@ -19,9 +19,23 @@ const StyledHomePage = styled.div`
   min-height: 100vh;
 `;
 
-function HomePage() {
+export interface ArticleInfo {
+  _id: string;
+  title: string;
+  likes: number;
+  views: number;
+  createdAt: string;
+}
+
+export interface ArticlesByTag {
+  _id: string;
+  articles: ArticleInfo[];
+}
+
+const HomePage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { loading, resource: articleTags } = useLoadResource('/api/articles');
+  const { loading, resource: articlesByTag } =
+    useLoadResource<ArticlesByTag[]>('/api/articlesByTag');
   useDocumentTitle('欢迎回来');
 
   return (
@@ -30,18 +44,18 @@ function HomePage() {
       <TagContainer
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}
-        tags={articleTags?.map((articleTag) => articleTag._id.title)}
+        tags={articlesByTag?.map((articleTag) => articleTag._id)}
       />
       <main style={{ padding: '1em' }}>
         {loading ? (
           <LoadingIndicator text="文章马上就好" />
         ) : (
-          <ArticleShow articleTags={articleTags} currentIndex={currentIndex} />
+          <ArticleShow articlesByTag={articlesByTag} currentIndex={currentIndex} />
         )}
       </main>
       <Footer />
     </StyledHomePage>
   );
-}
+};
 
 export default HomePage;

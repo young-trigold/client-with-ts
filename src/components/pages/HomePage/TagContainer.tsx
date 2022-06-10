@@ -1,7 +1,14 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 
-const StyledTagContainer = styled.nav`
+export interface TagContainerProps {
+  currentIndex?: number;
+  setCurrentIndex?: Function;
+  curTop?: number;
+  tags?: string[];
+}
+
+const StyledTagContainer = styled.nav<TagContainerProps>`
   position: sticky;
   top: ${(props) => `${props.curTop}px`};
   z-index: 2;
@@ -14,7 +21,7 @@ const StyledTagContainer = styled.nav`
   justify-content: center;
   box-shadow: 0px 0px 2px rgb(0 0 0 / 0.5);
 
-  & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
+  & > button:nth-of-type(${(props) => props.currentIndex ?? 0 + 1}) {
     color: ${(props) => props.theme.backgroundColor};
     box-shadow: 1px 1px 3px ${(props) => props.theme.shadowColor};
     background: linear-gradient(
@@ -46,7 +53,7 @@ const StyledTag = styled.button`
   }
 `;
 
-function TagContainer(props) {
+const TagContainer = (props: TagContainerProps) => {
   const { currentIndex, setCurrentIndex, tags } = props;
 
   const [curTop, setcurTop] = useState(50);
@@ -68,12 +75,12 @@ function TagContainer(props) {
   return (
     <StyledTagContainer currentIndex={currentIndex} curTop={curTop}>
       {tags?.map((tag, i) => (
-        <StyledTag key={tag} onClick={() => setCurrentIndex(i)}>
+        <StyledTag key={tag} onClick={() => setCurrentIndex?.(i)}>
           {tag}
         </StyledTag>
       ))}
     </StyledTagContainer>
   );
-}
+};
 
 export default TagContainer;

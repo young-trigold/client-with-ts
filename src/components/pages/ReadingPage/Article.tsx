@@ -7,12 +7,14 @@ import remarkMath from 'remark-math';
 import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 
+import React from 'react';
 import px from '../../../utils/realPixel';
 import LoadingIndicator from '../../LoadingIndicator/LoadingIndicator';
 import '../../../theme/katex.min.css';
 import materialDark from '../../../theme/codeThemeDark.json';
 import materialLight from '../../../theme/codeThemeLight.json';
 import Heading from './Heading';
+import { RootState } from '../../../app/store';
 
 const StyledArticle = styled.article`
   background-color: ${(props) => props.theme.foregroundColor};
@@ -112,10 +114,14 @@ const StyledArticle = styled.article`
   }
 `;
 
-export interface CodeProps {}
+export interface CodeProps {
+  inline: boolean;
+  className: string;
+  children?: React.ReactNode;
+}
 
 const Code = (props: CodeProps) => {
-  const themeMode = useSelector((state) => state.themeMode.value);
+  const themeMode = useSelector((state: RootState) => state.themeMode.value);
   const { inline, className, children } = props;
   const match = /language-(\w+)/.exec(className || '');
 

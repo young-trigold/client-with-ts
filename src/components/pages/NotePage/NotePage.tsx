@@ -22,7 +22,7 @@ const MainContainer = styled.main`
   justify-content: center;
 `;
 
-function NotePage() {
+const NotePage = () => {
   useDocumentTitle('我的笔记');
 
   return (
@@ -34,6 +34,6 @@ function NotePage() {
       <Footer />
     </StyledNotePage>
   );
-}
+};
 
 export default NotePage;

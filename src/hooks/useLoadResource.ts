@@ -3,8 +3,8 @@ import axios from 'axios';
 
 import { message } from '../components/Message/Message';
 
-const useLoadResource = (url = '') => {
-  const [resource, setResource] = useState(null);
+const useLoadResource = <T>(url = '') => {
+  const [resource, setResource] = useState<T | undefined>(undefined);
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
