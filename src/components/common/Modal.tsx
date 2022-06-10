@@ -1,7 +1,12 @@
 import styled from 'styled-components';
 import React from 'react';
 
-const StyledModal = styled.div`
+export interface ModalProps {
+  isModalVisible: boolean;
+  children: React.ReactNode;
+}
+
+const StyledModal = styled.div<ModalProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,22 +14,26 @@ const StyledModal = styled.div`
   padding: 1em;
   min-width: 300px;
   background-color: ${(props) => props.theme.foregroundColor};
-  border-radius: 16px;
+  border-radius: 4px;
   box-shadow: 5px 0px 15px ${(props) => props.theme.shadowColor};
   z-index: 5;
   transition: all 0.3s ease;
   position: relative;
-  transform: ${(props) => (props.isVisible ? 'unset' : 'translateY(-200px)')};
+  transform: ${(props) => (props.isModalVisible ? 'unset' : 'translateY(-200px)')};
 `;
 
-const ModalContainer = styled.div`
+export interface MaskProps {
+  isModalVisible: boolean;
+}
+
+const Mask = styled.div<MaskProps>`
   display: flex;
   position: fixed;
   left: 0;
   top: 0;
   width: 100vw;
-  height: ${(props) => (props.isVisible ? '100vh' : '0')};
-  opacity: ${(props) => (props.isVisible ? 1 : 0)};
+  height: ${(props) => (props.isModalVisible ? '100vh' : '0')};
+  opacity: ${(props) => (props.isModalVisible ? 1 : 0)};
   transition: all 0.3s;
   background-color: rgba(0, 0, 0, 0.5);
   align-items: center;
@@ -33,19 +42,14 @@ const ModalContainer = styled.div`
   overflow: hidden;
 `;
 
-export interface ModalProps {
-  isVisible: boolean;
-  children: React.ReactNode;
-}
-
 const Modal = (props: ModalProps) => {
-  const { isVisible, children } = props;
+  const { isModalVisible, children } = props;
 
   return (
-    <ModalContainer isVisible={isVisible}>
-      <StyledModal isVisible={isVisible}>{children}</StyledModal>
-    </ModalContainer>
+    <Mask isModalVisible={isModalVisible}>
+      <StyledModal isModalVisible={isModalVisible}>{children}</StyledModal>
+    </Mask>
   );
-}
+};
 
 export default Modal;

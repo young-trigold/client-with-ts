@@ -15,7 +15,11 @@ const MenuButton = styled.button`
   position: relative;
 `;
 
-const Menu = styled.nav`
+export interface MenuProps {
+  isMenuVisible: boolean;
+}
+
+const Menu = styled.nav<MenuProps>`
   display: flex;
   flex-flow: column;
   border-radius: 6px;
@@ -28,8 +32,8 @@ const Menu = styled.nav`
   box-shadow: 0 0 6px ${(props) => props.theme.shadowColor};
   overflow: hidden;
   transition: all 0.3s;
-  opacity: ${(props) => (props.isMeunVisible ? 1 : 0)};
-  height: ${(props) => (props.isMeunVisible ? '116px' : '0')};
+  opacity: ${(props) => (props.isMenuVisible ? 1 : 0)};
+  height: ${(props) => (props.isMenuVisible ? '116px' : '0')};
 
   & > button {
     padding: 4px;
@@ -85,19 +89,19 @@ function LinkContainer() {
 }
 
 function Navigation() {
-  const [isMeunVisible, setIsMeunVisible] = useState(false);
+  const [isMenuVisible, setIsMenuVisible] = useState(false);
 
   const handleClick = () => {
-    setIsMeunVisible(!isMeunVisible);
+    setIsMenuVisible(!isMenuVisible);
   };
 
   return (
     <StyledNavigation>
       <MenuButton type="button" onClick={addMediaEffect(handleClick, IconPressSound, 20)}>
-        <img alt="菜单" src={isMeunVisible ? CancelIcon : MenuIcon} width="24" />
+        <img alt="菜单" src={isMenuVisible ? CancelIcon : MenuIcon} width="24" />
       </MenuButton>
 
-      <Menu isMeunVisible={isMeunVisible}>
+      <Menu isMenuVisible={isMenuVisible}>
         <LinkContainer />
       </Menu>
 

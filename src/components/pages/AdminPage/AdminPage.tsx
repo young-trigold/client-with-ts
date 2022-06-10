@@ -41,7 +41,7 @@ const OptionContainer = styled.ol`
   background-color: ${(props) => props.theme.foregroundColor};
 
   & > li:nth-of-type(${(props) => props.currentIndex + 1}) {
-    color: ${(props) => props.theme.secondColor};
+    color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.primaryColor};
   }
 `;
@@ -59,7 +59,7 @@ const Option = styled.li`
 
   @media (hover: hover) {
     &:hover {
-      color: ${(props) => props.theme.secondColor};
+      color: ${(props) => props.theme.hoverColor};
     }
 
     &:active {

@@ -4,6 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import LikeIcon from '../../../static/icon/like.png';
 import EyeOpen from '../../../static/icon/eye-open.png';
 
+
+
+
+
 const StyledChapter = styled.article`
   position: relative;
   margin: 1em;
@@ -23,7 +27,7 @@ const StyledChapter = styled.article`
   cursor: pointer;
 
   &:hover {
-    color: ${(props) => props.theme.secondColor};
+    color: ${(props) => props.theme.hoverColor};
     background-color: ${(props) => props.theme.surfaceColor};
   }
 
@@ -41,7 +45,7 @@ const StyledInfoBar = styled.div`
   justify-content: space-around;
 `;
 
-function Chapter(props) {
+function Chapter(props: ChapterProps) {
   const { chapter } = props;
   const navigate = useNavigate();
 

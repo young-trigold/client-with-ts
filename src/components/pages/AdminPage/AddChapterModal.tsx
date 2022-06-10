@@ -1,18 +1,23 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../../Message/Message';
-import { FileInput } from '../../common/Input';
+import { Upload } from '../../common/Input';
 import Modal from '../../common/Modal';
 import { StyledButtonBar, Button } from '../../common/Button';
 
-function AddChapterModal(props) {
-  const { isVisible, currentOption, setIsVisible } = props;
+export interface AddChapterModalProps {
+  isModalVisible: boolean;
+  setIsModalVisible: Function;
+  currentOption: string;
+}
 
-  const [file, setFile] = useState(null);
+function AddChapterModal(props: AddChapterModalProps) {
+  const { isModalVisible, currentOption, setIsModalVisible } = props;
+  const [file, setFile] = useState<File | undefined>(undefined);
 
-  const handleFileInputChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) setFile(event.target.files[0]);
   };
 
   const handleSubmit = () => {
@@ -28,9 +33,12 @@ function AddChapterModal(props) {
             },
           });
           message.success('章节上传成功!');
-          window.location.reload(false);
+          window.location.reload();
         } catch (error) {
-          message.error(error?.response?.data?.message || error.message);
+          if (axios.isAxiosError(error))
+            return message.error((error.response?.data as { message: string })?.message);
+          if (error instanceof Error) return message.error(error.message);
+          return message.error(JSON.stringify(error));
         }
       };
 
@@ -41,13 +49,13 @@ function AddChapterModal(props) {
   };
 
   const handleCancel = () => {
-    setIsVisible(false);
-    setFile(null);
+    setIsModalVisible(false);
+    setFile(undefined);
   };
 
   return (
-    <Modal isVisible={isVisible}>
-      <FileInput accept=".md" onChange={handleFileInputChange} title="上传章节" file={file} />
+    <Modal isModalVisible={isModalVisible}>
+      <Upload accept=".md" onChange={handleUploadChange} title="上传章节" file={file} />
       <StyledButtonBar>
         <Button onClick={handleSubmit}>提交</Button>
         <Button onClick={handleCancel} state="dange">

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../Message/Message';
@@ -35,7 +35,7 @@ const StyledCancelButton = styled.button`
   border-radius: 14px;
 `;
 
-const StyledTogglePwdVisibleButton = styled.button`
+const StyledTogglePwdIsVisibleButton = styled.button`
   background-color: transparent;
   padding: 0;
   position: absolute;
@@ -49,22 +49,27 @@ const PwdInputContainer = styled.div`
   align-items: center;
 `;
 
-const LoginModal = (props) => {
-  const { isVisible, setIsVisible } = props;
+export interface LoginModalProps {
+  isLoginModalVisible: boolean;
+  setIsLoginModalVisible: Function;
+}
+
+const LoginModal = (props: LoginModalProps) => {
+  const { isLoginModalVisible, setIsLoginModalVisible } = props;
   const [isPwdVisible, setIsPwdVisible] = useState(false);
 
-  const togglePwdVisible = () => {
+  const togglePwdIsVisible = () => {
     setIsPwdVisible(!isPwdVisible);
   };
 
   const [name, setName] = useState('');
   const [pwd, setPwd] = useState('');
 
-  const handleNameChange = (event) => {
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 
-  const handlePwdChange = (event) => {
+  const handlePwdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setPwd(event.target.value);
   };
 
@@ -82,9 +87,12 @@ const LoginModal = (props) => {
         );
 
         message.success('注册成功!');
-        setIsVisible(false);
+        setIsLoginModalVisible(false);
       } catch (error) {
-        message.error(error?.response?.data?.message || error.message);
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
     };
 
@@ -109,10 +117,13 @@ const LoginModal = (props) => {
         message.success('登录成功!');
         setName('');
         setPwd('');
-        setIsVisible(false);
+        setIsLoginModalVisible(false);
         localStorage.setItem('user', JSON.stringify(res.data));
       } catch (error) {
-        message.error(error?.response?.data?.message || error.message);
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
     };
 
@@ -120,13 +131,13 @@ const LoginModal = (props) => {
   };
 
   return (
-    <Modal isVisible={isVisible}>
-      <StyledCancelButton type="button" onClick={() => setIsVisible(false)}>
+    <Modal isModalVisible={isLoginModalVisible}>
+      <StyledCancelButton type="button" onClick={() => setIsLoginModalVisible(false)}>
         <img src={CancelIcon} alt="取消" width="18" />
       </StyledCancelButton>
       <div>
         <div>用户名:</div>
-        <Input value={name} onChange={handleNameChange} maxLength="10" placeholder="昵称" />
+        <Input value={name} onChange={handleNameChange} maxLength={10} placeholder="昵称" />
       </div>
       <div>
         <div>密码:</div>
@@ -138,9 +149,9 @@ const LoginModal = (props) => {
             placeholder="12345678"
             onChange={handlePwdChange}
           />
-          <StyledTogglePwdVisibleButton type="button" onClick={togglePwdVisible}>
+          <StyledTogglePwdIsVisibleButton type="button" onClick={togglePwdIsVisible}>
             <img alt="眼睛开合" src={isPwdVisible ? EyeOpen : EyeClose} width="16" />
-          </StyledTogglePwdVisibleButton>
+          </StyledTogglePwdIsVisibleButton>
         </PwdInputContainer>
       </div>
       <StyledButtonBar>

@@ -4,10 +4,10 @@ import { Button } from '../common/Button';
 import LoginModal from './LoginModal';
 
 function LoginButton() {
-  const [isVisible, setIsVisible] = useState(false);
+  const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
   const handleClick = () => {
-    setIsVisible(true);
+    setIsLoginModalVisible(true);
   };
 
   return (
@@ -15,7 +15,10 @@ function LoginButton() {
       <Button buttonType="outlined" onClick={handleClick}>
         登录
       </Button>
-      <LoginModal isVisible={isVisible} setIsVisible={setIsVisible} />
+      <LoginModal
+        isLoginModalVisible={isLoginModalVisible}
+        setIsLoginModalVisible={setIsLoginModalVisible}
+      />
     </>
   );
 }

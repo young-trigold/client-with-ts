@@ -20,6 +20,13 @@ const StyledChapterTitle = styled.h2`
   text-align: center;
 `;
 
+export interface ChapterInfo {
+  _id: string;
+  likes: number;
+  views: number;
+  title: string;
+}
+
 function ChapterListPage() {
   const { noteTitle } = useParams();
   const { noteId } = useLocation().state;
@@ -37,7 +44,7 @@ function ChapterListPage() {
         ) : (
           <ChaptersContainer>
             {chapters?.map((chapter) => (
-              <Chapter key={chapter._id} chapter={chapter} />
+              <Chapter key={chapter._id} chapter={chapter as ChapterInfo} />
             ))}
           </ChaptersContainer>
         )}

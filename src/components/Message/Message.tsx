@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { addMessage, clearMessage } from './messagesSlice';
-import store from '../../app/store';
+import store, { RootState } from '../../app/store';
 import CancelIcon from '../../static/icon/cancel.png';
 
 const StyledMessageList = styled.div`
@@ -27,28 +27,33 @@ const StyledCancelButton = styled.button`
   justify-content: center;
 `;
 
-const getColor = (props) => {
-  if (props.tag === 'warn') {
-    return props.theme.warnColor;
-  }
-  if (props.tag === 'error') {
-    return props.theme.dangeColor;
-  }
+export interface MessageProps {
+  title?: string;
+  state: string;
+  visible?: boolean;
+  [key: string]: any;
+}
 
-  if (props.tag === 'success') {
-    return props.theme.successColor;
-  }
-
-  return props.theme.secondColor;
-};
-
-const StyledMessage = styled.div`
+const StyledMessage = styled.div<MessageProps>`
   margin: 0.5em 1em;
   border-radius: 4px;
   box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
   background-color: ${(props) => props.theme.surfaceColor};
-  color: ${(props) => getColor(props)};
-  display: ${(props) => (props.isVisible ? 'flex' : 'none')};
+  color: ${(props) => () => {
+    if (props.state === 'warn') {
+      return props.theme.warnColor;
+    }
+    if (props.state === 'error') {
+      return props.theme.dangeColor;
+    }
+
+    if (props.state === 'success') {
+      return props.theme.successColor;
+    }
+
+    return props.theme.primaryColor;
+  }};
+  display: ${(props) => (props.visible ? 'flex' : 'none')};
   padding: 0.5em 1em;
   transition: all 0.3s ease;
   align-items: center;
@@ -56,9 +61,9 @@ const StyledMessage = styled.div`
   z-index: 4;
 `;
 
-function Message(props) {
-  const { title, tag } = props;
-  const [isVisible, setIsVisible] = useState(true);
+function Message(props: MessageProps) {
+  const { title, state } = props;
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -69,11 +74,11 @@ function Message(props) {
   }, []);
 
   const handleClick = () => {
-    setIsVisible(false);
+    setVisible(false);
   };
 
   return (
-    <StyledMessage isVisible={isVisible} tag={tag}>
+    <StyledMessage visible={visible} state={state}>
       <div>{String(title)}</div>
       <StyledCancelButton type="button" onClick={handleClick}>
         <img src={CancelIcon} alt="关闭" width="14" />
@@ -83,29 +88,29 @@ function Message(props) {
 }
 
 function MessageList() {
-  const messages = useSelector((state) => state.messages.value);
+  const messages = useSelector((state: RootState) => state.messages.value);
 
   return (
     <StyledMessageList>
       {messages.map((message) => (
-        <Message key={Math.random().toString(36)} title={message.title} tag={message.tag} />
+        <Message key={Math.random().toString(36)} title={message.title} state={message.state} />
       ))}
     </StyledMessageList>
   );
 }
 
 const message = {
-  info(title) {
+  info(title: string) {
     store.dispatch(addMessage({ title }));
   },
-  warn(title) {
-    store.dispatch(addMessage({ title, tag: 'warn' }));
+  warn(title: string) {
+    store.dispatch(addMessage({ title, state: 'warn' }));
   },
-  success(title) {
-    store.dispatch(addMessage({ title, tag: 'success' }));
+  success(title: string) {
+    store.dispatch(addMessage({ title, state: 'success' }));
   },
-  error(title) {
-    store.dispatch(addMessage({ title, tag: 'error' }));
+  error(title: string) {
+    store.dispatch(addMessage({ title, state: 'error' }));
   },
 };
 

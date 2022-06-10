@@ -5,7 +5,7 @@ import axios from 'axios';
 import { message } from '../../Message/Message';
 import Modal from '../../common/Modal';
 import AddIcon from '../../../static/icon/plus.png';
-import { TextInput, FileInput } from '../../common/Input';
+import { Input, Upload } from '../../common/Input';
 import { Button, StyledButtonBar } from '../../common/Button';
 
 const AddTagButton = styled.button`
@@ -43,7 +43,7 @@ function NewTagOption() {
     setIsModalVisible(false);
   };
 
-  const handleFileInputChange = (event) => {
+  const handleUploadChange = (event) => {
     setFile(event.target.files[0]);
   };
 
@@ -93,11 +93,11 @@ function NewTagOption() {
       <Modal isVisible={isModalVisible}>
         <div style={{ marginBottom: '1em' }}>
           <span>标签名称:</span>
-          <TextInput size="10" maxLength="10" onChange={handleInputChange} />
+          <Input size="10" maxLength="10" onChange={handleInputChange} />
         </div>
 
         <div>
-          <FileInput accept=".md" onChange={handleFileInputChange} title="上传文章" file={file} />
+          <Upload accept=".md" onChange={handleUploadChange} title="上传文章" file={file} />
         </div>
 
         <StyledButtonBar>

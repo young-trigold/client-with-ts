@@ -25,24 +25,24 @@ const StyledChapterBody = styled.main`
 
 function AddButton(props) {
   const { currentOption } = props;
-  const [isVisible, setIsVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleClick = () => {
-    setIsVisible(!isVisible);
+    setIsModalVisible(!isModalVisible);
   };
 
   return (
     <>
       <IconButton
-        icon={isVisible ? CancelIcon : AddIcon}
+        icon={isModalVisible ? CancelIcon : AddIcon}
         width={24}
         description="添加"
         handler={handleClick}
       />
       <AddChapterModal
-        isVisible={isVisible}
+        isModalVisible={isModalVisible}
         currentOption={currentOption}
-        setIsVisible={setIsVisible}
+        setIsModalVisible={setIsModalVisible}
       />
     </>
   );
@@ -61,9 +61,12 @@ function ChapterBody(props) {
         });
 
         message.success('删除成功!');
-        window.location.reload(false);
+        window.location.reload();
       } catch (error) {
-        message.error(error?.response?.data?.message || error.message);
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
     };
 

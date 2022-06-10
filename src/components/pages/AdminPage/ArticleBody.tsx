@@ -10,19 +10,19 @@ import AddIcon from '../../../static/icon/plus.png';
 
 function AddButton(props) {
   const { currentOption } = props;
-  const [isVisible, setIsVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleClick = () => {
-    setIsVisible(true);
+    setIsModalVisible(true);
   };
 
   return (
     <>
       <IconButton width={24} description="添加" icon={AddIcon} handler={handleClick} />
       <AddArticleModal
-        isVisible={isVisible}
+        isModalVisible={isModalVisible}
         currentOption={currentOption}
-        setIsVisible={setIsVisible}
+        setIsModalVisible={setIsModalVisible}
       />
     </>
   );
@@ -52,9 +52,12 @@ function ArticleBody(props) {
           },
         });
         message.success('删除成功!');
-        window.location.reload(false);
+        window.location.reload();
       } catch (error) {
-        message.error(error?.response?.data?.message || error.message);
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
     };
 

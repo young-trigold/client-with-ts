@@ -1,17 +1,23 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../../Message/Message';
 import { StyledButtonBar, Button } from '../../common/Button';
 import Modal from '../../common/Modal';
-import { FileInput } from '../../common/Input';
+import { Upload } from '../../common/Input';
 
-function AddArticleModal(props) {
-  const { isVisible, currentOption, setIsVisible } = props;
-  const [file, setFile] = useState(null);
+export interface AddArticleModalProps {
+  isModalVisible: boolean;
+  setIsModalVisible: Function;
+  currentOption: string;
+}
 
-  const handleFileInputChange = (event) => {
-    setFile(event.target.files[0]);
+function AddArticleModal(props: AddArticleModalProps) {
+  const { isModalVisible, currentOption, setIsModalVisible } = props;
+  const [file, setFile] = useState<File | undefined>(undefined);
+
+  const handleUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files) setFile(event.target.files[0]);
   };
 
   const handleSubmit = () => {
@@ -29,9 +35,12 @@ function AddArticleModal(props) {
             },
           });
           message.success('上传成功!');
-          window.location.reload(false);
+          window.location.reload();
         } catch (error) {
-          message.error(error?.response?.data?.message || error.message);
+          if (axios.isAxiosError(error))
+            return message.error((error.response?.data as { message: string })?.message);
+          if (error instanceof Error) return message.error(error.message);
+          return message.error(JSON.stringify(error));
         }
       };
 
@@ -42,14 +51,14 @@ function AddArticleModal(props) {
   };
 
   const handleCancel = () => {
-    setIsVisible(false);
-    setFile(null);
+    setIsModalVisible(false);
+    setFile(undefined);
   };
 
   return (
-    <Modal isVisible={isVisible}>
+    <Modal isModalVisible={isModalVisible}>
       <div>
-        <FileInput accept=".md" onChange={handleFileInputChange} title="上传文章" file={file} />
+        <Upload accept=".md" onChange={handleUploadChange} title="上传文章" file={file} />
       </div>
       <StyledButtonBar>
         <Button onClick={handleSubmit}>提交</Button>

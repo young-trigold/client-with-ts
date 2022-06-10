@@ -5,7 +5,7 @@ import axios from 'axios';
 import AddIcon from '../../../static/icon/plus.png';
 import { message } from '../../Message/Message';
 import Modal from '../../common/Modal';
-import { TextInput } from '../../common/Input';
+import { Input } from '../../common/Input';
 import { Button, StyledButtonBar } from '../../common/Button';
 
 const AddNoteButton = styled.button`
@@ -78,7 +78,7 @@ function NewNoteOption() {
       <Modal isVisible={isModalVisible}>
         <div>
           <span>笔记标题:</span>
-          <TextInput size="10" maxLength="20" onChange={handleInputChange} />
+          <Input size="10" maxLength="20" onChange={handleInputChange} />
         </div>
         <StyledButtonBar>
           <Button onClick={handleSubmit}>提交</Button>
