@@ -15,7 +15,14 @@ function CatalogButton() {
     dispatch(toggleCatalogVisible());
   };
 
-  return <IconButton icon={isCacel ? CacelIcon : ListIcon} width="24" description="目录" handler={handleClick} />;
+  return (
+    <IconButton
+      icon={isCacel ? CacelIcon : ListIcon}
+      width={24}
+      description="目录"
+      handler={handleClick}
+    />
+  );
 }
 
 export default CatalogButton;

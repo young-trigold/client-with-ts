@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import { RootState } from '../../../app/store';
+import { Heading } from './ReadingPage';
 
-const StyledCatalog = styled.nav`
+export interface CatalogProps {
+  catalogVisible?: boolean;
+  headings: Heading[];
+  currentHeading: string;
+}
+
+const StyledCatalog = styled.nav<CatalogProps>`
   flex: 3;
   height: fit-content;
   min-width: 300px;
@@ -31,6 +39,8 @@ const StyledCatalog = styled.nav`
   }
 `;
 
+export interface CatalogItemProps {}
+
 const isCurrentHeading = (props) => props.heading.content === props.currentHeading;
 
 const StyledCatalogItem = styled.a`
@@ -49,10 +59,10 @@ const StyledCatalogItem = styled.a`
   }
 `;
 
-function Catalog(props) {
+function Catalog(props: CatalogProps) {
   const { headings, currentHeading } = props;
 
-  const catalogVisible = useSelector((state) => state.catalogVisible.value);
+  const catalogVisible = useSelector((state: RootState) => state.catalogVisible.value);
 
   return (
     <StyledCatalog catalogVisible={catalogVisible}>

@@ -42,7 +42,12 @@ const StyledButtonBar = styled.aside`
   }
 `;
 
-function Aside(props) {
+export interface AsideProps {
+  isChapter: boolean;
+  itemId: string;
+}
+
+function Aside(props: AsideProps) {
   const { isChapter, itemId } = props;
 
   const handleShare = () => {
@@ -63,7 +68,7 @@ function Aside(props) {
   };
 
   const handleLike = () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user') ?? '');
 
     const increaseLikes = async () => {
       try {
@@ -97,7 +102,10 @@ function Aside(props) {
 
         message.success('谢谢你的赞哦!');
       } catch (error) {
-        message.error(error?.response?.data?.message || error.message);
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
     };
 
@@ -111,18 +119,18 @@ function Aside(props) {
   return (
     <StyledButtonBar>
       <IconButton
-        width="28"
+        width={28}
         icon={LikeIcon}
-        desription="点赞"
+        description="点赞"
         handler={debounce(handleLike, 600)}
       />
       <a href="#comment">
-        <IconButton width="28" icon={CommentIcon} desription="评论" />
+        <IconButton width={28} icon={CommentIcon} description="评论" />
       </a>
       <IconButton
-        width="28"
+        width={28}
         icon={ShareIcon}
-        desription="分享"
+        description="分享"
         handler={debounce(handleShare, 600)}
       />
     </StyledButtonBar>

@@ -1,8 +1,11 @@
-import { useRef, createElement, useEffect, useCallback } from 'react';
+import React, { useRef, createElement, useEffect, useCallback } from 'react';
 
-function Heading(properties, setCurrentHeading) {
+function Heading(
+  properties: { children?: React.ReactNode; level: number },
+  setCurrentHeading: Function,
+) {
   const { children, level } = properties;
-  const ref = useRef();
+  const ref = useRef<HTMLHeadingElement | undefined>(undefined);
 
   const handleCurrentHeadingChange = useCallback(() => {
     window.requestAnimationFrame(() => {

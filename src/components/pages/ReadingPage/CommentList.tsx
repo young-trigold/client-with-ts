@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { CommentInfo } from './ReadingPage';
 
 const CommentListConstiner = styled.div`
   padding: 1em;
@@ -23,7 +24,11 @@ const StyledUserInfo = styled.div`
   justify-content: space-between;
 `;
 
-function CommentList(props) {
+export interface CommentListProps {
+  comments?: CommentInfo[];
+}
+
+function CommentList(props: CommentListProps) {
   const { comments } = props;
 
   return comments?.length ? (

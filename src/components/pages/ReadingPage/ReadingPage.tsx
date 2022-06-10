@@ -12,6 +12,8 @@ import Catalog from './Catalog';
 import CatalogButton from './CatalogButton';
 import Comment from './Comment';
 import CommentList from './CommentList';
+import { NoteInfo } from '../NotePage/NoteShow';
+import { ArticleInfo } from '../HomePage/HomePage';
 
 const StyledReadingPage = styled.div`
   @media (max-width: 530px) {
@@ -59,17 +61,45 @@ const Container = styled.div`
   }
 `;
 
-function ReadingPage(props) {
+export interface ReadingPageProps {
+  isChapter: boolean;
+}
+
+export interface User {
+  _id: string;
+  role: string;
+  name: string;
+  pwd: string;
+}
+
+export interface CommentInfo {
+  _id: string;
+  user: User;
+  updatedAt: string;
+  content: string;
+}
+
+export interface Item {
+  comments: CommentInfo[];
+  content: string;
+}
+
+export interface Heading {
+  level: number;
+  content: string;
+}
+
+const ReadingPage = (props: ReadingPageProps) => {
   const { isChapter } = props;
   const { itemId } = useParams();
   useDocumentTitle('认真阅读ing...');
 
-  const [headings, setHeadings] = useState([]);
-  const [currentHeading, setCurrentHeading] = useState(0);
+  const [headings, setHeadings] = useState<Heading[]>([]);
+  const [currentHeading, setCurrentHeading] = useState<string>('');
 
   const { loading, resource: item } = isChapter
-    ? useLoadResource(`/api/notes/${itemId}`)
-    : useLoadResource(`/api/articles/${itemId}`);
+    ? useLoadResource<Item>(`/api/notes/${itemId}`)
+    : useLoadResource<Item>(`/api/articles/${itemId}`);
 
   useEffect(() => {
     const rawHeadings = item?.content?.match(/^#{2,3}(?!#)(.)+$/gm);
@@ -77,7 +107,7 @@ function ReadingPage(props) {
     if (rawHeadings) {
       setHeadings(
         rawHeadings.map((rawHeading) => ({
-          level: rawHeading.match(/#/g).length,
+          level: rawHeading.match(/#/g)?.length ?? 0,
           content: rawHeading.replace(/#/g, '').trim(),
         })),
       );
@@ -88,10 +118,10 @@ function ReadingPage(props) {
     <StyledReadingPage>
       <Header />
       <MainContainer>
-        <Aside isChapter={isChapter} itemId={itemId} />
+        <Aside isChapter={isChapter} itemId={itemId ?? ''} />
         <Container>
           <Article
-            content={item?.content}
+            content={item?.content ?? ''}
             loading={loading}
             setCurrentHeading={setCurrentHeading}
           />
@@ -104,6 +134,6 @@ function ReadingPage(props) {
       <Footer />
     </StyledReadingPage>
   );
-}
+};
 
 export default ReadingPage;

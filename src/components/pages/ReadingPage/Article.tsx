@@ -140,7 +140,13 @@ const Code = (props: CodeProps) => {
   );
 };
 
-function Article(props) {
+export interface ArticleProps {
+  content: string;
+  loading: boolean;
+  setCurrentHeading: Function;
+}
+
+function Article(props: ArticleProps) {
   const { content, loading, setCurrentHeading } = props;
 
   return (

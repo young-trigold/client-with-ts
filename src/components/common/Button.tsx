@@ -193,14 +193,18 @@ export interface IconButtonProps {
   icon: string;
   width: number;
   description: string;
-  handler: React.MouseEventHandler<HTMLElement>;
+  handler?: React.MouseEventHandler<HTMLElement>;
 }
 
 const IconButton = (props: IconButtonProps) => {
   const { icon, width, description, handler } = props;
 
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (handler) addMediaEffect(handler, IconPressSound, 20)(event);
+  };
+
   return (
-    <StyledIconButton type="button" onClick={addMediaEffect(handler, IconPressSound, 20)}>
+    <StyledIconButton type="button" onClick={handleClick}>
       <img alt={description} src={icon} width={width} />
     </StyledIconButton>
   );

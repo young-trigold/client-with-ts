@@ -1,12 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+export interface CatalogVisivleState {
+  value: boolean;
+}
+
+const initialState: CatalogVisivleState = {
+  value: false,
+};
+
 const CatalogVisibleSlice = createSlice({
   name: 'catalogVisible',
-  initialState: {
-    value: false,
-  },
+  initialState,
   reducers: {
-    toggleCatalogVisible: (state) => {
+    toggleCatalogVisible: (state: CatalogVisivleState) => {
       // eslint-disable-next-line no-param-reassign
       if (state.value === true) state.value = false;
       // eslint-disable-next-line no-param-reassign

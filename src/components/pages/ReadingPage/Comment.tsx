@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import { Button } from '../../common/Button';
@@ -69,7 +69,7 @@ const StyledTextArea = styled.textarea`
   border: 2px solid ${(props) => props.theme.surfaceColor};
   border-radius: 0.5em;
   caret-color: ${(props) => props.theme.warnColor};
-  color: ${(props) => props.theme.secondColor};
+  color: ${(props) => props.theme.primaryColor};
   transition: all 0.3s;
 
   &:focus {
@@ -85,17 +85,22 @@ const StyledTextArea = styled.textarea`
   }
 `;
 
-function Comment(props) {
+export interface CommmentProps {
+  isChapter: boolean;
+  itemId?: string;
+}
+
+function Comment(props: CommmentProps) {
   const { isChapter, itemId } = props;
   const [comment, setComment] = useState('');
 
-  const handleCommentChange = (event) => {
+  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setComment(event.target.value);
   };
 
   // eslint-disable-next-line consistent-return
   const postComment = async () => {
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user') ?? '');
 
     if (!user) return message.warn('您还没有登录!');
 
@@ -115,7 +120,10 @@ function Comment(props) {
 
       message.success('发表成功!');
     } catch (error) {
-      message.error(error?.response?.data?.message || error.message);
+      if (axios.isAxiosError(error))
+        return message.error((error.response?.data as { message: string })?.message);
+      if (error instanceof Error) return message.error(error.message);
+      return message.error(JSON.stringify(error));
     }
   };
 
