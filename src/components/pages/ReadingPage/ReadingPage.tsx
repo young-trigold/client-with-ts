@@ -12,8 +12,7 @@ import Catalog from './Catalog';
 import CatalogButton from './CatalogButton';
 import Comment from './Comment';
 import CommentList from './CommentList';
-import { NoteInfo } from '../NotePage/NoteShow';
-import { ArticleInfo } from '../HomePage/HomePage';
+import { HeadingInfo } from './Heading';
 
 const StyledReadingPage = styled.div`
   @media (max-width: 530px) {
@@ -84,17 +83,12 @@ export interface Item {
   content: string;
 }
 
-export interface Heading {
-  level: number;
-  content: string;
-}
-
 const ReadingPage = (props: ReadingPageProps) => {
   const { isChapter } = props;
   const { itemId } = useParams();
   useDocumentTitle('认真阅读ing...');
 
-  const [headings, setHeadings] = useState<Heading[]>([]);
+  const [headings, setHeadings] = useState<HeadingInfo[]>([]);
   const [currentHeading, setCurrentHeading] = useState<string>('');
 
   const { loading, resource: item } = isChapter

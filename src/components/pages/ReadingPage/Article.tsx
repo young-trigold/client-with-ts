@@ -8,6 +8,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 
 import React from 'react';
+import { CodeComponent } from 'react-markdown/lib/ast-to-react';
 import px from '../../../utils/realPixel';
 import LoadingIndicator from '../../LoadingIndicator/LoadingIndicator';
 import '../../../theme/katex.min.css';
@@ -43,28 +44,11 @@ const StyledArticle = styled.article`
 
   & td,
   & th {
-    padding: 0.5rem;
-  }
-
-  & th {
-    font-size: 18px;
-    border-right: 1px solid ${(props) => props.theme.surfaceColor};
-  }
-
-  & th:last-of-type {
-    border-right: 0;
-  }
-
-  & tr {
-    border-bottom: 1px solid ${(props) => props.theme.backgroundColor};
-  }
-
-  & thead > tr {
-    border-radius: 1em;
+    padding: 8px;
   }
 
   & tbody > tr:hover {
-    background-color: ${(props) => props.theme.backgroundColor};
+    background-color: ${(props) => props.theme.surfaceColor};
   }
 
   & thead > tr:hover {
@@ -81,7 +65,8 @@ const StyledArticle = styled.article`
     text-align: center;
     table-layout: fixed;
     margin: auto;
-    background-color: ${(props) => props.theme.surfaceColor};
+    border: ${px()} dashed ${(props) => props.theme.borderColor};
+    background-color: ${(props) => props.theme.foregroundColor};
     margin: 1em 0;
   }
 
@@ -130,7 +115,11 @@ const Code = (props: CodeProps) => {
       showLineNumbers
       showInlineLineNumbers
       lineNumberStyle={{ minWidth: '3em', marginLeft: '0' }}
-      style={themeMode === 'dark' ? materialDark : materialLight}
+      style={
+        themeMode === 'dark'
+          ? (materialDark as { [key: string]: React.CSSProperties })
+          : (materialLight as { [key: string]: React.CSSProperties })
+      }
       language={match[1]}
     >
       {String(children).trim()}
@@ -156,7 +145,7 @@ function Article(props: ArticleProps) {
       ) : (
         <ReactMarkdown
           components={{
-            code: Code,
+            code: Code as CodeComponent,
             h2: (properties) => Heading(properties, setCurrentHeading),
             h3: (properties) => Heading(properties, setCurrentHeading),
           }}

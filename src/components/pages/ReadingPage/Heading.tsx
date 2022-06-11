@@ -1,9 +1,14 @@
 import React, { useRef, createElement, useEffect, useCallback } from 'react';
 
-function Heading(
+export interface HeadingInfo {
+  level: number;
+  content: string;
+}
+
+const Heading = (
   properties: { children?: React.ReactNode; level: number },
   setCurrentHeading: Function,
-) {
+) => {
   const { children, level } = properties;
   const ref = useRef<HTMLHeadingElement | undefined>(undefined);
 
@@ -29,6 +34,6 @@ function Heading(
   }, [ref.current]);
 
   return createElement(`h${level}`, { id: String(children).trim(), ref }, String(children).trim());
-}
+};
 
 export default Heading;

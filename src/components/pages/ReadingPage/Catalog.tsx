@@ -1,12 +1,37 @@
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../../app/store';
-import { Heading } from './ReadingPage';
+import { HeadingInfo } from './Heading';
+
+export interface CatalogItemProps {
+  key: string;
+  href: string;
+  heading: HeadingInfo;
+  level: number;
+  currentHeading: string;
+}
+
+const StyledCatalogItem = styled.a<CatalogItemProps>`
+  display: block;
+  margin: 5px ${(props) => `${(props.level - 1) * 1.5}em`};
+  border-left: ${(props) => (props.heading.content === props.currentHeading ? '5px' : '0')} solid
+    ${(props) => props.theme.primaryColor};
+  color: ${(props) =>
+    props.heading.content === props.currentHeading ? props.theme.primaryColor : 'inherit'};
+
+  &:active {
+    color: ${(props) => props.theme.primaryColor};
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.surfaceColor};
+  }
+`;
 
 export interface CatalogProps {
   catalogVisible?: boolean;
-  headings: Heading[];
-  currentHeading: string;
+  headings?: HeadingInfo[];
+  currentHeading?: string;
 }
 
 const StyledCatalog = styled.nav<CatalogProps>`
@@ -39,26 +64,6 @@ const StyledCatalog = styled.nav<CatalogProps>`
   }
 `;
 
-export interface CatalogItemProps {}
-
-const isCurrentHeading = (props) => props.heading.content === props.currentHeading;
-
-const StyledCatalogItem = styled.a`
-  display: block;
-  margin: 5px ${(props) => `${(props.level - 1) * 1.5}em`};
-  border-left: ${(props) => (props.heading.content === props.currentHeading ? '5px' : '0')} solid
-    ${(props) => props.theme.primaryColor};
-  color: ${(props) => (isCurrentHeading(props) ? props.theme.primaryColor : 'inherit')};
-
-  &:active {
-    color: ${(props) => props.theme.primaryColor};
-  }
-
-  &:hover {
-    background-color: ${(props) => props.theme.surfaceColor};
-  }
-`;
-
 function Catalog(props: CatalogProps) {
   const { headings, currentHeading } = props;
 
@@ -66,11 +71,11 @@ function Catalog(props: CatalogProps) {
 
   return (
     <StyledCatalog catalogVisible={catalogVisible}>
-      {headings.map((heading) => (
+      {headings?.map((heading) => (
         <StyledCatalogItem
           href={`#${heading.content}`}
           key={heading.content}
-          currentHeading={currentHeading}
+          currentHeading={currentHeading ?? ''}
           level={heading.level}
           heading={heading}
         >
