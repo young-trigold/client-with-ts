@@ -5,7 +5,7 @@ const addMediaEffect =
   (
     callback: React.MouseEventHandler<HTMLElement>,
     sound = textPressSoundSrc,
-    vibrateDuration = 200,
+    vibrateDuration = 20,
   ) =>
   (event: React.MouseEvent<HTMLElement>) => {
     callback(event);

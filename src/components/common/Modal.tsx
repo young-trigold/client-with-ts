@@ -14,8 +14,8 @@ const StyledModal = styled.div<ModalProps>`
   padding: 1em;
   min-width: 300px;
   background-color: ${(props) => props.theme.foregroundColor};
-  border-radius: 4px;
-  box-shadow: 5px 0px 15px ${(props) => props.theme.shadowColor};
+  border-radius: 8px;
+  box-shadow: 1px 1px 4px ${(props) => props.theme.shadowColor};
   z-index: 5;
   transition: all 0.3s ease;
   position: relative;

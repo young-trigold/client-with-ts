@@ -37,7 +37,7 @@ export interface MessageProps {
 const StyledMessage = styled.div<MessageProps>`
   margin: 0.5em 1em;
   border-radius: 4px;
-  box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
+  box-shadow: 1px 1px 3px ${(props) => props.theme.shadowColor};
   background-color: ${(props) => props.theme.surfaceColor};
   color: ${(props) => () => {
     if (props.state === 'warn') {

@@ -11,7 +11,7 @@ const StyledFooter = styled.footer`
   justify-content: space-around;
 
   @media (max-width: 767px) {
-    margin-bottom: 2em;
+    padding-bottom: 1em;
     flex-direction: column;
     background-color: ${(props) => props.theme.backgroundColor};
   }
