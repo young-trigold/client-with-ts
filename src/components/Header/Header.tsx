@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 
 import px from '../../utils/realPixel';
 import Navigation from './Navigation';
