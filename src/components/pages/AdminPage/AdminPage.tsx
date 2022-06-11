@@ -8,6 +8,9 @@ import NewNoteOption from './NewNoteOption';
 import LoadingIndicator from '../../LoadingIndicator/LoadingIndicator';
 import AdminBody from './AdminBody';
 import NewTagOption from './NewTagOption';
+import { NoteInfo } from '../NotePage/NoteShow';
+import { ArticleInfo, ArticlesByTag } from '../HomePage/HomePage';
+import { ChapterInfo } from '../ChapterListPage/ChapterListPage';
 
 const StyledAdminPage = styled.div`
   height: 100vh;
@@ -32,7 +35,7 @@ const NavigationBarTitle = styled.h2`
   font-size: 18px;
 `;
 
-const OptionContainer = styled.ol`
+const OptionContainer = styled.ol<{ currentIndex: number }>`
   user-select: none;
   padding-left: 0;
   margin-left: 2em;
@@ -68,23 +71,29 @@ const Option = styled.li`
   }
 `;
 
-function AdminPage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [noteOptions, setNoteOptions] = useState([]);
-  const [chapters, setChapters] = useState([]);
-  const [tagOptions, setTagOptions] = useState([]);
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
+export interface NoteOption {
+  _id: string;
+  title: string;
+}
 
+const AdminPage = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [noteOptions, setNoteOptions] = useState<NoteOption[]>([]);
+  const [chapters, setChapters] = useState<ChapterInfo[][]>([]);
+  const [tagOptions, setTagOptions] = useState<string[]>([]);
+  const [articles, setArticles] = useState<ArticleInfo[][]>([]);
+  const [loading, setLoading] = useState(true);
   useDocumentTitle('好久不见');
 
   useEffect(() => {
-    Promise.all([axios.get('/api/notes'), axios.ge4t('/api/articles')])
+    Promise.all([axios.get('/api/notes'), axios.get('/api/articles')])
       .then((response) => {
-        setNoteOptions(response[0].data?.map((note) => ({ title: note.title, _id: note._id })));
-        setChapters(response[0].data?.map((note) => note.chapters));
-        setTagOptions(response[1].data?.map((tag) => tag._id));
-        setArticles(response[1].data?.map((tag) => tag.articles));
+        setNoteOptions(
+          response[0].data?.map((note: NoteInfo) => ({ title: note.title, _id: note._id })),
+        );
+        setChapters(response[0].data?.map((note: NoteInfo) => note.chapters));
+        setTagOptions(response[1].data?.map((tag: ArticlesByTag) => tag._id));
+        setArticles(response[1].data?.map((tag: ArticlesByTag) => tag.articles));
       })
       .catch((error) => {
         message.error(error?.response?.data?.message || error.message);
@@ -100,7 +109,7 @@ function AdminPage() {
         <div>
           <NavigationBarTitle>我的笔记</NavigationBarTitle>
           <OptionContainer currentIndex={currentIndex}>
-            {noteOptions.map((noteOption, i) => (
+            {noteOptions?.map((noteOption, i) => (
               <Option key={noteOption._id} onClick={() => setCurrentIndex(i)}>
                 {noteOption.title}
               </Option>
@@ -133,6 +142,6 @@ function AdminPage() {
       />
     </StyledAdminPage>
   );
-}
+};
 
 export default AdminPage;

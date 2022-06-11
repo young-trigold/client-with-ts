@@ -5,13 +5,12 @@ import { message } from '../../Message/Message';
 import { Upload } from '../../common/Input';
 import Modal from '../../common/Modal';
 import { StyledButtonBar, Button } from '../../common/Button';
+import { NoteOption } from './AdminPage';
 
 export interface AddChapterModalProps {
   isModalVisible: boolean;
   setIsModalVisible: Function;
-  currentOption: {
-    _id: string;
-  };
+  currentOption: NoteOption;
 }
 
 function AddChapterModal(props: AddChapterModalProps) {

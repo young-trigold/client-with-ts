@@ -7,8 +7,9 @@ import { StyledTable, StyledRow } from './StyledTable';
 import { StyledButtonBar, IconButton, Button } from '../../common/Button';
 import AddArticleModal from './AddArticleModal';
 import AddIcon from '../../../static/icon/plus.png';
+import { ArticleInfo } from '../HomePage/HomePage';
 
-function AddButton(props) {
+const AddButton = (props: { currentOption: string }) => {
   const { currentOption } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -26,7 +27,7 @@ function AddButton(props) {
       />
     </>
   );
-}
+};
 
 const StyledArticleBody = styled.main`
   flex: 8;
@@ -40,10 +41,16 @@ const StyledArticleBody = styled.main`
   }
 `;
 
-function ArticleBody(props) {
+export interface ArticleBodyProps {
+  currentIndex: number;
+  articles: ArticleInfo[][];
+  tagOptions: string[];
+}
+
+function ArticleBody(props: ArticleBodyProps) {
   const { currentIndex, articles, tagOptions } = props;
 
-  const deleteItem = (articleId) => {
+  const deleteItem = (articleId: string) => {
     const deleteArticle = async () => {
       try {
         await axios.delete(`/api/articles/${articleId}`, {

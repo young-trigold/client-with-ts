@@ -10,7 +10,7 @@ import { message } from '../../Message/Message';
 import AddIcon from '../../../static/icon/plus.png';
 import CancelIcon from '../../../static/icon/cancel.png';
 import { ChapterInfo } from '../ChapterListPage/ChapterListPage';
-import { NoteInfo } from '../NotePage/NoteShow';
+import { NoteOption } from './AdminPage';
 
 const StyledChapterBody = styled.main`
   flex: 8;
@@ -31,10 +31,10 @@ export interface OptionInfo {
 }
 
 export interface AddButtonProps {
-  currentOption: OptionInfo;
+  currentOption: NoteOption;
 }
 
-function AddButton(props: AddButtonProps) {
+const AddButton = (props: AddButtonProps) => {
   const { currentOption } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -57,12 +57,12 @@ function AddButton(props: AddButtonProps) {
       />
     </>
   );
-}
+};
 
 export interface ChapterBodyProps {
   currentIndex: number;
-  chapters: ChapterInfo[];
-  noteOptions: NoteInfo[];
+  chapters: ChapterInfo[][];
+  noteOptions: NoteOption[];
 }
 
 function ChapterBody(props: ChapterBodyProps) {

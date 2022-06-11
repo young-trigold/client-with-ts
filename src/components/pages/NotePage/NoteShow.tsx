@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import useLoadResource from '../../../hooks/useLoadResource';
 import LoadingIndicator from '../../LoadingIndicator/LoadingIndicator';
+import { ChapterInfo } from '../ChapterListPage/ChapterListPage';
 import Note from './Note';
 
 const StyledNoteShow = styled.section`
@@ -14,6 +15,7 @@ const StyledNoteShow = styled.section`
 export interface NoteInfo {
   _id: string;
   title: string;
+  chapters: ChapterInfo[];
 }
 
 const NoteShow = () => {
