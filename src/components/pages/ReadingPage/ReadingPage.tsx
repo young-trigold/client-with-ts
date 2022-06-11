@@ -1,18 +1,20 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useDocumentTitle from '../../../hooks/useDocumentTitle';
 import useLoadResource from '../../../hooks/useLoadResource';
 
 import Header from '../../Header/Header';
-import Footer from '../../Footer/Footer';
+
 import Aside from './Aside';
 import Article from './Article';
-import Catalog from './Catalog';
 import CatalogButton from './CatalogButton';
-import Comment from './Comment';
-import CommentList from './CommentList';
 import { HeadingInfo } from './Heading';
+
+const Catalog = React.lazy(() => import('./Catalog'));
+const Comment = React.lazy(() => import('./Comment'));
+const CommentList = React.lazy(() => import('./CommentList'));
+const Footer = React.lazy(() => import('../../Footer/Footer'));
 
 const StyledReadingPage = styled.div`
   @media (max-width: 530px) {
