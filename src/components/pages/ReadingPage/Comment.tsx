@@ -91,7 +91,8 @@ function Comment(props: CommmentProps) {
 
   // eslint-disable-next-line consistent-return
   const postComment = async () => {
-    const user = JSON.parse(localStorage.getItem('user') ?? '');
+    const rawUser = localStorage.getItem('user');
+    const user = rawUser && JSON.parse(rawUser);
 
     if (!user) return message.warn('您还没有登录!');
     if (!comment) return message.warn('内容不可为空!');

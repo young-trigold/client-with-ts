@@ -12,7 +12,8 @@ function ProtectPage() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const user = JSON.parse(localStorage.getItem('user') ?? '');
+      const rawUser = localStorage.getItem('user');
+      const user = rawUser && JSON.parse(rawUser);
 
       if (user) {
         try {
