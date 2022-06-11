@@ -19,15 +19,16 @@ const StyledArticle = styled.article`
     ${(props) => props.theme.foregroundColor}
   );
   border-radius: 10px;
-  box-shadow: 0px 0px 5px ${(props) => props.theme.shadowColor};
   transition: all 0.3s ease-out;
   position: relative;
   margin-left: -1em;
   user-select: none;
+  touch-action: manipulation;
+  box-shadow: 1px 1px 4px ${(props) => props.theme.shadowColor};
 
   &:hover {
     z-index: 1;
-    box-shadow: 5px 0px 15px ${(props) => props.theme.shadowColor};
+    box-shadow: 1px 1px 8px ${(props) => props.theme.shadowColor};
     transform: translateY(-1em);
   }
 `;
