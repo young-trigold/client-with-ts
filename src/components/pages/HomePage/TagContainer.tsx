@@ -1,25 +1,21 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 
 export interface TagContainerProps {
   currentIndex: number;
   setCurrentIndex?: Function;
-  curTop?: number;
   tags?: string[];
 }
 
 const StyledTagContainer = styled.nav<TagContainerProps>`
   position: sticky;
-  top: ${(props) => `${props.curTop}px`};
+  top: 45.99px;
   z-index: 2;
-  box-shadow: inset 0 0 4px ${(props) => props.theme.shadowColor};
   background-color: transparent;
   user-select: none;
   display: flex;
   flex-wrap: wrap;
   background-color: ${(props) => props.theme.foregroundColor};
   justify-content: center;
-  box-shadow: 0px 0px 2px rgb(0 0 0 / 0.5);
 
   & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
     color: ${(props) => props.theme.backgroundColor};
@@ -56,24 +52,8 @@ const StyledTag = styled.button`
 const TagContainer = (props: TagContainerProps) => {
   const { currentIndex, setCurrentIndex, tags } = props;
 
-  const [curTop, setcurTop] = useState(50);
-
-  const setTopWhileScroll = () => {
-    if (window.scrollY > 54) {
-      setcurTop(0);
-    } else {
-      setcurTop(50);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', setTopWhileScroll);
-
-    return () => window.removeEventListener('scroll', setTopWhileScroll);
-  }, [window.scrollY]);
-
   return (
-    <StyledTagContainer currentIndex={currentIndex} curTop={curTop}>
+    <StyledTagContainer currentIndex={currentIndex}>
       {tags?.map((tag, i) => (
         <StyledTag key={tag} onClick={() => setCurrentIndex?.(i)}>
           {tag}

@@ -41,7 +41,7 @@ function RouterPart() {
             path="reading/articles/:itemId"
             element={
               <Suspense fallback={<LoadingPage />}>
-                <ReadingPage />
+                <ReadingPage isChapter={false} />
               </Suspense>
             }
           />

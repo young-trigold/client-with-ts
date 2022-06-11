@@ -39,7 +39,7 @@ const HomePage = () => {
 
   return (
     <StyledHomePage>
-      <Header atHomePage />
+      <Header />
       <TagContainer
         currentIndex={currentIndex}
         setCurrentIndex={setCurrentIndex}

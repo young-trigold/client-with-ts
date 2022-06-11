@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 import debounce from '../../utils/debounce';
 import addMediaEffect from '../../utils/addMediaEffect';
-import IconPressSound from '../../static/audio/icon-press.mp3';
+import TextPressSoundSrc from '../../static/audio/text-press.mp3';
+import IconPressSoundSrc from '../../static/audio/icon-press.mp3';
 
 import { State, Size } from '../../config/config';
 
@@ -147,7 +148,7 @@ const Button = (props: ButtonProps) => {
       return;
     }
 
-    if (onClick) addMediaEffect(onClick)(event);
+    if (onClick) addMediaEffect(onClick, TextPressSoundSrc)(event);
   }, 600);
 
   return (
@@ -200,7 +201,7 @@ const IconButton = (props: IconButtonProps) => {
   const { icon, width, description, handler } = props;
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (handler) addMediaEffect(handler, IconPressSound, 20)(event);
+    if (handler) addMediaEffect(handler, IconPressSoundSrc, 20)(event);
   };
 
   return (

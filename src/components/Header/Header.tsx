@@ -6,16 +6,9 @@ import Navigation from './Navigation';
 import SearchBox from './SearchBox';
 import ToggleThemeButton from './ToggleThemeButton';
 
-export interface HeaderProps {
-  atHomePage?: boolean;
-  isVisible?: boolean;
-  children?: React.ReactNode;
-}
-
-const StyledHeader = styled.header<HeaderProps>`
+const StyledHeader = styled.header`
   min-width: 340px;
-  overflow: ${(props) => (props.isVisible ? 'visible' : 'hidden')};
-  height: ${(props) => (props.isVisible ? '50px' : '0')};
+  height: 46px;
   padding: 0 1em;
   display: flex;
   justify-content: space-between;
@@ -28,33 +21,12 @@ const StyledHeader = styled.header<HeaderProps>`
   transition: all 0.3s ease-in-out;
 `;
 
-const Header = (props: HeaderProps) => {
-  const { atHomePage } = props;
-  const [isVisible, setIsVisible] = useState(true);
-
-  if (atHomePage) {
-    const hideHeaderWhileScroll = () => {
-      if (window.scrollY > 51.999) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-    };
-
-    useEffect(() => {
-      window.addEventListener('scroll', hideHeaderWhileScroll);
-
-      return () => window.removeEventListener('scroll', hideHeaderWhileScroll);
-    }, [window.scrollY]);
-  }
-
-  return (
-    <StyledHeader isVisible={isVisible}>
-      <Navigation />
-      <SearchBox />
-      <ToggleThemeButton />
-    </StyledHeader>
-  );
-};
+const Header = () => (
+  <StyledHeader>
+    <Navigation />
+    <SearchBox />
+    <ToggleThemeButton />
+  </StyledHeader>
+);
 
 export default Header;
