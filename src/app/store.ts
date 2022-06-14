@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import themeModeReducer from '../theme/themeModeSlice';
-import catalogVisibleReducer from '../components/pages/ReadingPage/CataLogVisibleSlice';
+import catalogVisibleReducer from '../pages/ReadingPage/CataLogVisibleSlice';
 import messagesReducer from '../components/Message/messagesSlice';
 
 const store = configureStore({

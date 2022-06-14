@@ -6,7 +6,7 @@ import LoginButton from './LoginButton';
 import CancelIcon from '../../static/icon/cancel.png';
 import MenuIcon from '../../static/icon/menu.png';
 import IconPressSound from '../../static/audio/icon-press.mp3';
-import { Button } from '../common/Button';
+import { Button } from '../Button';
 import addMediaEffect from '../../utils/addMediaEffect';
 
 const MenuButton = styled.button`

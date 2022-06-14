@@ -3,7 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 
 import SearchImage from '../../static/icon/search.png';
-import { Input } from '../common/Input';
+import { Input } from '../Input';
 import { message } from '../Message/Message';
 import debounce from '../../utils/debounce';
 

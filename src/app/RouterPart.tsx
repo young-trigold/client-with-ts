@@ -2,16 +2,14 @@ import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 import { MessageList } from '../components/Message/Message';
-import HomePage from '../components/pages/HomePage/HomePage';
-import LoadingPage from '../components/LoadingIndicator/LoadingIndicator';
-import NotFoundPage from '../components/NotFound/NotFoundPage';
+import HomePage from '../pages/HomePage/HomePage';
+import LoadingPage from '../components/LoadingIndicator';
+import NotFoundPage from '../components/NotFoundPage';
 
-const NotePage = React.lazy(() => import('../components/pages/NotePage/NotePage'));
-const ReadingPage = React.lazy(() => import('../components/pages/ReadingPage/ReadingPage'));
-const ChapterListPage = React.lazy(
-  () => import('../components/pages/ChapterListPage/ChapterListPage'),
-);
-const ProtectPage = React.lazy(() => import('../components/pages/AdminPage/ProtectPage'));
+const NotePage = React.lazy(() => import('../pages/NotePage/NotePage'));
+const ReadingPage = React.lazy(() => import('../pages/ReadingPage/ReadingPage'));
+const ChapterListPage = React.lazy(() => import('../pages/ChapterListPage/ChapterListPage'));
+const ProtectPage = React.lazy(() => import('../pages/AdminPage/ProtectPage'));
 
 function RouterPart() {
   return (

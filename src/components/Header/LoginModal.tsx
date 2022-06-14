@@ -4,9 +4,9 @@ import axios from 'axios';
 
 import { message } from '../Message/Message';
 import { validateName, validatePwd } from './validate';
-import { Input } from '../common/Input';
-import Modal from '../common/Modal';
-import { Button } from '../common/Button';
+import { Input } from '../Input';
+import Modal from '../Modal';
+import { Button } from '../Button';
 
 import CancelIcon from '../../static/icon/cancel.png';
 import EyeOpen from '../../static/icon/eye-open.png';

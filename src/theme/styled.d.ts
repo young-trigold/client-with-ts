@@ -1,5 +1,8 @@
 import 'styled-components';
 
+export type State = 'dange' | 'warn' | 'success';
+export type Size = 'middle' | 'large' | 'small';
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     primaryColor: string;
