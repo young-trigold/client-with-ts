@@ -17,6 +17,7 @@ const StyledHomePage = styled.div`
   transition: all 0.3s;
   font-size: 1em;
   min-height: 100vh;
+  position: relative;
 `;
 
 export interface ArticleInfo {

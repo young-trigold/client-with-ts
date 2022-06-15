@@ -10,7 +10,7 @@ const Heading = (
   setCurrentHeading: Function,
 ) => {
   const { children, level } = properties;
-  const ref = useRef<HTMLHeadingElement | undefined>(undefined);
+  const ref = useRef<HTMLHeadingElement>(null);
 
   const handleCurrentHeadingChange = useCallback(() => {
     window.requestAnimationFrame(() => {
