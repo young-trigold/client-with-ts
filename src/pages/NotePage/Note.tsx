@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { NoteInfo } from './NoteShow';
 
 const StyledNote = styled.ol`
+  box-sizing: border-box;
   list-style: none;
   width: 220px;
   height: 300px;
@@ -24,28 +25,18 @@ const StyledNote = styled.ol`
   padding: 1em;
   cursor: pointer;
   z-index: 2;
+  border-left: 10px solid ${(props) => props.theme.primaryColor};
 
   &:hover {
     box-shadow: 5px 0px 5px ${(props) => props.theme.shadowColor};
     transform: rotateY(20deg);
     & > li {
-      width: 220px !important;
+      width: 210px !important;
     }
   }
 
   &:active {
     color: ${(props) => props.theme.activeColor};
-  }
-
-  &:before {
-    display: block;
-    position: absolute;
-    content: '';
-    z-index: 11;
-    left: 0;
-    width: 10px;
-    height: 100%;
-    background-color: ${(props) => props.theme.primaryColor};
   }
 `;
 
@@ -72,10 +63,10 @@ const Note = (props: NoteProps) => {
   return (
     <StyledNote onClick={handleNavigate}>
       <h3>{note.title}</h3>
-      <StyledPage style={{ zIndex: 1, width: '224px' }} />
-      <StyledPage style={{ zIndex: 0, width: '228px' }} />
-      <StyledPage style={{ zIndex: -1, width: '232px' }} />
-      <StyledPage style={{ zIndex: -2, width: '236px' }} />
+      <StyledPage style={{ zIndex: 1, width: '214px' }} />
+      <StyledPage style={{ zIndex: 0, width: '218px' }} />
+      <StyledPage style={{ zIndex: -1, width: '222px' }} />
+      <StyledPage style={{ zIndex: -2, width: '226px' }} />
     </StyledNote>
   );
 };
