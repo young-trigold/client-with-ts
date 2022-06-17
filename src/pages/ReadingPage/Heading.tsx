@@ -1,4 +1,4 @@
-import React, { useRef, createElement, useEffect, useCallback } from 'react';
+import React, { useRef, createElement, useEffect } from 'react';
 
 export interface HeadingInfo {
   level: number;
@@ -12,7 +12,7 @@ const Heading = (
   const { children, level } = properties;
   const ref = useRef<HTMLHeadingElement>(null);
 
-  const handleCurrentHeadingChange = useCallback(() => {
+  const handleCurrentHeadingChange = () =>
     window.requestAnimationFrame(() => {
       if (ref.current) {
         const rect = ref.current.getBoundingClientRect();
@@ -23,7 +23,6 @@ const Heading = (
         }
       }
     });
-  }, []);
 
   useEffect(() => {
     window.addEventListener('scroll', handleCurrentHeadingChange);
