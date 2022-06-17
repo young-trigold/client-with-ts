@@ -26,6 +26,7 @@ const StyledNote = styled.ol`
   cursor: pointer;
   z-index: 2;
   border-left: 10px solid ${(props) => props.theme.primaryColor};
+  touch-action: manipulation;
 
   &:hover {
     box-shadow: 5px 0px 5px ${(props) => props.theme.shadowColor};
@@ -43,7 +44,7 @@ const StyledNote = styled.ol`
 const StyledPage = styled.li`
   width: 220px;
   height: 300px;
-  border-right: 1px solid ${(props) => props.theme.borderColor};
+  border-right: 1px solid #666666;
   border-radius: 2px 16px 16px 2px;
   position: absolute;
 `;

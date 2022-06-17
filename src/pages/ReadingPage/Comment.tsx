@@ -57,22 +57,20 @@ const StyledTextArea = styled.textarea`
   line-height: 1.5em;
   height: fit-content;
   background-color: ${(props) => props.theme.backgroundColor};
-  border: 2px solid ${(props) => props.theme.surfaceColor};
+  border: 1px solid ${(props) => props.theme.borderColor};
   border-radius: 0.5em;
   caret-color: ${(props) => props.theme.warnColor};
   color: ${(props) => props.theme.primaryColor};
   transition: all 0.3s;
+  resize: none;
 
+  &:active,
   &:focus {
-    border: 2px solid ${(props) => props.theme.primaryColor};
+    border: 1px solid ${(props) => props.theme.activeColor};
   }
 
   &:hover {
-    box-shadow: 0px 0px 6px ${(props) => props.theme.shadowColor};
-  }
-
-  &:active {
-    box-shadow: 0px 0px 6px ${(props) => props.theme.shadowColor};
+    border: 1px solid ${(props) => props.theme.hoverColor};
   }
 `;
 
