@@ -7,8 +7,8 @@ const LoginButton = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
   const handleClick = useCallback(() => {
-    setIsLoginModalVisible(true);
-  }, [setIsLoginModalVisible]);
+    setIsLoginModalVisible(!isLoginModalVisible);
+  }, [setIsLoginModalVisible, isLoginModalVisible]);
 
   return (
     <>
