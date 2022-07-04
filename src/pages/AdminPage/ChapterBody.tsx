@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { StyledTable, StyledRow } from './StyledTable';
@@ -34,13 +34,13 @@ export interface AddButtonProps {
   currentOption: NoteOption;
 }
 
-const AddButton = (props: AddButtonProps) => {
+const AddButton = React.memo((props: AddButtonProps) => {
   const { currentOption } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setIsModalVisible(!isModalVisible);
-  };
+  }, [setIsModalVisible]);
 
   return (
     <>
@@ -57,7 +57,7 @@ const AddButton = (props: AddButtonProps) => {
       />
     </>
   );
-};
+});
 
 export interface ChapterBodyProps {
   currentIndex: number;
@@ -68,27 +68,30 @@ export interface ChapterBodyProps {
 function ChapterBody(props: ChapterBodyProps) {
   const { currentIndex, chapters, noteOptions } = props;
 
-  const deleteItem = (chapterId: string) => {
-    const deleteChapter = async () => {
-      try {
-        await axios.delete(`/api/notes/${noteOptions[currentIndex]._id}/${chapterId}`, {
-          headers: {
-            Authorization: `Bearer ${JSON.parse(localStorage.getItem('user') ?? '')?.token}`,
-          },
-        });
+  const deleteItem = useCallback(
+    (chapterId: string) => {
+      const deleteChapter = async () => {
+        try {
+          await axios.delete(`/api/notes/${noteOptions[currentIndex]._id}/${chapterId}`, {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(localStorage.getItem('user') ?? '')?.token}`,
+            },
+          });
 
-        message.success('删除成功!');
-        window.location.reload();
-      } catch (error) {
-        if (axios.isAxiosError(error))
-          return message.error((error.response?.data as { message: string })?.message);
-        if (error instanceof Error) return message.error(error.message);
-        return message.error(JSON.stringify(error));
-      }
-    };
+          message.success('删除成功!');
+          window.location.reload();
+        } catch (error) {
+          if (axios.isAxiosError(error))
+            return message.error((error.response?.data as { message: string })?.message);
+          if (error instanceof Error) return message.error(error.message);
+          return message.error(JSON.stringify(error));
+        }
+      };
 
-    deleteChapter();
-  };
+      deleteChapter();
+    },
+    [noteOptions],
+  );
 
   return (
     <StyledChapterBody>

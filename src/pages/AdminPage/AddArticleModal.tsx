@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../../components/Message/Message';
 import { StyledButtonBar, Button } from '../../components/Button';
 import Modal from '../../components/Modal';
 import { Upload } from '../../components/Input';
+import debounce from '../../utils/debounce';
 
 export interface AddArticleModalProps {
   isModalVisible: boolean;
@@ -14,14 +15,20 @@ export interface AddArticleModalProps {
 
 function AddArticleModal(props: AddArticleModalProps) {
   const { isModalVisible, currentOption, setIsModalVisible } = props;
-  const [file, setFile] = useState<File | undefined>(undefined);
 
-  const handleUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) setFile(event.target.files[0]);
-  };
+  const [file, setFile] = useState<File>();
 
-  const handleSubmit = () => {
-    if (file) {
+  const handleUploadChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) setFile(event.target.files[0]);
+    },
+    [setFile],
+  );
+
+  const handleSubmit = useCallback(
+    debounce(() => {
+      if (!file) return message.warn('文件不能为空!');
+
       const formData = new FormData();
       formData.append('file', file);
       formData.append('tag', currentOption);
@@ -45,29 +52,32 @@ function AddArticleModal(props: AddArticleModalProps) {
       };
 
       postChapter();
-    } else {
-      message.warn('文件不能为空!');
-    }
-  };
+    }, 200),
+    [file],
+  );
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    setFile(undefined);
-  };
+  const handleCancel = useCallback(
+    debounce(() => {
+      setIsModalVisible(false);
+      setFile(undefined);
+    }, 200),
+    [setIsModalVisible, setFile],
+  );
 
   return (
     <Modal isModalVisible={isModalVisible}>
-      <div>
+      <form style={{ width: '100%', textAlign: 'center' }}>
         <Upload accept=".md" onChange={handleUploadChange} title="上传文章" file={file} />
-      </div>
-      <StyledButtonBar>
-        <Button onClick={handleSubmit}>提交</Button>
-        <Button onClick={handleCancel} state="dange">
-          取消
-        </Button>
-      </StyledButtonBar>
+
+        <StyledButtonBar>
+          <Button onClick={handleSubmit}>提交</Button>
+          <Button onClick={handleCancel} state="dange">
+            取消
+          </Button>
+        </StyledButtonBar>
+      </form>
     </Modal>
   );
 }
 
-export default AddArticleModal;
+export default React.memo(AddArticleModal);

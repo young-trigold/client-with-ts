@@ -1,5 +1,6 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../../components/Message/Message';
@@ -34,60 +35,59 @@ const NewTagOption = () => {
   const [file, setFile] = useState<File | undefined>(undefined);
   const [tag, setTag] = useState('');
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setIsModalVisible(!isModalVisible);
-  };
+  }, [setIsModalVisible]);
 
-  const handleCancel = () => {
+  const handleCancel = useCallback(() => {
     setFile(undefined);
     setTag('');
     setIsModalVisible(false);
-  };
+  }, [setFile, setTag, setIsModalVisible]);
 
-  const handleUploadChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) setFile(event.target.files[0]);
-  };
+  const handleUploadChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (event.target.files) setFile(event.target.files[0]);
+    },
+    [setFile],
+  );
 
-  const handleSubmit = async () => {
-    if (tag) {
-      if (file) {
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('tag', tag);
-        formData.append('date', new Date().toLocaleDateString());
+  const handleSubmit = useCallback(async () => {
+    if (!tag || !file) return message.warn('文章或标签不能为空!');
 
-        const postChapter = async () => {
-          try {
-            await axios.post('/api/articles/', formData, {
-              headers: {
-                'Content-Type': 'multipart/form-data',
-              },
-            });
-            message.success('上传成功!');
-            window.location.reload();
-          } catch (error) {
-            if (axios.isAxiosError(error))
-              return message.error((error.response?.data as { message: string })?.message);
-            if (error instanceof Error) return message.error(error.message);
-            return message.error(JSON.stringify(error));
-          }
-        };
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('tag', tag);
+    formData.append('date', new Date().toLocaleDateString());
 
-        postChapter();
-      } else {
-        message.warn('文章不能为空!');
+    const postChapter = async () => {
+      try {
+        await axios.post('/api/articles/', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+        message.success('上传成功!');
+        window.location.reload();
+      } catch (error) {
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
       }
-    } else {
-      message.warn('标签不能为空!');
-    }
-  };
+    };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = event.target;
-    if (value) {
-      setTag(value);
-    }
-  };
+    postChapter();
+  }, [tag, file]);
+
+  const handleInputChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const { value } = event.target;
+
+      if (value) setTag(value);
+    },
+    [setTag],
+  );
 
   return (
     <>
@@ -95,24 +95,24 @@ const NewTagOption = () => {
         <img src={AddIcon} alt="添加标签" width="20" />
       </AddTagButton>
       <Modal isModalVisible={isModalVisible}>
-        <div style={{ marginBottom: '1em' }}>
-          <span>标签名称:</span>
-          <Input size={10} maxLength={10} onChange={handleInputChange} />
-        </div>
+        <form style={{ width: '100%', textAlign: 'center' }}>
+          <section style={{ marginBottom: '1em' }}>
+            <label htmlFor="tag">标签名称:</label>
+            <Input id="tag" size={10} maxLength={10} onChange={handleInputChange} />
+          </section>
 
-        <div>
           <Upload accept=".md" onChange={handleUploadChange} title="上传文章" file={file!} />
-        </div>
 
-        <StyledButtonBar>
-          <Button onClick={handleSubmit}>提交</Button>
-          <Button onClick={handleCancel} state="dange">
-            取消
-          </Button>
-        </StyledButtonBar>
+          <StyledButtonBar>
+            <Button onClick={handleSubmit}>提交</Button>
+            <Button onClick={handleCancel} state="dange">
+              取消
+            </Button>
+          </StyledButtonBar>
+        </form>
       </Modal>
     </>
   );
 };
 
-export default NewTagOption;
+export default React.memo(NewTagOption);

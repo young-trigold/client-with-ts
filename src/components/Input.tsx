@@ -16,7 +16,7 @@ interface InputProps {
   maxLength?: number;
   inputSize?: Size;
   size?: number;
-  [key: string]: any;
+  id?: string;
 }
 
 const StyledInput = styled.input<InputProps>`
@@ -111,6 +111,7 @@ const Input = (props: InputProps) => {
     onChange,
     onFocus,
     value,
+    id,
   } = props;
 
   return (
@@ -124,6 +125,8 @@ const Input = (props: InputProps) => {
       onFocus={onFocus}
       type={type}
       value={value}
+      id={id}
+      autoComplete="off"
     />
   );
 };

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../../components/Message/Message';
@@ -10,13 +10,13 @@ import AddArticleModal from './AddArticleModal';
 import AddIcon from '../../static/icon/plus.png';
 import { ArticleInfo } from '../HomePage/HomePage';
 
-const AddButton = (props: { currentOption: string }) => {
+const AddButton = React.memo((props: { currentOption: string }) => {
   const { currentOption } = props;
   const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setIsModalVisible(true);
-  };
+  }, [setIsModalVisible]);
 
   return (
     <>
@@ -28,7 +28,7 @@ const AddButton = (props: { currentOption: string }) => {
       />
     </>
   );
-};
+});
 
 const StyledArticleBody = styled.main`
   flex: 8;
@@ -51,7 +51,7 @@ export interface ArticleBodyProps {
 function ArticleBody(props: ArticleBodyProps) {
   const { currentIndex, articles, tagOptions } = props;
 
-  const deleteItem = (articleId: string) => {
+  const deleteItem = useCallback((articleId: string) => {
     const deleteArticle = async () => {
       try {
         await axios.delete(`/api/articles/${articleId}`, {
@@ -70,7 +70,7 @@ function ArticleBody(props: ArticleBodyProps) {
     };
 
     deleteArticle();
-  };
+  }, []);
 
   return (
     <StyledArticleBody>
@@ -102,4 +102,4 @@ function ArticleBody(props: ArticleBodyProps) {
   );
 }
 
-export default ArticleBody;
+export default React.memo(ArticleBody);
