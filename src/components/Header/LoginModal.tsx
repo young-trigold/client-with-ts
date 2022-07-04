@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import styled from 'styled-components';
 import React, { useCallback, useState } from 'react';
 import axios from 'axios';
@@ -6,18 +7,11 @@ import { message } from '../Message/Message';
 import { validateName, validatePwd } from './validate';
 import { Input } from '../Input';
 import Modal from '../Modal';
-import { Button } from '../Button';
+import { Button, StyledButtonBar } from '../Button';
 
 import CancelIcon from '../../static/icon/cancel.png';
 import EyeOpen from '../../static/icon/eye-open.png';
 import EyeClose from '../../static/icon/eye-close.png';
-
-const StyledButtonBar = styled.div`
-  width: 80%;
-  display: flex;
-  justify-content: space-evenly;
-  margin: 8px 0;
-`;
 
 const StyledCancelButton = styled.button`
   position: absolute;
@@ -39,6 +33,7 @@ const StyledTogglePwdIsVisibleButton = styled.button`
   background-color: transparent;
   padding: 0;
   position: absolute;
+  bottom: 0.3em;
   right: 1em;
   border: none;
 `;
@@ -46,7 +41,7 @@ const StyledTogglePwdIsVisibleButton = styled.button`
 const PwdInputContainer = styled.div`
   position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `;
 
 export interface LoginModalProps {
@@ -61,7 +56,7 @@ const LoginModal = (props: LoginModalProps) => {
 
   const togglePwdIsVisible = useCallback(() => {
     setIsPwdVisible(!isPwdVisible);
-  }, [setIsPwdVisible]);
+  }, [setIsPwdVisible, isPwdVisible]);
 
   const [name, setName] = useState('');
 
@@ -109,34 +104,39 @@ const LoginModal = (props: LoginModalProps) => {
     }
   }, [setIsLoginModalVisible, validateName, name, pwd]);
 
-  const handleLogin = useCallback(() => {
-    const login = async () => {
-      try {
-        const res = await axios.post(
-          '/api/login',
-          { name, pwd },
-          {
-            headers: {
-              'Content-Type': 'application/json',
+  const handleSubmit = useCallback(
+    (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+
+      const login = async () => {
+        try {
+          const res = await axios.post(
+            '/api/login',
+            { name, pwd },
+            {
+              headers: {
+                'Content-Type': 'application/json',
+              },
             },
-          },
-        );
+          );
 
-        message.success('登录成功!');
-        setName('');
-        setPwd('');
-        setIsLoginModalVisible(false);
-        localStorage.setItem('user', JSON.stringify(res.data));
-      } catch (error) {
-        if (axios.isAxiosError(error))
-          return message.error((error.response?.data as { message: string })?.message);
-        if (error instanceof Error) return message.error(error.message);
-        return message.error(JSON.stringify(error));
-      }
-    };
+          message.success('登录成功!');
+          setName('');
+          setPwd('');
+          setIsLoginModalVisible(false);
+          localStorage.setItem('user', JSON.stringify(res.data));
+        } catch (error) {
+          if (axios.isAxiosError(error))
+            return message.error((error.response?.data as { message: string })?.message);
+          if (error instanceof Error) return message.error(error.message);
+          return message.error(JSON.stringify(error));
+        }
+      };
 
-    if (validateName(name) && validatePwd(pwd)) login();
-  }, [name, pwd, setName, setPwd, setIsLoginModalVisible]);
+      if (validateName(name) && validatePwd(pwd)) login();
+    },
+    [name, pwd, setName, setPwd, setIsLoginModalVisible],
+  );
 
   return (
     <Modal isModalVisible={isLoginModalVisible}>
@@ -146,15 +146,29 @@ const LoginModal = (props: LoginModalProps) => {
       >
         <img src={CancelIcon} alt="取消" width="18" />
       </StyledCancelButton>
-      <form>
-        <div style={{ margin: '0.5em 0' }}>
-          <div>用户名:</div>
-          <Input value={name} onChange={handleNameChange} maxLength={10} placeholder="昵称" />
-        </div>
-        <div style={{ margin: '0.5em 0' }}>
-          <div>密码:</div>
+      <form onSubmit={handleSubmit}>
+        <section style={{ margin: '0.5em 0' }}>
+          <label htmlFor="username">
+            用户名:
+            <br />
+          </label>
+          <Input
+            id="username"
+            value={name}
+            onChange={handleNameChange}
+            maxLength={10}
+            placeholder="昵称"
+          />
+        </section>
+        <section style={{ margin: '0.5em 0' }}>
           <PwdInputContainer>
+            <label htmlFor="password">
+              密码:
+              <br />
+            </label>
+
             <Input
+              id="password"
               value={pwd}
               type={isPwdVisible ? 'text' : 'password'}
               maxLength={16}
@@ -165,13 +179,12 @@ const LoginModal = (props: LoginModalProps) => {
               <img alt="眼睛开合" src={isPwdVisible ? EyeOpen : EyeClose} width="16" />
             </StyledTogglePwdIsVisibleButton>
           </PwdInputContainer>
-        </div>
+        </section>
+        <StyledButtonBar>
+          <Button type="sumit">登录</Button>
+          <Button onClick={handleRegister}>注册</Button>
+        </StyledButtonBar>
       </form>
-
-      <StyledButtonBar>
-        <Button onClick={handleLogin}>登录</Button>
-        <Button onClick={handleRegister}>注册</Button>
-      </StyledButtonBar>
     </Modal>
   );
 };

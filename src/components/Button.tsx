@@ -12,6 +12,7 @@ export type ButtonType = 'elevated' | 'outlined' | 'text' | 'link';
 export type ButtonShape = 'rect' | 'rounded' | 'circular';
 
 export interface ButtonProps {
+  type?: string;
   buttonType?: ButtonType;
   state?: State;
   shape?: ButtonShape;
@@ -135,6 +136,7 @@ const StyledButton = styled.button<ButtonProps>`
 const Button = React.memo((props: ButtonProps) => {
   const {
     onClick,
+    type = 'button',
     buttonType = 'outlined',
     state,
     size = 'middle',
@@ -163,7 +165,7 @@ const Button = React.memo((props: ButtonProps) => {
       shape={shape}
       size={size}
       disabled={disabled}
-      type="button"
+      type={type}
     >
       {children}
     </StyledButton>
@@ -219,9 +221,9 @@ const IconButton = React.memo((props: IconButtonProps) => {
 });
 
 const StyledButtonBar = styled.div`
-  & > * {
-    margin: 0 0.5em;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
 `;
 
 export { Button, IconButton, StyledButtonBar };
