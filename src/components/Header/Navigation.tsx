@@ -73,7 +73,7 @@ const Navigation = () => {
       IconPressSound,
       20,
     ),
-    [setIsMenuVisible],
+    [setIsMenuVisible, isMenuVisible],
   );
 
   return (
