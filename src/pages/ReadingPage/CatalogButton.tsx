@@ -15,7 +15,7 @@ function CatalogButton() {
   const handleClick = useCallback(() => {
     setIsCacel(!isCacel);
     dispatch(toggleCatalogVisible());
-  }, [setIsCacel, dispatch]);
+  }, [setIsCacel, dispatch, isCacel]);
 
   return (
     <IconButton

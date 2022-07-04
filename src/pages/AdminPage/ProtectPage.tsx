@@ -16,7 +16,7 @@ function ProtectPage() {
       const userToken = getUserToken();
       if (!userToken) {
         setLoading(false);
-        return message.warn('请先登录！');
+        return message.warn('请先登录!');
       }
 
       try {
@@ -27,7 +27,7 @@ function ProtectPage() {
         });
 
         if (res.data.role === 'admin') setIsAdmin(true);
-        else message.warn('权限不足！');
+        else message.warn('权限不足!');
       } catch (error) {
         if (axios.isAxiosError(error))
           return message.error((error.response?.data as { message: string })?.message);

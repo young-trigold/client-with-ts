@@ -67,12 +67,12 @@ function Aside(props: AsideProps) {
     // 复制
     const result = document.execCommand('copy', true);
     if (result) message.success('链接已复制到剪贴板!');
-    else message.error('再试一次！');
+    else message.error('再试一次!');
   }, []);
 
   const handleLike = useCallback(() => {
     const userToken = getUserToken();
-    if (!userToken) return message.warn('请先登录！');
+    if (!userToken) return message.warn('请先登录!');
 
     const increaseLikes = async () => {
       try {

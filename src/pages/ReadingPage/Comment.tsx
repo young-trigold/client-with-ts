@@ -95,7 +95,7 @@ function Comment(props: CommmentProps) {
   // eslint-disable-next-line consistent-return
   const postComment = useCallback(async () => {
     const userToken = getUserToken();
-    if (!userToken) return message.warn('请先登录！');
+    if (!userToken) return message.warn('请先登录!');
 
     if (!comment) return message.warn('内容不可为空!');
 
