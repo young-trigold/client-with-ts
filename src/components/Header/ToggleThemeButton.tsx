@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
 import { toggleThemeMode } from '../../theme/themeModeSlice';
 import addMediaEffect from '../../utils/addMediaEffect';
 
@@ -41,15 +42,19 @@ const ToggleThemeButton = () => {
   const themeMode = useSelector((state: RootState) => state.themeMode.value);
   const dispath = useDispatch();
 
-  const handleCilick = () => {
-    dispath(toggleThemeMode());
-  };
+  const handleCilick = useCallback(
+    addMediaEffect(
+      () => {
+        dispath(toggleThemeMode());
+      },
+      ToggleSoundSrc,
+      20,
+    ),
+    [dispath],
+  );
 
   return (
-    <StyledToggleThemeButton
-      type="button"
-      onClick={addMediaEffect(handleCilick, ToggleSoundSrc, 20)}
-    >
+    <StyledToggleThemeButton type="button" onClick={handleCilick}>
       <img src={SunIconSrc} width="24" alt="太阳" />
       <img src={MoonIconSrc} width="24" alt="月亮" />
       <Marker themeMode={themeMode} />
@@ -57,4 +62,4 @@ const ToggleThemeButton = () => {
   );
 };
 
-export default ToggleThemeButton;
+export default React.memo(ToggleThemeButton);

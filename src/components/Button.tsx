@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import React, { useCallback } from 'react';
 import debounce from '../utils/debounce';
 import addMediaEffect from '../utils/addMediaEffect';
 
@@ -131,7 +132,7 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-const Button = (props: ButtonProps) => {
+const Button = React.memo((props: ButtonProps) => {
   const {
     onClick,
     buttonType = 'outlined',
@@ -142,14 +143,17 @@ const Button = (props: ButtonProps) => {
     disabled = false,
   } = props;
 
-  const handleClick = debounce((event: React.MouseEvent<HTMLButtonElement>) => {
-    if (disabled) {
-      event.preventDefault();
-      return;
-    }
+  const handleClick = useCallback(
+    debounce((event: React.MouseEvent<HTMLButtonElement>) => {
+      if (disabled) {
+        event.preventDefault();
+        return;
+      }
 
-    if (onClick) addMediaEffect(onClick, TextPressSoundSrc)(event);
-  }, 600);
+      if (onClick) addMediaEffect(onClick, TextPressSoundSrc)(event);
+    }, 600),
+    [onClick],
+  );
 
   return (
     <StyledButton
@@ -164,7 +168,7 @@ const Button = (props: ButtonProps) => {
       {children}
     </StyledButton>
   );
-};
+});
 
 const StyledIconButton = styled.button`
   background-color: ${(props) => props.theme.foregroundColor};
@@ -197,19 +201,22 @@ export interface IconButtonProps {
   handler?: React.MouseEventHandler<HTMLElement>;
 }
 
-const IconButton = (props: IconButtonProps) => {
+const IconButton = React.memo((props: IconButtonProps) => {
   const { icon, width, description, handler } = props;
 
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    if (handler) addMediaEffect(handler, IconPressSoundSrc, 20)(event);
-  };
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (handler) addMediaEffect(handler, IconPressSoundSrc, 20)(event);
+    },
+    [handler],
+  );
 
   return (
     <StyledIconButton type="button" onClick={handleClick}>
       <img alt={description} src={icon} width={width} />
     </StyledIconButton>
   );
-};
+});
 
 const StyledButtonBar = styled.div`
   & > * {

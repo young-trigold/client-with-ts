@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { toggleCatalogVisible } from './CataLogVisibleSlice';
 import { IconButton } from '../../components/Button';
 
@@ -12,10 +12,10 @@ function CatalogButton() {
   const [isCacel, setIsCacel] = useState(catalogVisible);
   const dispatch = useDispatch();
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setIsCacel(!isCacel);
     dispatch(toggleCatalogVisible());
-  };
+  }, [setIsCacel, dispatch]);
 
   return (
     <IconButton
@@ -27,4 +27,4 @@ function CatalogButton() {
   );
 }
 
-export default CatalogButton;
+export default React.memo(CatalogButton);

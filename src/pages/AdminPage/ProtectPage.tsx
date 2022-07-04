@@ -4,6 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 import LoadingIndicator from '../../components/LoadingIndicator';
 import { message } from '../../components/Message/Message';
+import getUserToken from '../../utils/getUserToken';
 import AdminPage from './AdminPage';
 
 function ProtectPage() {
@@ -12,28 +13,27 @@ function ProtectPage() {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const rawUser = localStorage.getItem('user');
-      const user = rawUser && JSON.parse(rawUser);
+      const userToken = getUserToken();
+      if (!userToken) {
+        setLoading(false);
+        return message.warn('请先登录！');
+      }
 
-      if (user) {
-        try {
-          const res = await axios.get('/api/validateRole', {
-            headers: {
-              Authorization: `Bearer ${user.token}`,
-            },
-          });
-          if (res.data.role === 'admin') setIsAdmin(true);
-          else message.warn('权限不足!');
-        } catch (error) {
-          if (axios.isAxiosError(error))
-            return message.error((error.response?.data as { message: string })?.message);
-          if (error instanceof Error) return message.error(error.message);
-          return message.error(JSON.stringify(error));
-        } finally {
-          setLoading(false);
-        }
-      } else {
-        message.warn('您还没有登录!');
+      try {
+        const res = await axios.get('/api/validateRole', {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        });
+
+        if (res.data.role === 'admin') setIsAdmin(true);
+        else message.warn('权限不足！');
+      } catch (error) {
+        if (axios.isAxiosError(error))
+          return message.error((error.response?.data as { message: string })?.message);
+        if (error instanceof Error) return message.error(error.message);
+        return message.error(JSON.stringify(error));
+      } finally {
         setLoading(false);
       }
     };

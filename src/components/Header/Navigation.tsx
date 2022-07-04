@@ -1,13 +1,11 @@
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
-import { useNavigate } from 'react-router-dom';
 
-import LoginButton from './LoginButton';
 import CancelIcon from '../../static/icon/cancel.png';
 import MenuIcon from '../../static/icon/menu.png';
 import IconPressSound from '../../static/audio/icon-press.mp3';
-import { Button } from '../Button';
 import addMediaEffect from '../../utils/addMediaEffect';
+import LinkContainer from './LinkContainer';
 
 const MenuButton = styled.button`
   border: none;
@@ -64,47 +62,23 @@ const StyledNavigation = styled.div`
   }
 `;
 
-function LinkContainer() {
-  const navigate = useNavigate();
-
-  const handleNoteClick = () => {
-    navigate('/notes');
-  };
-
-  const handleArticleClick = () => {
-    navigate('/');
-  };
-
-  const handleAdminClick = () => {
-    navigate('/admin');
-  };
-
-  return (
-    <>
-      <LoginButton />
-      <Button buttonType="link" onClick={handleAdminClick}>
-        进入后台
-      </Button>
-      <Button buttonType="link" onClick={handleArticleClick}>
-        我的文章
-      </Button>
-      <Button buttonType="link" onClick={handleNoteClick}>
-        我的笔记
-      </Button>
-    </>
-  );
-}
-
 const Navigation = () => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-  const handleClick = () => {
-    setIsMenuVisible(!isMenuVisible);
-  };
+  const handleClick = useCallback(
+    addMediaEffect(
+      () => {
+        setIsMenuVisible(!isMenuVisible);
+      },
+      IconPressSound,
+      20,
+    ),
+    [setIsMenuVisible],
+  );
 
   return (
     <StyledNavigation>
-      <MenuButton type="button" onClick={addMediaEffect(handleClick, IconPressSound, 20)}>
+      <MenuButton type="button" onClick={handleClick}>
         <img alt="菜单" src={isMenuVisible ? CancelIcon : MenuIcon} width="24" />
       </MenuButton>
 
@@ -119,4 +93,4 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+export default React.memo(Navigation);

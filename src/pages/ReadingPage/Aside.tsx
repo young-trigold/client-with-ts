@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import axios from 'axios';
 
+import React, { useCallback } from 'react';
 import { IconButton } from '../../components/Button';
 import { message } from '../../components/Message/Message';
 import debounce from '../../utils/debounce';
@@ -8,6 +9,7 @@ import debounce from '../../utils/debounce';
 import CommentIcon from '../../static/icon/comment.png';
 import ShareIcon from '../../static/icon/share.png';
 import LikeIcon from '../../static/icon/like.png';
+import getUserToken from '../../utils/getUserToken';
 
 const StyledButtonBar = styled.aside`
   height: fit-content;
@@ -51,7 +53,7 @@ export interface AsideProps {
 function Aside(props: AsideProps) {
   const { isChapter, itemId } = props;
 
-  const handleShare = () => {
+  const handleShare = useCallback(() => {
     // 创建输入框
     const textarea = document.createElement('textarea');
     document.body.appendChild(textarea);
@@ -66,10 +68,11 @@ function Aside(props: AsideProps) {
     const result = document.execCommand('copy', true);
     if (result) message.success('链接已复制到剪贴板!');
     else message.error('再试一次！');
-  };
+  }, []);
 
-  const handleLike = () => {
-    const user = JSON.parse(localStorage.getItem('user') ?? '');
+  const handleLike = useCallback(() => {
+    const userToken = getUserToken();
+    if (!userToken) return message.warn('请先登录！');
 
     const increaseLikes = async () => {
       try {
@@ -82,7 +85,7 @@ function Aside(props: AsideProps) {
             {
               headers: {
                 contentType: 'application/json',
-                Authorization: `Bearer ${user.token}`,
+                Authorization: `Bearer ${userToken}`,
               },
             },
           );
@@ -95,7 +98,7 @@ function Aside(props: AsideProps) {
             {
               headers: {
                 contentType: 'application/json',
-                Authorization: `Bearer ${user.token}`,
+                Authorization: `Bearer ${userToken}`,
               },
             },
           );
@@ -110,12 +113,8 @@ function Aside(props: AsideProps) {
       }
     };
 
-    if (user) {
-      increaseLikes();
-    } else {
-      message.warn('您还未登录!');
-    }
-  };
+    return increaseLikes();
+  }, [getUserToken]);
 
   return (
     <StyledButtonBar>
@@ -138,4 +137,4 @@ function Aside(props: AsideProps) {
   );
 }
 
-export default Aside;
+export default React.memo(Aside);

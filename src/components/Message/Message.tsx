@@ -1,8 +1,9 @@
 import styled from 'styled-components';
-import { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { addMessage, clearMessage } from './messagesSlice';
 import store, { RootState } from '../../app/store';
+
 import CancelIcon from '../../static/icon/cancel.png';
 
 const StyledMessageList = styled.div`
@@ -73,9 +74,9 @@ const Message = (props: MessageProps) => {
     return () => clearTimeout(timer);
   }, []);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setVisible(false);
-  };
+  }, [setVisible]);
 
   return (
     <StyledMessage visible={visible} state={state}>
@@ -87,7 +88,7 @@ const Message = (props: MessageProps) => {
   );
 };
 
-const MessageList = () => {
+const MessageList = React.memo(() => {
   const messages = useSelector((state: RootState) => state.messages.value);
 
   return (
@@ -97,7 +98,7 @@ const MessageList = () => {
       ))}
     </StyledMessageList>
   );
-};
+});
 
 const message = {
   info(title: string) {

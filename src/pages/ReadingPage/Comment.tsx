@@ -1,9 +1,10 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 import { Button } from '../../components/Button';
 import { message } from '../../components/Message/Message';
+import getUserToken from '../../utils/getUserToken';
 
 const CommentContainer = styled.div`
   display: flex;
@@ -81,18 +82,21 @@ export interface CommmentProps {
 
 function Comment(props: CommmentProps) {
   const { isChapter, itemId } = props;
+
   const [comment, setComment] = useState('');
 
-  const handleCommentChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setComment(event.target.value);
-  };
+  const handleCommentChange = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setComment(event.target.value);
+    },
+    [setComment],
+  );
 
   // eslint-disable-next-line consistent-return
-  const postComment = async () => {
-    const rawUser = localStorage.getItem('user');
-    const user = rawUser && JSON.parse(rawUser);
+  const postComment = useCallback(async () => {
+    const userToken = getUserToken();
+    if (!userToken) return message.warn('请先登录！');
 
-    if (!user) return message.warn('您还没有登录!');
     if (!comment) return message.warn('内容不可为空!');
 
     try {
@@ -104,7 +108,7 @@ function Comment(props: CommmentProps) {
         {
           headers: {
             contentType: 'application/json',
-            Authorization: `Bearer ${user.token}`,
+            Authorization: `Bearer ${userToken}`,
           },
         },
       );
@@ -116,7 +120,7 @@ function Comment(props: CommmentProps) {
       if (error instanceof Error) return message.error(error.message);
       return message.error(JSON.stringify(error));
     }
-  };
+  }, [comment]);
 
   return (
     <CommentContainer id="comment">
@@ -127,4 +131,4 @@ function Comment(props: CommmentProps) {
   );
 }
 
-export default Comment;
+export default React.memo(Comment);

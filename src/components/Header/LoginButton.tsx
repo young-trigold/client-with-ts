@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import { Button } from '../Button';
 import LoginModal from './LoginModal';
@@ -6,9 +6,9 @@ import LoginModal from './LoginModal';
 const LoginButton = () => {
   const [isLoginModalVisible, setIsLoginModalVisible] = useState(false);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     setIsLoginModalVisible(true);
-  };
+  }, [setIsLoginModalVisible]);
 
   return (
     <>
@@ -23,4 +23,4 @@ const LoginButton = () => {
   );
 };
 
-export default LoginButton;
+export default React.memo(LoginButton);

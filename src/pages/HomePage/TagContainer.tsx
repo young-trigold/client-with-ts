@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import styled from 'styled-components';
 
 export interface TagContainerProps {
@@ -55,7 +56,7 @@ const TagContainer = (props: TagContainerProps) => {
   return (
     <StyledTagContainer currentIndex={currentIndex}>
       {tags?.map((tag, i) => (
-        <StyledTag key={tag} onClick={() => setCurrentIndex?.(i)}>
+        <StyledTag key={tag} onClick={useCallback(() => setCurrentIndex?.(i), [setCurrentIndex])}>
           {tag}
         </StyledTag>
       ))}

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { message } from '../Message/Message';
@@ -56,24 +56,32 @@ export interface LoginModalProps {
 
 const LoginModal = (props: LoginModalProps) => {
   const { isLoginModalVisible, setIsLoginModalVisible } = props;
+
   const [isPwdVisible, setIsPwdVisible] = useState(false);
 
-  const togglePwdIsVisible = () => {
+  const togglePwdIsVisible = useCallback(() => {
     setIsPwdVisible(!isPwdVisible);
-  };
+  }, [setIsPwdVisible]);
 
   const [name, setName] = useState('');
+
+  const handleNameChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setName(event.target.value);
+    },
+    [setName],
+  );
+
   const [pwd, setPwd] = useState('');
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
+  const handlePwdChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setPwd(event.target.value);
+    },
+    [setPwd],
+  );
 
-  const handlePwdChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPwd(event.target.value);
-  };
-
-  const handleRegister = () => {
+  const handleRegister = useCallback(() => {
     const postUser = async () => {
       try {
         await axios.post(
@@ -99,9 +107,9 @@ const LoginModal = (props: LoginModalProps) => {
     if (validateName(name) && validatePwd(pwd)) {
       postUser();
     }
-  };
+  }, [setIsLoginModalVisible, validateName, name, pwd]);
 
-  const handleLogin = () => {
+  const handleLogin = useCallback(() => {
     const login = async () => {
       try {
         const res = await axios.post(
@@ -128,11 +136,14 @@ const LoginModal = (props: LoginModalProps) => {
     };
 
     if (validateName(name) && validatePwd(pwd)) login();
-  };
+  }, [name, pwd, setName, setPwd, setIsLoginModalVisible]);
 
   return (
     <Modal isModalVisible={isLoginModalVisible}>
-      <StyledCancelButton type="button" onClick={() => setIsLoginModalVisible(false)}>
+      <StyledCancelButton
+        type="button"
+        onClick={useCallback(() => setIsLoginModalVisible(false), [setIsLoginModalVisible])}
+      >
         <img src={CancelIcon} alt="取消" width="18" />
       </StyledCancelButton>
       <form>
@@ -165,4 +176,4 @@ const LoginModal = (props: LoginModalProps) => {
   );
 };
 
-export default LoginModal;
+export default React.memo(LoginModal);
