@@ -1,9 +1,9 @@
-import { useCallback } from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 
 export interface TagContainerProps {
   currentIndex: number;
-  setCurrentIndex?: Function;
+  setCurrentIndex?: React.Dispatch<React.SetStateAction<number>>;
   tags?: string[];
 }
 

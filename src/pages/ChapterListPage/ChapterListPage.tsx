@@ -36,6 +36,7 @@ function ChapterListPage() {
     `/api/chapters/${noteId}`,
     [noteId],
   );
+
   useDocumentTitle(noteTitle);
 
   return (
