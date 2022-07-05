@@ -23,7 +23,7 @@ const NavigationBar = styled.nav`
   padding: 1em;
   min-width: 160px;
   flex: 2;
-  border-right: 1px solid ${(props) => props.theme.surfaceColor};
+  border-right: 1px solid ${(props) => props.theme.borderColor};
 `;
 
 const NavigationBarTitle = styled.h2`
@@ -42,33 +42,28 @@ const OptionContainer = styled.ol<{ currentIndex: number }>`
   margin-left: 2em;
   list-style: none;
   overflow-y: hidden;
+  color: ${(props) => props.theme.textColor};
   background-color: ${(props) => props.theme.foregroundColor};
 
   & > li:nth-of-type(${(props) => props.currentIndex + 1}) {
-    color: ${(props) => props.theme.textColor};
-    background-color: ${(props) => props.theme.primaryColor};
+    color: ${(props) => props.theme.foregroundColor};
+    background-color: ${(props) => props.theme.activeColor};
   }
 `;
 
 const Option = styled.li`
   margin-top: 0.5em;
   padding: 6px;
-  border-bottom: 1px solid ${(props) => props.theme.surfaceColor};
+  border-bottom: 1px solid ${(props) => props.theme.borderColor};
 
-  @media (hover: none) {
-    &:active {
-      background-color: ${(props) => props.theme.primaryColor};
-    }
+  &:hover {
+    color: ${(props) => props.theme.foregroundColor};
+    background-color: ${(props) => props.theme.hoverColor};
   }
 
-  @media (hover: hover) {
-    &:hover {
-      color: ${(props) => props.theme.hoverColor};
-    }
-
-    &:active {
-      background-color: ${(props) => props.theme.primaryColor};
-    }
+  &:active {
+    color: ${(props) => props.theme.foregroundColor};
+    background-color: ${(props) => props.theme.activeColor};
   }
 `;
 

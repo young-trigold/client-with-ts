@@ -14,11 +14,7 @@ const StyledArticle = styled.article`
   align-items: center;
   min-height: 230px;
   width: 160px;
-  background: linear-gradient(
-    145deg,
-    ${(props) => props.theme.surfaceColor},
-    ${(props) => props.theme.foregroundColor}
-  );
+  background: ${(props) => props.theme.foregroundColor};
   border-radius: 10px;
   transition: all 0.3s ease-out;
   position: relative;

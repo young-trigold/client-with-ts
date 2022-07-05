@@ -4,26 +4,29 @@ const StyledTable = styled.table`
   border-collapse: collapse;
   width: 100%;
   text-align: center;
+  table-layout: fixed;
 
   & td,
   & th {
-    padding: 0.5rem;
+    padding: 8px;
   }
 
   & th {
     font-size: 18px;
-    border-right: 1px solid ${(props) => props.theme.surfaceColor};
+    border-right: 1px solid ${(props) => props.theme.borderColor};
   }
 
   & th:last-of-type {
     border-right: 0;
   }
 
-  & tr {
-    border-bottom: 1px solid ${(props) => props.theme.surfaceColor};
+  & tr:nth-of-type(even) {
+    background-color: ${(props) => props.theme.foregroundColor};
+  }
 
+  & tr {
     &:hover {
-      background-color: ${(props) => props.theme.foregroundColor};
+      background-color: ${(props) => props.theme.surfaceColor};
     }
   }
 

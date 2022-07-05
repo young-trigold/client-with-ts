@@ -10,13 +10,14 @@ const GlobalStyle = createGlobalStyle`
   body {
     margin: 0;
     word-break: break-word;
-    font-family: -apple-system,system-ui,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Arial;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
     color: ${(props) => props.theme.textColor};
     background-color: ${(props) => props.theme.backgroundColor};
     white-space: normal;
+    
   }
 
   // ====================================链接==================================================
@@ -31,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
   // =============================================滚动条===========================================
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+    box-shadow: inset 0 0 4px ${(props) => props.theme.shadowColor};
     background-color: transparent;
     border-radius: 8px;
   }
@@ -41,26 +42,19 @@ const GlobalStyle = createGlobalStyle`
     background-color: transparent;
   }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #AAA;
-    border-radius: 8px;
-    background: linear-gradient(90deg, ${(props) => props.theme.surfaceColor}, ${(props) =>
-  props.theme.backgroundColor});
+  ::-webkit-scrollbar:horizontal {
+    height: 10px;
   }
 
-  ::-webkit-scrollbar-thumb:horizontal {
-    background: linear-gradient(180deg, ${(props) => props.theme.surfaceColor}, ${(props) =>
-  props.theme.backgroundColor});
+  ::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: ${(props) => props.theme.shadowColor};
   }
 
   // ===============================================选择文字========================================
-  body::-webkit-scrollbar {
-    display: none;
-  }
-
   ::selection {
-    color: initial;
-    background-color: #2ecc71;
+    color: ${(props) => props.theme.foregroundColor};
+    background-color: ${(props) => props.theme.primaryColor};
   }
 `;
 

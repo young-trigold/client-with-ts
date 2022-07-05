@@ -67,18 +67,30 @@ const StyledArticle = styled.article`
     text-align: center;
     table-layout: fixed;
     margin: auto;
-    border: ${px()} dashed ${(props) => props.theme.borderColor};
     background-color: ${(props) => props.theme.foregroundColor};
     margin: 1em 0;
+    box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
+
+    & tr:nth-of-type(even) {
+      background-color: ${(props) => props.theme.backgroundColor};
+    }
+  }
+
+  & pre {
+    border: none !important;
+    border-radius: 6.4px;
+    box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
+    background-color: ${(props) => props.theme.foregroundColor} !important;
   }
 
   & code:not([class^='language']) {
     white-space: normal;
     overflow: auto;
-    background-color: ${(props) => props.theme.codeMask};
+    color: ${(props) => props.theme.foregroundColor};
+    background-color: ${(props) => props.theme.activeColor};
     font-family: 'source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace';
     border-radius: 4px;
-    padding: 0 4px;
+    padding: 1px 4px;
   }
 
   @media (max-width: 400px) {

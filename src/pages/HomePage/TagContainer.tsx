@@ -17,6 +17,7 @@ const StyledTagContainer = styled.nav<TagContainerProps>`
   flex-wrap: wrap;
   background-color: ${(props) => props.theme.foregroundColor};
   justify-content: center;
+  box-shadow: 0 1px 2px 0 ${(props) => props.theme.shadowColor};
 
   & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
     color: ${(props) => props.theme.backgroundColor};
