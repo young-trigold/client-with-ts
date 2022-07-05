@@ -32,7 +32,10 @@ function ChapterListPage() {
   const { noteTitle } = useParams();
   const { noteId } = useLocation().state as { [key: string]: string };
 
-  const { loading, resource: chapters } = useLoadResource<ChapterInfo[]>(`/api/chapters/${noteId}`);
+  const { loading, resource: chapters } = useLoadResource<ChapterInfo[]>(
+    `/api/chapters/${noteId}`,
+    [noteId],
+  );
   useDocumentTitle(noteTitle);
 
   return (
