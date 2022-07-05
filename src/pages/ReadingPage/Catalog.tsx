@@ -13,13 +13,23 @@ export interface CatalogItemProps {
 }
 
 const StyledCatalogItem = styled.a<CatalogItemProps>`
-  display: block;
-  margin: 5px ${(props) => `${(props.level - 1) * 1.5}em`};
-  padding-left: 0.5em;
-  border-left: ${(props) => (props.heading.content === props.currentHeading ? '5px' : '0')} solid
-    ${(props) => props.theme.primaryColor};
+  width: fit-content;
+  margin: 2px ${(props) => `${(props.level - 1) * 1.5}em`};
+  margin-left: 0;
   color: ${(props) =>
     props.heading.content === props.currentHeading ? props.theme.primaryColor : 'inherit'};
+  transition: all 0.3s;
+
+  &::before {
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 0.5em;
+    content: '';
+    width: 5px;
+    height: ${(props) => (props.heading.content === props.currentHeading ? '1.2em' : '0')};
+    background-color: ${(props) => props.theme.primaryColor};
+    transition: all 0.3s;
+  }
 
   &:active {
     color: ${(props) => props.theme.primaryColor};
@@ -37,6 +47,8 @@ export interface CatalogProps {
 }
 
 const StyledCatalog = styled.nav<CatalogProps>`
+  display: flex;
+  flex-direction: column;
   flex: 3;
   height: fit-content;
   min-width: 300px;
@@ -44,7 +56,7 @@ const StyledCatalog = styled.nav<CatalogProps>`
   background-color: ${(props) => props.theme.foregroundColor};
   margin: 1em 0.5em;
   border-radius: 10px;
-  box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
+  box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
   padding: 1em;
   user-select: none;
   overflow: auto;
