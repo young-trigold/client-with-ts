@@ -15,6 +15,7 @@ export interface CatalogItemProps {
 const StyledCatalogItem = styled.a<CatalogItemProps>`
   display: block;
   margin: 5px ${(props) => `${(props.level - 1) * 1.5}em`};
+  padding-left: 0.5em;
   border-left: ${(props) => (props.heading.content === props.currentHeading ? '5px' : '0')} solid
     ${(props) => props.theme.primaryColor};
   color: ${(props) =>
