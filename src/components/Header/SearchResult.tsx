@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 export interface Result {
   title: string;
@@ -47,9 +48,12 @@ const StyledSearchResult = styled.div<SearchResultProps>`
 const SearchResult = (props: SearchResultProps) => {
   const { isVisible, results, selectedIndex = 0 } = props;
 
-  const handleMouseDown = useCallback((result: Result) => {
-    window.location.href = `/reading/${result.tag ? 'articles' : 'chapters'}/${result._id}`;
-  }, []);
+  const navigate = useNavigate();
+
+  const handleMouseDown = useCallback(
+    (result: Result) => navigate(`/reading/${result.tag ? 'articles' : 'chapters'}/${result._id}`),
+    [navigate],
+  );
 
   if (!isVisible || results?.length === 0) return null;
 

@@ -19,6 +19,7 @@ import materialDark from '../../theme/codeThemeDark.json';
 import { RootState } from '../../app/store';
 
 const StyledArticle = styled.article`
+  content-visibility: auto;
   background-color: ${(props) => props.theme.foregroundColor};
   background-image: linear-gradient(
       to right,

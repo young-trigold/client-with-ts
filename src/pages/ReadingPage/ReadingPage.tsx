@@ -87,15 +87,17 @@ export interface Item {
 
 const ReadingPage = (props: ReadingPageProps) => {
   const { isChapter } = props;
-  const { itemId } = useParams();
+
   useDocumentTitle('认真阅读ing...');
+
+  const { itemId } = useParams();
 
   const [headings, setHeadings] = useState<HeadingInfo[]>([]);
   const [currentHeading, setCurrentHeading] = useState<string>('');
 
   const { loading, resource: item } = isChapter
-    ? useLoadResource<Item>(`/api/notes/${itemId}`)
-    : useLoadResource<Item>(`/api/articles/${itemId}`);
+    ? useLoadResource<Item>(`/api/notes/${itemId}`, [itemId])
+    : useLoadResource<Item>(`/api/articles/${itemId}`, [itemId]);
 
   useEffect(() => {
     const rawHeadings = item?.content?.match(/^#{2,3}(?!#)(.)+$/gm);
@@ -108,7 +110,7 @@ const ReadingPage = (props: ReadingPageProps) => {
         })),
       );
     }
-  }, [!item?.content]);
+  }, [item]);
 
   return (
     <StyledReadingPage>
