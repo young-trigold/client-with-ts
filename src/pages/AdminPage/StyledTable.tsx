@@ -34,6 +34,7 @@ const StyledTable = styled.table`
     position: sticky;
     top: 0;
     background-color: ${(props) => props.theme.foregroundColor};
+    border-bottom: 1px solid ${(props) => props.theme.borderColor};
   }
 `;
 

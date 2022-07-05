@@ -19,6 +19,7 @@ const StyledFooter = styled.footer`
 
 const StyledDivider = styled.hr`
   margin: 0 1em;
+  border: 1px dashed ${(props) => props.theme.borderColor};
 
   @media (max-width: 767px) {
     & {
