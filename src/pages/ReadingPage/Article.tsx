@@ -23,10 +23,10 @@ const StyledArticle = styled.article`
   background-color: ${(props) => props.theme.foregroundColor};
   background-image: linear-gradient(
       to right,
-      ${(props) => props.theme.lineColor} ${px()},
+      ${(props) => props.theme.shadowColor} ${px()},
       transparent 0
     ),
-    linear-gradient(to bottom, ${(props) => props.theme.lineColor} ${px()}, transparent 0);
+    linear-gradient(to bottom, ${(props) => props.theme.shadowColor} ${px()}, transparent 0);
   background-size: 1.2em 1.2em;
   border-radius: 10px;
   box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
