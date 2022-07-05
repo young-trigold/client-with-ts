@@ -63,6 +63,7 @@ const StyledArticle = styled.article`
 
   & table {
     border-collapse: collapse;
+    border-radius: 6.4px;
     width: 100%;
     text-align: center;
     table-layout: fixed;
@@ -76,11 +77,18 @@ const StyledArticle = styled.article`
     }
   }
 
-  & pre {
+  & > pre {
+    font-size: 16px !important;
+    line-height: 1.5em;
     border: none !important;
     border-radius: 6.4px;
     box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
     background-color: ${(props) => props.theme.foregroundColor} !important;
+
+    @media (max-width: 400px) {
+      font-size: 14px !important;
+      line-height: 1.2em;
+    }
   }
 
   & code:not([class^='language']) {

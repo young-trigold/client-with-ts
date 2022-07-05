@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-
+import React, { useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { NoteInfo } from './NoteShow';
@@ -19,7 +19,7 @@ const StyledNote = styled.ol`
   user-select: none;
   background-color: ${(props) => props.theme.foregroundColor};
   border-radius: 2px 16px 16px 2px;
-  box-shadow: 5px 0px 15px ${(props) => props.theme.shadowColor};
+  box-shadow: 4px 8px 16px ${(props) => props.theme.shadowColor};
   transform: perspective(600px) rotateY(-20deg);
   transition: all 0.3s ease;
   padding: 1em;
@@ -44,7 +44,7 @@ const StyledNote = styled.ol`
 const StyledPage = styled.li`
   width: 220px;
   height: 300px;
-  border-right: 1px solid #666666;
+  border-right: 1px solid ${(props) => props.theme.shadowColor};
   border-radius: 2px 16px 16px 2px;
   position: absolute;
 `;
@@ -57,9 +57,9 @@ const Note = (props: NoteProps) => {
   const { note } = props;
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleNavigate = useCallback(() => {
     navigate(`/notes/${note.title}`, { state: { noteId: note._id } });
-  };
+  }, [navigate, note]);
 
   return (
     <StyledNote onClick={handleNavigate}>
@@ -72,4 +72,4 @@ const Note = (props: NoteProps) => {
   );
 };
 
-export default Note;
+export default React.memo(Note);
