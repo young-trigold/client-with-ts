@@ -36,6 +36,7 @@ export interface ArticlesByTag {
 const HomePage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { loading, resource: articlesByTag } = useLoadResource<ArticlesByTag[]>('/api/articles');
+
   useDocumentTitle('欢迎回来');
 
   return (

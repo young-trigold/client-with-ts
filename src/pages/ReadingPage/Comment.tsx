@@ -6,35 +6,19 @@ import { Button } from '../../components/Button';
 import { message } from '../../components/Message/Message';
 import getUserToken from '../../utils/getUserToken';
 
-const CommentContainer = styled.div`
+const CommentContainer = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   flex-wrap: wrap;
   padding: 1em;
-  margin: 1em 0;
-  justify-content: center;
+  margin: 1em;
   border-radius: 10px;
   background-color: ${(props) => props.theme.foregroundColor};
   box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
 
   & > button {
     margin-top: 1em;
-  }
-
-  @media (max-width: 400px) {
-    & {
-      border-radius: 0;
-    }
-
-    & > button {
-      margin-right: auto;
-    }
-  }
-
-  @media (min-width: 400.01px) {
-    & > button {
-      margin-left: auto;
-    }
   }
 `;
 
@@ -44,6 +28,7 @@ const StyledTitle = styled.h2`
 `;
 
 const StyledTextArea = styled.textarea`
+  display: block;
   font-family: -apple-system, system-ui, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif,
     BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial;
   font-size: 16px;
@@ -51,7 +36,7 @@ const StyledTextArea = styled.textarea`
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   word-break: break-word;
-  flex: 1;
+  width: 100%;
   padding: 8px 12px;
   min-width: 300px;
   min-height: 7em;
