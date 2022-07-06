@@ -36,7 +36,7 @@ function ChapterListPage() {
     [noteId],
   );
 
-  useDocumentTitle(noteTitle);
+  useDocumentTitle(noteTitle, [noteTitle]);
 
   return (
     <div>

@@ -1,8 +1,6 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-const useDocumentTitle = (title = '') => {
-  document.title = title;
-
+const useDocumentTitle = (title = '', dependencyArr: React.DependencyList = []) => {
   const handlePageVisible = () => {
     if (document.visibilityState === 'hidden') {
       document.title = '再待一会儿呗~';
@@ -12,10 +10,11 @@ const useDocumentTitle = (title = '') => {
   };
 
   useEffect(() => {
+    document.title = title;
     document.addEventListener('visibilitychange', handlePageVisible);
 
     return () => document.removeEventListener('visibilitychange', handlePageVisible);
-  }, [title]);
+  }, dependencyArr);
 };
 
 export default useDocumentTitle;

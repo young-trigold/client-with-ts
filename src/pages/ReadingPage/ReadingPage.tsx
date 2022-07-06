@@ -92,7 +92,7 @@ export interface Item {
 const ReadingPage = (props: ReadingPageProps) => {
   const { isChapter } = props;
 
-  useDocumentTitle('认真阅读ing...');
+  useDocumentTitle('认真阅读中...');
 
   const { itemId } = useParams();
 
