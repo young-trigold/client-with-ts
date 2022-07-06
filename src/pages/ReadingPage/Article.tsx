@@ -101,7 +101,7 @@ const StyledArticle = styled.article`
 
     @media (max-width: 400px) {
       font-size: 14px !important;
-      line-height: 1.2em;
+      line-height: 1.3em;
     }
   }
 
