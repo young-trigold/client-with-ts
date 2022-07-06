@@ -17,6 +17,5 @@ declare module 'styled-components' {
     warnColor: string;
     dangeColor: string;
     shadowColor: string;
-    transitionDuration: string;
   }
 }

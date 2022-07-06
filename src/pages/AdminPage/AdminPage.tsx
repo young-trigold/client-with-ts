@@ -21,9 +21,13 @@ const StyledAdminPage = styled.div`
 
 const NavigationBar = styled.nav`
   padding: 1em;
-  min-width: 160px;
+  min-width: 180px;
   flex: 2;
   border-right: 1px solid ${(props) => props.theme.borderColor};
+
+  @media (max-width: 500px) {
+    min-width: 120px;
+  }
 `;
 
 const NavigationBarTitle = styled.h2`
@@ -48,6 +52,10 @@ const OptionContainer = styled.ol<{ currentIndex: number }>`
   & > li:nth-of-type(${(props) => props.currentIndex + 1}) {
     color: ${(props) => props.theme.foregroundColor};
     background-color: ${(props) => props.theme.activeColor};
+  }
+
+  @media (max-width: 500px) {
+    margin-left: 0;
   }
 `;
 
@@ -74,6 +82,7 @@ export interface NoteOption {
 
 const AdminPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
   const [noteOptions, setNoteOptions] = useState<NoteOption[]>([]);
   const [chapters, setChapters] = useState<ChapterInfo[][]>([]);
   const [tagOptions, setTagOptions] = useState<string[]>([]);
@@ -96,11 +105,11 @@ const AdminPage = () => {
         message.error(error?.response?.data?.message || error.message);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [setNoteOptions, setArticles, setTagOptions, setChapters]);
 
-  return loading ? (
-    <LoadingIndicator />
-  ) : (
+  if (loading) return <LoadingIndicator />;
+
+  return (
     <StyledAdminPage>
       <NavigationBar>
         <div>

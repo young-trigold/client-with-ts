@@ -5,10 +5,15 @@ import Article from './Article';
 import { ArticlesByTag } from './HomePage';
 
 const StyledArticleShow = styled.section`
-  margin-left: 1em;
+  margin-left: 2em;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 400px) {
+    justify-content: space-evenly;
+    margin-left: 0;
+  }
 `;
 
 export interface ArticleShowProps {

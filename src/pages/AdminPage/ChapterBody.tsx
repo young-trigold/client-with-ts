@@ -3,7 +3,7 @@ import React, { useCallback, useState } from 'react';
 import axios from 'axios';
 
 import { StyledTable, StyledRow } from './StyledTable';
-import { StyledButtonBar, IconButton, Button } from '../../components/Button';
+import { StyledButtonBar, Button, FloatingActionButton } from '../../components/Button';
 import AddChapterModal from './AddChapterModal';
 import { message } from '../../components/Message/Message';
 
@@ -19,9 +19,13 @@ const StyledChapterBody = styled.main`
 
   & > button {
     position: fixed;
-    bottom: 50px;
-    right: 2em;
-    z-index: 0;
+    bottom: 4em;
+    right: 4em;
+
+    @media (max-width: 400px) {
+      bottom: 4em;
+      right: 2em;
+    }
   }
 `;
 
@@ -40,15 +44,15 @@ const AddButton = React.memo((props: AddButtonProps) => {
 
   const handleClick = useCallback(() => {
     setIsModalVisible(!isModalVisible);
-  }, [setIsModalVisible]);
+  }, [setIsModalVisible, isModalVisible]);
 
   return (
     <>
-      <IconButton
+      <FloatingActionButton
         icon={isModalVisible ? CancelIcon : AddIcon}
         width={24}
         description="添加"
-        handler={handleClick}
+        onClick={handleClick}
       />
       <AddChapterModal
         isModalVisible={isModalVisible}
@@ -108,10 +112,18 @@ function ChapterBody(props: ChapterBodyProps) {
               <td>{chapter.title}</td>
               <td>
                 <StyledButtonBar>
-                  <Button onClick={() => deleteItem(chapter._id)} state="dange">
+                  <Button
+                    onClick={() => deleteItem(chapter._id)}
+                    state="dange"
+                    size={window.matchMedia('(max-width: 400px)').matches ? 'small' : 'middle'}
+                  >
                     删除
                   </Button>
-                  <Button>修改</Button>
+                  <Button
+                    size={window.matchMedia('(max-width: 400px)').matches ? 'small' : 'middle'}
+                  >
+                    修改
+                  </Button>
                 </StyledButtonBar>
               </td>
             </StyledRow>

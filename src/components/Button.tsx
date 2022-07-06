@@ -83,11 +83,11 @@ const StyledButton = styled.button<ButtonProps>`
           return '4px';
       }
     })()};
-  transition: ${(props) =>
-    `all ${props.theme.transitionDuration} cubic-bezier(0.645, 0.045, 0.355, 1)`};
+  transition: all 0.3s;
   user-select: none;
   touch-action: manipulation;
   cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  position: relative;
 
   &:hover,
   &:focus {
@@ -154,7 +154,7 @@ const Button = React.memo((props: ButtonProps) => {
 
       if (onClick) addMediaEffect(onClick, TextPressSoundSrc)(event);
     }, 600),
-    [onClick],
+    [onClick, debounce, addMediaEffect, TextPressSoundSrc],
   );
 
   return (
@@ -173,6 +173,7 @@ const Button = React.memo((props: ButtonProps) => {
 });
 
 const StyledIconButton = styled.button`
+  position: relative;
   background-color: ${(props) => props.theme.foregroundColor};
   border: none;
   border-radius: 25px;
@@ -182,9 +183,8 @@ const StyledIconButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: 0.2s;
+  transition: all 0.3s;
   user-select: none;
-  box-shadow: 3px 3px 3px ${(props) => props.theme.shadowColor};
 
   &:hover {
     background-color: ${(props) => props.theme.surfaceColor};
@@ -200,17 +200,17 @@ export interface IconButtonProps {
   icon: string;
   width: number;
   description: string;
-  handler?: React.MouseEventHandler<HTMLElement>;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 const IconButton = React.memo((props: IconButtonProps) => {
-  const { icon, width, description, handler } = props;
+  const { icon, width, description, onClick } = props;
 
   const handleClick = useCallback(
-    (event: React.MouseEvent<HTMLButtonElement>) => {
-      if (handler) addMediaEffect(handler, IconPressSoundSrc, 20)(event);
-    },
-    [handler],
+    debounce((event: React.MouseEvent<HTMLButtonElement>) => {
+      if (onClick) addMediaEffect(onClick, IconPressSoundSrc, 20)(event);
+    }, 600),
+    [onClick, IconPressSoundSrc, addMediaEffect, debounce],
   );
 
   return (
@@ -226,4 +226,54 @@ const StyledButtonBar = styled.div`
   justify-content: space-evenly;
 `;
 
-export { Button, IconButton, StyledButtonBar };
+export interface FloatingActionButtonProps {
+  icon: string;
+  width: number;
+  description: string;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const StyledFloatingActionButton = styled.button`
+  position: relative;
+  z-index: 1;
+  background-color: ${(props) => props.theme.primaryColor};
+  border: none;
+  border-radius: 25px;
+  padding: 0;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  user-select: none;
+  box-shadow: 3px 3px 3px ${(props) => props.theme.shadowColor};
+
+  &:hover {
+    background-color: ${(props) => props.theme.hoverColor};
+  }
+
+  &:active {
+    transform: scale(0.9);
+    background-color: ${(props) => props.theme.activeColor};
+  }
+`;
+
+const FloatingActionButton = React.memo((props: FloatingActionButtonProps) => {
+  const { icon, width, description, onClick } = props;
+
+  const handleClick = useCallback(
+    debounce((event: React.MouseEvent<HTMLButtonElement>) => {
+      if (onClick) addMediaEffect(onClick, IconPressSoundSrc, 20)(event);
+    }, 600),
+    [onClick, IconPressSoundSrc, addMediaEffect],
+  );
+
+  return (
+    <StyledFloatingActionButton type="button" onClick={handleClick}>
+      <img alt={description} src={icon} width={width} />
+    </StyledFloatingActionButton>
+  );
+});
+
+export { Button, IconButton, FloatingActionButton, StyledButtonBar };

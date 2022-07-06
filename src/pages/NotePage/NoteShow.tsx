@@ -11,7 +11,10 @@ const StyledNoteShow = styled.section`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+
+  @media (max-width: 400px) {
+    justify-content: center;
+  }
 `;
 
 export interface NoteInfo {

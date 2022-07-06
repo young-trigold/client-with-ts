@@ -14,6 +14,7 @@ function ProtectPage() {
   useEffect(() => {
     const fetchUser = async () => {
       const userToken = getUserToken();
+
       if (!userToken) {
         setLoading(false);
         return message.warn('请先登录!');
@@ -39,7 +40,7 @@ function ProtectPage() {
     };
 
     fetchUser();
-  }, []);
+  }, [setLoading, setIsAdmin]);
 
   if (loading) return <LoadingIndicator text="正在验证身份" />;
 

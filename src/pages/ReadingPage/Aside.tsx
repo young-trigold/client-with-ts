@@ -4,7 +4,6 @@ import axios from 'axios';
 import React, { useCallback } from 'react';
 import { IconButton } from '../../components/Button';
 import { message } from '../../components/Message/Message';
-import debounce from '../../utils/debounce';
 
 import CommentIcon from '../../static/icon/comment.png';
 import ShareIcon from '../../static/icon/share.png';
@@ -12,7 +11,6 @@ import LikeIcon from '../../static/icon/like.png';
 import getUserToken from '../../utils/getUserToken';
 
 const StyledButtonBar = styled.aside`
-  height: fit-content;
   position: sticky;
   display: flex;
   flex-direction: column;
@@ -20,7 +18,7 @@ const StyledButtonBar = styled.aside`
   top: 180px;
   left: 2em;
   z-index: 2;
-  min-width: 150px;
+  margin-right: 4em;
 
   & > * {
     margin: 2em 0;
@@ -118,21 +116,11 @@ function Aside(props: AsideProps) {
 
   return (
     <StyledButtonBar>
-      <IconButton
-        width={28}
-        icon={LikeIcon}
-        description="点赞"
-        handler={debounce(handleLike, 600)}
-      />
+      <IconButton width={28} icon={LikeIcon} description="点赞" onClick={handleLike} />
       <a href="#comment">
         <IconButton width={28} icon={CommentIcon} description="评论" />
       </a>
-      <IconButton
-        width={28}
-        icon={ShareIcon}
-        description="分享"
-        handler={debounce(handleShare, 600)}
-      />
+      <IconButton width={28} icon={ShareIcon} description="分享" onClick={handleShare} />
     </StyledButtonBar>
   );
 }

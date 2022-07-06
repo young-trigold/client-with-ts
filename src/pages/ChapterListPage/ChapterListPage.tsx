@@ -9,8 +9,7 @@ import Footer from '../../components/Footer/Footer';
 import LoadingIndicator from '../../components/LoadingIndicator';
 import Chapter from './Chapter';
 
-const ChaptersContainer = styled.div`
-  width: 100%;
+const ChaptersContainer = styled.section`
   display: flex;
   flex-wrap: wrap;
   align-items: center;

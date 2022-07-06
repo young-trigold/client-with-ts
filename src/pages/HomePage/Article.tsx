@@ -7,7 +7,7 @@ import EyeOpen from '../../static/icon/eye-open.png';
 import { ArticleInfo } from './HomePage';
 
 const StyledArticle = styled.article`
-  margin: 1em 0;
+  margin: 1.5em 0;
   padding: 1em;
   display: flex;
   flex-direction: column;
@@ -16,17 +16,28 @@ const StyledArticle = styled.article`
   width: 160px;
   background: ${(props) => props.theme.foregroundColor};
   border-radius: 10px;
-  transition: all 0.3s ease-out;
+  transition: all 0.3s;
   position: relative;
-  margin-left: -1em;
+  margin-left: -1.5em;
   user-select: none;
   touch-action: manipulation;
-  box-shadow: 1px 1px 4px ${(props) => props.theme.shadowColor};
+  box-shadow: 0 0 4px ${(props) => props.theme.shadowColor};
+  border: 1px solid ${(props) => props.theme.borderColor};
 
   &:hover {
     z-index: 1;
-    box-shadow: 1px 1px 8px ${(props) => props.theme.shadowColor};
-    transform: translateY(-1em);
+    box-shadow: 0 0 15px ${(props) => props.theme.shadowColor};
+    transform: translateY(-1.5em);
+    margin-left: 0.5em;
+  }
+
+  @media (max-width: 400px) {
+    margin-left: unset;
+
+    &:hover {
+      margin-left: unset;
+      transform: translateY(-1em);
+    }
   }
 `;
 

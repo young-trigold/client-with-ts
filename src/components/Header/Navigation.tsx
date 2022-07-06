@@ -9,7 +9,7 @@ import LinkContainer from './LinkContainer';
 
 const MenuButton = styled.button`
   border: none;
-  background-color: transparent;
+  background-color: ${(props) => props.theme.foregroundColor};
   position: relative;
 `;
 
@@ -31,7 +31,7 @@ const Menu = styled.nav<MenuProps>`
   overflow: hidden;
   transition: all 0.3s;
   opacity: ${(props) => (props.isMenuVisible ? 1 : 0)};
-  height: ${(props) => (props.isMenuVisible ? '160px' : '0')};
+  height: ${(props) => (props.isMenuVisible ? '156px' : '0')};
 
   & > button {
     padding: 4px;
@@ -73,7 +73,8 @@ const Navigation = () => {
       IconPressSound,
       20,
     ),
-    [setIsMenuVisible, isMenuVisible],
+
+    [setIsMenuVisible, isMenuVisible, addMediaEffect],
   );
 
   return (

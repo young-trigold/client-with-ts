@@ -19,6 +19,7 @@ import materialDark from '../../theme/codeThemeDark.json';
 import { RootState } from '../../app/store';
 
 const StyledArticle = styled.article`
+  margin: 0 1em;
   content-visibility: auto;
   background-color: ${(props) => props.theme.foregroundColor};
   background-image: linear-gradient(
@@ -28,11 +29,23 @@ const StyledArticle = styled.article`
     ),
     linear-gradient(to bottom, ${(props) => props.theme.shadowColor} ${px()}, transparent 0);
   background-size: 1.2em 1.2em;
-  border-radius: 10px;
-  box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
+  border-radius: 6.4px;
   line-height: 1.5em;
+  box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
   padding: 0 1em;
   overflow-wrap: break-word;
+
+  @media (max-width: 400px) {
+    & code[class^='language'] {
+      font-size: 14px !important;
+    }
+  }
+
+  @media (max-width: 530px) {
+    border-radius: 0;
+    margin: 0;
+    line-height: 1.3em;
+  }
 
   & img {
     width: 100%;
@@ -58,6 +71,7 @@ const StyledArticle = styled.article`
   }
 
   & thead {
+    color: ${(props) => props.theme.foregroundColor};
     background-color: ${(props) => props.theme.primaryColor};
   }
 
@@ -91,20 +105,15 @@ const StyledArticle = styled.article`
     }
   }
 
+  // inline-code
   & code:not([class^='language']) {
     white-space: normal;
     overflow: auto;
     color: ${(props) => props.theme.foregroundColor};
     background-color: ${(props) => props.theme.activeColor};
     font-family: 'source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace';
+    padding: 1px;
     border-radius: 4px;
-    padding: 1px 4px;
-  }
-
-  @media (max-width: 400px) {
-    & code[class^='language'] {
-      font-size: 14px !important;
-    }
   }
 
   & p {
@@ -113,11 +122,6 @@ const StyledArticle = styled.article`
 
   & li > p {
     text-indent: 0 !important;
-  }
-
-  @media (max-width: 530px) {
-    border-radius: 0;
-    margin: 0;
   }
 `;
 

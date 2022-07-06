@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import { message } from '../../components/Message/Message';
 import { StyledTable, StyledRow } from './StyledTable';
-import { StyledButtonBar, IconButton, Button } from '../../components/Button';
+import { StyledButtonBar, Button, FloatingActionButton } from '../../components/Button';
 import AddArticleModal from './AddArticleModal';
 
 import AddIcon from '../../static/icon/plus.png';
@@ -15,12 +15,12 @@ const AddButton = React.memo((props: { currentOption: string }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleClick = useCallback(() => {
-    setIsModalVisible(true);
-  }, [setIsModalVisible]);
+    setIsModalVisible(!isModalVisible);
+  }, [setIsModalVisible, isModalVisible]);
 
   return (
     <>
-      <IconButton width={24} description="添加" icon={AddIcon} handler={handleClick} />
+      <FloatingActionButton width={24} description="添加" icon={AddIcon} onClick={handleClick} />
       <AddArticleModal
         isModalVisible={isModalVisible}
         currentOption={currentOption}
@@ -37,8 +37,13 @@ const StyledArticleBody = styled.main`
 
   & > button {
     position: fixed;
-    bottom: 50px;
-    right: 2em;
+    bottom: 4em;
+    right: 4em;
+
+    @media (max-width: 400px) {
+      bottom: 4em;
+      right: 2em;
+    }
   }
 `;
 
@@ -87,10 +92,18 @@ function ArticleBody(props: ArticleBodyProps) {
               <td>{article.title}</td>
               <td>
                 <StyledButtonBar>
-                  <Button onClick={() => deleteItem(article._id)} state="dange">
+                  <Button
+                    onClick={() => deleteItem(article._id)}
+                    state="dange"
+                    size={window.matchMedia('(max-width: 400px)').matches ? 'small' : 'middle'}
+                  >
                     删除
                   </Button>
-                  <Button>修改</Button>
+                  <Button
+                    size={window.matchMedia('(max-width: 400px)').matches ? 'small' : 'middle'}
+                  >
+                    修改
+                  </Button>
                 </StyledButtonBar>
               </td>
             </StyledRow>

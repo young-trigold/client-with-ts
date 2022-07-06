@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useCallback, useState } from 'react';
 import { toggleCatalogVisible } from './CataLogVisibleSlice';
-import { IconButton } from '../../components/Button';
+import { FloatingActionButton } from '../../components/Button';
 
 import ListIcon from '../../static/icon/list.png';
 import CacelIcon from '../../static/icon/cancel.png';
@@ -15,14 +15,14 @@ function CatalogButton() {
   const handleClick = useCallback(() => {
     setIsCacel(!isCacel);
     dispatch(toggleCatalogVisible());
-  }, [setIsCacel, dispatch, isCacel]);
+  }, [setIsCacel, dispatch, isCacel, toggleCatalogVisible]);
 
   return (
-    <IconButton
+    <FloatingActionButton
       icon={isCacel ? CacelIcon : ListIcon}
       width={24}
       description="目录"
-      handler={handleClick}
+      onClick={handleClick}
     />
   );
 }

@@ -17,7 +17,6 @@ const themes: Themes = {
     warnColor: '#faad14',
     dangeColor: '#ff4d4f',
     shadowColor: 'rgb(0 0 0 / 0.1)',
-    transitionDuration: '0.3s',
     borderColor: '#dadde1',
   },
   dark: {
@@ -32,7 +31,6 @@ const themes: Themes = {
     warnColor: '#ffec3d',
     dangeColor: '#fa541c',
     shadowColor: 'rgb(0 0 0/0.4)',
-    transitionDuration: '0.3s',
     borderColor: '#606770',
   },
 };

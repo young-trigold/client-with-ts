@@ -13,17 +13,18 @@ export interface CatalogItemProps {
 }
 
 const StyledCatalogItem = styled.a<CatalogItemProps>`
+  position: relative;
   width: fit-content;
   margin: 2px ${(props) => `${(props.level - 1) * 1.5}em`};
-  margin-left: 0;
+  margin-right: 0;
   color: ${(props) =>
     props.heading.content === props.currentHeading ? props.theme.primaryColor : 'inherit'};
   transition: all 0.3s;
 
   &::before {
-    display: inline-block;
-    vertical-align: bottom;
-    margin-right: 0.5em;
+    display: block;
+    position: absolute;
+    left: -1em;
     content: '';
     width: 5px;
     height: ${(props) => (props.heading.content === props.currentHeading ? '1.2em' : '0')};
@@ -50,17 +51,16 @@ const StyledCatalog = styled.nav<CatalogProps>`
   display: flex;
   flex-direction: column;
   flex: 3;
-  height: fit-content;
   min-width: 300px;
   max-height: 550px;
   background-color: ${(props) => props.theme.foregroundColor};
-  margin: 1em 0.5em;
-  border-radius: 10px;
+  border-radius: 6.4px;
   box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
   padding: 1em;
   user-select: none;
   overflow: auto;
   position: sticky;
+  transition: all 0.3s;
 
   @media (min-width: 899.1px) {
     top: 66px;
@@ -73,7 +73,8 @@ const StyledCatalog = styled.nav<CatalogProps>`
     max-height: 450px;
     transform: translate(50%, 0);
     position: fixed;
-    display: ${(props) => (props.catalogVisible ? 'block' : 'none')};
+    opacity: ${(props) => (props.catalogVisible ? 1 : 0)};
+    z-index: ${(props) => (props.catalogVisible ? 3 : -1)};
     background-color: ${(props) => props.theme.surfaceColor};
   }
 `;

@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
     box-sizing: border-box;
     outline: none;
     touch-action: manipulation;
+    scroll-behavior: smooth;
   }
 
   body {

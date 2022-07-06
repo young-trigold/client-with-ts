@@ -21,12 +21,8 @@ const StyledTagContainer = styled.nav<TagContainerProps>`
 
   & > button:nth-of-type(${(props) => props.currentIndex + 1}) {
     color: ${(props) => props.theme.backgroundColor};
-    box-shadow: 1px 1px 3px ${(props) => props.theme.shadowColor};
-    background: linear-gradient(
-      180deg,
-      ${(props) => props.theme.primaryColor},
-      ${(props) => props.theme.hoverColor}
-    );
+    box-shadow: 0 0 3px ${(props) => props.theme.shadowColor};
+    background-color: ${(props) => props.theme.activeColor};
   }
 `;
 
@@ -40,14 +36,14 @@ const StyledTag = styled.button`
   cursor: pointer;
   background-color: ${(props) => props.theme.foregroundColor};
 
-  &:hover,
+  &:hover {
+    color: ${(props) => props.theme.backgroundColor};
+    background-color: ${(props) => props.theme.hoverColor};
+  }
+
   &:active {
     color: ${(props) => props.theme.backgroundColor};
-    background: linear-gradient(
-      180deg,
-      ${(props) => props.theme.primaryColor},
-      ${(props) => props.theme.hoverColor}
-    );
+    background-color: ${(props) => props.theme.activeColor};
   }
 `;
 

@@ -25,24 +25,28 @@ const StyledReadingPage = styled.div`
 `;
 
 const MainContainer = styled.main`
-  padding: 0 2em;
-  width: 100%;
+  margin: 0 2em;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   position: relative;
+  transition: all 0.3s;
 
   & > button {
-    display: none;
+    display: flex;
+    position: fixed;
+    right: 2em;
+    bottom: 110px;
+    z-index: -1;
+    opacity: 0;
   }
 
   @media (max-width: 899px) {
-    padding: 0;
+    margin: 0;
 
     & > button {
-      display: flex;
-      position: fixed;
-      right: 2em;
-      bottom: 110px;
+      z-index: 1;
+      opacity: 1;
     }
   }
 `;

@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 
+import { useCallback } from 'react';
 import LikeIcon from '../../static/icon/like.png';
 import EyeOpen from '../../static/icon/eye-open.png';
 import { ChapterInfo } from './ChapterListPage';
+import debounce from '../../utils/debounce';
 
 const StyledChapter = styled.article`
   position: relative;
@@ -44,11 +46,15 @@ const StyledInfoBar = styled.div`
 
 function Chapter(props: { chapter: ChapterInfo }) {
   const { chapter } = props;
+
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/reading/chapters/${chapter._id}`);
-  };
+  const handleClick = useCallback(
+    debounce(() => {
+      navigate(`/reading/chapters/${chapter._id}`);
+    }, 200),
+    [navigate, chapter],
+  );
 
   return (
     <StyledChapter onClick={handleClick}>
