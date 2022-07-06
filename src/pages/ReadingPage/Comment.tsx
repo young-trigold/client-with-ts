@@ -17,6 +17,11 @@ const CommentContainer = styled.section`
   background-color: ${(props) => props.theme.foregroundColor};
   box-shadow: 0px 0px 1px ${(props) => props.theme.shadowColor};
 
+  @media (max-width: 530px) {
+    border-radius: 0;
+    margin: 0;
+  }
+
   & > button {
     margin-top: 1em;
   }
