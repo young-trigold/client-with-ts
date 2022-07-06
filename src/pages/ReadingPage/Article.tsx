@@ -84,7 +84,7 @@ const StyledArticle = styled.article`
     margin: auto;
     background-color: ${(props) => props.theme.foregroundColor};
     margin: 1em 0;
-    box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
+    box-shadow: 0 0 4px ${(props) => props.theme.shadowColor};
 
     & tr:nth-of-type(even) {
       background-color: ${(props) => props.theme.backgroundColor};
@@ -96,7 +96,7 @@ const StyledArticle = styled.article`
     line-height: 1.5em;
     border: none !important;
     border-radius: 6.4px;
-    box-shadow: 0 0 8px ${(props) => props.theme.shadowColor};
+    box-shadow: 0 0 4px ${(props) => props.theme.shadowColor};
     background-color: ${(props) => props.theme.foregroundColor} !important;
 
     @media (max-width: 400px) {
