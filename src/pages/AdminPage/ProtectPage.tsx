@@ -27,7 +27,8 @@ function ProtectPage() {
           },
         });
 
-        if (res.data.role === 'admin') setIsAdmin(true);
+        const user = res.data;
+        if (user.role === 'admin') setIsAdmin(true);
         else message.warn('权限不足!');
       } catch (error) {
         if (axios.isAxiosError(error))
